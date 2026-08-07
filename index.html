@@ -21,6 +21,7 @@
                         brandCyan: '#00f0ff',
                         brandGreen: '#10b981',
                         brandPurple: '#8b5cf6',
+                        brandOrange: '#f97316',
                     },
                     fontFamily: {
                         heading: ['Fredoka', 'sans-serif'],
@@ -53,19 +54,13 @@
             font-family: 'Fredoka', cursive, sans-serif;
         }
 
-        /* Smooth Glow Effects */
-        .glow-yellow {
-            box-shadow: 0 0 25px -5px rgba(255, 200, 55, 0.4);
-        }
-        .glow-pink {
-            box-shadow: 0 0 25px -5px rgba(255, 42, 133, 0.4);
-        }
-        .glow-cyan {
-            box-shadow: 0 0 25px -5px rgba(0, 240, 255, 0.4);
-        }
-        .glow-purple {
-            box-shadow: 0 0 25px -5px rgba(139, 92, 246, 0.4);
-        }
+        /* Glow Effects */
+        .glow-yellow { box-shadow: 0 0 25px -5px rgba(255, 200, 55, 0.4); }
+        .glow-pink { box-shadow: 0 0 25px -5px rgba(255, 42, 133, 0.4); }
+        .glow-cyan { box-shadow: 0 0 25px -5px rgba(0, 240, 255, 0.4); }
+        .glow-purple { box-shadow: 0 0 25px -5px rgba(139, 92, 246, 0.4); }
+        .glow-green { box-shadow: 0 0 25px -5px rgba(16, 185, 129, 0.4); }
+        .glow-orange { box-shadow: 0 0 25px -5px rgba(249, 115, 22, 0.4); }
 
         /* Hover bounce animation */
         .bouncy-hover {
@@ -75,7 +70,7 @@
             transform: translateY(-4px) scale(1.02);
         }
 
-        /* Interactive Physics Jump Keyframes */
+        /* Physics Animations */
         @keyframes jumpSquash {
             0% { transform: translateY(0) scale(1, 1); }
             20% { transform: translateY(10px) scale(1.15, 0.85); }
@@ -93,50 +88,57 @@
             100% { transform: rotate(0deg); }
         }
 
-        .animate-jump {
-            animation: jumpSquash 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+        @keyframes handWave {
+            0% { transform: rotate(0deg); }
+            25% { transform: rotate(-30deg); }
+            50% { transform: rotate(20deg); }
+            75% { transform: rotate(-25deg); }
+            100% { transform: rotate(0deg); }
         }
 
-        .animate-bounce-hair {
-            animation: bounceHair 0.9s cubic-bezier(0.25, 1, 0.5, 1);
-            transform-origin: top center;
-        }
+        .animate-jump { animation: jumpSquash 0.8s cubic-bezier(0.25, 1, 0.5, 1); }
+        .animate-bounce-hair { animation: bounceHair 0.9s cubic-bezier(0.25, 1, 0.5, 1); transform-origin: top center; }
+        .animate-wave { animation: handWave 1s ease-in-out infinite; transform-origin: bottom right; }
 
         /* Custom Scrollbar */
-        ::-webkit-scrollbar {
-            width: 10px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #0b0819;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #2d2250;
-            border-radius: 5px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #8b5cf6;
-        }
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: #0b0819; }
+        ::-webkit-scrollbar-thumb { background: #2d2250; border-radius: 5px; }
+        ::-webkit-scrollbar-thumb:hover { background: #8b5cf6; }
     </style>
 </head>
 <body class="min-h-screen flex flex-col justify-between antialiased selection:bg-brandPink selection:text-white pb-12">
 
     <header class="bg-[#130f26]/90 border-b border-brandBorder sticky top-0 z-50 backdrop-blur-md">
-        <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
+        <div class="max-w-6xl mx-auto px-4 py-4 flex flex-col sm:flex-row justify-between items-center gap-4">
             <div class="flex items-center gap-3">
                 <div class="bg-gradient-to-tr from-brandPink to-brandYellow p-3 rounded-2xl shadow-lg transform -rotate-3 text-slate-900">
                     <i class="fa-solid fa-wand-magic-sparkles text-2xl"></i>
                 </div>
                 <div>
                     <h1 class="text-2xl md:text-3xl font-bold font-heading bg-gradient-to-r from-brandYellow via-brandPink to-brandCyan bg-clip-text text-transparent">
-                        Moho Kid Academy
+                        SCG Anime Pro
                     </h1>
-                    <p class="text-xs text-purple-300 font-medium tracking-wide">3 Life-Changing Animation Hacks</p>
+                    <p class="text-xs text-purple-300 font-medium tracking-wide">6 Life-Changing Animation Hacks</p>
                 </div>
             </div>
             
-            <div class="flex items-center gap-2 text-xs md:text-sm font-heading font-semibold text-brandYellow bg-purple-950/80 px-4 py-2 rounded-full border border-purple-700/60 shadow-inner">
-                <i class="fa-solid fa-bolt text-brandYellow animate-pulse"></i>
-                <span>Super Hacks for Kids!</span>
+            <div class="flex items-center gap-3 w-full sm:w-auto justify-between sm:justify-end">
+                <!-- Topic Selection Dropdown -->
+                <select id="topicSelect" onchange="scrollToTopic(this.value)" class="bg-purple-950/90 text-brandYellow text-xs md:text-sm font-heading font-semibold px-4 py-2.5 rounded-2xl border border-purple-700/60 focus:outline-none focus:ring-2 focus:ring-brandYellow cursor-pointer shadow-inner w-full sm:w-auto">
+                    <option value="" disabled selected>✨ Select a Topic...</option>
+                    <option value="hack-1">1. Smart Bones Control Dial</option>
+                    <option value="hack-2">2. Dynamic Bone Spring Physics</option>
+                    <option value="hack-3">3. Shared Styles (Color Swap)</option>
+                    <option value="hack-4">4. Target Bones (Floor Pin Lock)</option>
+                    <option value="hack-5">5. Switch Layers (Mouth Swapper)</option>
+                    <option value="hack-6">6. Actions Library (Save Moves)</option>
+                </select>
+
+                <div class="hidden lg:flex items-center gap-2 text-xs md:text-sm font-heading font-semibold text-brandYellow bg-purple-950/80 px-4 py-2 rounded-full border border-purple-700/60 shadow-inner whitespace-nowrap">
+                    <i class="fa-solid fa-bolt text-brandYellow animate-pulse"></i>
+                    <span>6 Super Hacks!</span>
+                </div>
             </div>
         </div>
     </header>
@@ -154,25 +156,11 @@
                 Animate <span class="bg-gradient-to-r from-brandYellow to-amber-400 bg-clip-text text-transparent">10x Faster</span> in Moho!
             </h2>
             <p class="text-purple-200 text-base md:text-lg max-w-2xl mx-auto leading-relaxed">
-                Discover the 3 magic shortcuts pro animators use so you can skip tedious drawing and focus on bringing your wildest cartoon stories to life!
+                Discover 6 magic shortcuts pro animators use so you can skip tedious re-drawing and focus on bringing your wildest cartoon stories to life!
             </p>
         </section>
 
-        <section class="bg-brandCard rounded-3xl border border-brandBorder p-6 md:p-8 space-y-6 glow-purple transition-all duration-300">
-            <div class="flex flex-col md:flex-row gap-6 items-start justify-between">
-                
-                <!-- Left: Hack Explanation -->
-                <div class="space-y-4 flex-1">
-                    <div class="flex items-center gap-3">
-                        <span class="bg-brandYellow text-slate-950 font-heading font-black text-xl w-10 h-10 rounded-2xl flex items-center justify-center shadow-lg">1</span>
-                        <h3 class="text-2xl md:text-3xl font-heading font-bold text-white">The Smart Bones Control Dial</h3>
-                    </div>
-
-                    <p class="text-purple-200 text-sm md:text-base leading-relaxed">
-                        Instead of re-drawing face expressions or elbow bends over and over, turn them into a <b>magic turn dial</b>! Turn the dial, and Moho automatically controls the drawing for you.
-                    </p>
-
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+        <section id="hack-1" class="bg-brandCard rounded-3xl border border-brandBorder p-6 md:p-8 space-y-6 glow-purple transition-all duration-300">
                         <div class="bg-purple-950/60 p-3.5 rounded-2xl border border-purple-800/40 text-xs text-purple-200 flex items-start gap-2.5">
                             <i class="fa-solid fa-circle-check text-brandGreen text-base mt-0.5"></i>
                             <span><b>Why it helps:</b> Keeps character limbs smooth and saves hundreds of repetitive drawings!</span>
@@ -187,7 +175,6 @@
                         <i class="fa-solid fa-book-open"></i> Learn How To Do It! (12 Easy Steps)
                     </button>
 
-                    <!-- Expandable Step-by-Step Instructions -->
                     <div id="tutorial-1" class="hidden p-5 md:p-6 bg-[#120d24] rounded-2xl border border-brandPurple/60 space-y-4 transition-all">
                         <div class="flex items-center justify-between border-b border-purple-800/40 pb-3">
                             <h4 class="text-brandYellow font-heading font-bold text-lg flex items-center gap-2">
@@ -199,11 +186,11 @@
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2 text-xs md:text-sm">
                             <div class="bg-slate-900/80 p-3 rounded-xl border border-purple-900/60 flex items-start gap-3">
                                 <span class="bg-brandYellow text-slate-950 font-bold w-6 h-6 rounded-full flex items-center justify-center text-xs shrink-0 mt-0.5">1</span>
-                                <div><b class="text-white block font-heading">Open Moho</b> Click <code class="bg-purple-950 px-1.5 py-0.5 rounded text-brandYellow">File > New</code> (or <kbd class="bg-slate-800 px-1 rounded border border-slate-700">Ctrl + N</kbd>) for a fresh page.</div>
+                                <div><b class="text-white block font-heading">Open Moho</b> Click <code class="bg-purple-950 px-1.5 py-0.5 rounded text-brandYellow">File > New</code> for a fresh page.</div>
                             </div>
                             <div class="bg-slate-900/80 p-3 rounded-xl border border-purple-900/60 flex items-start gap-3">
                                 <span class="bg-brandYellow text-slate-950 font-bold w-6 h-6 rounded-full flex items-center justify-center text-xs shrink-0 mt-0.5">2</span>
-                                <div><b class="text-white block font-heading">Create Drawing Layer</b> In Layers window, click <code class="bg-purple-950 px-1.5 py-0.5 rounded text-brandCyan">+</code> and pick <b>Vector Layer</b> (this is your drawing layer!). Name it "Arm".</div>
+                                <div><b class="text-white block font-heading">Create Drawing Layer</b> In Layers window, click <code class="bg-purple-950 px-1.5 py-0.5 rounded text-brandCyan">+</code> and pick <b>Vector Layer</b> (drawing layer). Name it "Arm".</div>
                             </div>
                             <div class="bg-slate-900/80 p-3 rounded-xl border border-purple-900/60 flex items-start gap-3">
                                 <span class="bg-brandYellow text-slate-950 font-bold w-6 h-6 rounded-full flex items-center justify-center text-xs shrink-0 mt-0.5">3</span>
@@ -211,65 +198,57 @@
                             </div>
                             <div class="bg-slate-900/80 p-3 rounded-xl border border-purple-900/60 flex items-start gap-3">
                                 <span class="bg-brandYellow text-slate-950 font-bold w-6 h-6 rounded-full flex items-center justify-center text-xs shrink-0 mt-0.5">4</span>
-                                <div><b class="text-white block font-heading">Draw Lower Arm</b> Draw the lower arm next to it, letting the edges touch and rest slightly on top of each other at the elbow joint.</div>
+                                <div><b class="text-white block font-heading">Draw Lower Arm</b> Draw lower arm next to it, letting edges touch and rest slightly on top of each other.</div>
                             </div>
                             <div class="bg-slate-900/80 p-3 rounded-xl border border-purple-900/60 flex items-start gap-3">
                                 <span class="bg-brandYellow text-slate-950 font-bold w-6 h-6 rounded-full flex items-center justify-center text-xs shrink-0 mt-0.5">5</span>
-                                <div><b class="text-white block font-heading">Create Bone Layer</b> Click <code class="bg-purple-950 px-1.5 py-0.5 rounded text-brandCyan">+</code> and select <b>Bone Layer</b> (this folder holds your skeleton!). Name it "Rig".</div>
+                                <div><b class="text-white block font-heading">Create Bone Layer</b> Click <code class="bg-purple-950 px-1.5 py-0.5 rounded text-brandCyan">+</code> and select <b>Bone Layer</b> (skeleton folder). Name it "Rig".</div>
                             </div>
                             <div class="bg-slate-900/80 p-3 rounded-xl border border-purple-900/60 flex items-start gap-3">
                                 <span class="bg-brandYellow text-slate-950 font-bold w-6 h-6 rounded-full flex items-center justify-center text-xs shrink-0 mt-0.5">6</span>
-                                <div><b class="text-white block font-heading">Group Layers</b> Drag your "Arm" drawing layer inside the "Rig" bone folder.</div>
+                                <div><b class="text-white block font-heading">Group Layers</b> Drag "Arm" layer inside "Rig" bone folder.</div>
                             </div>
                             <div class="bg-slate-900/80 p-3 rounded-xl border border-purple-900/60 flex items-start gap-3">
                                 <span class="bg-brandYellow text-slate-950 font-bold w-6 h-6 rounded-full flex items-center justify-center text-xs shrink-0 mt-0.5">7</span>
-                                <div><b class="text-white block font-heading">Add Bones</b> Select Bone layer and draw 2 bones along the arm with <b>Add Bone Tool</b> (<kbd class="bg-slate-800 px-1 rounded border border-slate-700">A</kbd>).</div>
+                                <div><b class="text-white block font-heading">Add Bones</b> Draw 2 bones along the arm with <b>Add Bone Tool</b> (<kbd class="bg-slate-800 px-1 rounded border border-slate-700">A</kbd>).</div>
                             </div>
                             <div class="bg-slate-900/80 p-3 rounded-xl border border-purple-900/60 flex items-start gap-3">
                                 <span class="bg-brandYellow text-slate-950 font-bold w-6 h-6 rounded-full flex items-center justify-center text-xs shrink-0 mt-0.5">8</span>
-                                <div><b class="text-white block font-heading">Glue Drawing to Bones</b> Highlight drawing points and click <code class="bg-purple-950 px-1.5 py-0.5 rounded text-brandYellow">Bone > Flexi-Bind Points</code> (this glues your drawing directly to the bone!).</div>
+                                <div><b class="text-white block font-heading">Glue Drawing to Bones</b> Highlight drawing points and click <code class="bg-purple-950 px-1.5 py-0.5 rounded text-brandYellow">Bone > Flexi-Bind Points</code> (glues drawing directly to bone).</div>
                             </div>
                             <div class="bg-slate-900/80 p-3 rounded-xl border border-purple-900/60 flex items-start gap-3">
                                 <span class="bg-brandYellow text-slate-950 font-bold w-6 h-6 rounded-full flex items-center justify-center text-xs shrink-0 mt-0.5">9</span>
-                                <div><b class="text-white block font-heading">Make Smart Dial</b> Click elbow bone, then top menu: <code class="bg-purple-950 px-1.5 py-0.5 rounded text-brandYellow">Bone > Make Smart Bone Dial</code>.</div>
+                                <div><b class="text-white block font-heading">Make Smart Dial</b> Click elbow bone, then menu: <code class="bg-purple-950 px-1.5 py-0.5 rounded text-brandYellow">Bone > Make Smart Bone Dial</code>.</div>
                             </div>
                             <div class="bg-slate-900/80 p-3 rounded-xl border border-purple-900/60 flex items-start gap-3">
                                 <span class="bg-brandYellow text-slate-950 font-bold w-6 h-6 rounded-full flex items-center justify-center text-xs shrink-0 mt-0.5">10</span>
-                                <div><b class="text-white block font-heading">Set Dial Name</b> Type "Elbow Bend" and press <b>OK</b> to open special setup mode.</div>
+                                <div><b class="text-white block font-heading">Set Dial Name</b> Type "Elbow Bend" and press <b>OK</b> to enter setup mode.</div>
                             </div>
                             <div class="bg-slate-900/80 p-3 rounded-xl border border-purple-900/60 flex items-start gap-3">
                                 <span class="bg-brandYellow text-slate-950 font-bold w-6 h-6 rounded-full flex items-center justify-center text-xs shrink-0 mt-0.5">11</span>
-                                <div><b class="text-white block font-heading">Fix Arm Joint</b> Bend the bone and adjust drawing points so the elbow looks neat with no messy bumps!</div>
+                                <div><b class="text-white block font-heading">Fix Arm Joint</b> Bend bone and adjust drawing points so elbow looks smooth with no messy bumps!</div>
                             </div>
                             <div class="bg-slate-900/80 p-3 rounded-xl border border-purple-900/60 flex items-start gap-3">
                                 <span class="bg-brandYellow text-slate-950 font-bold w-6 h-6 rounded-full flex items-center justify-center text-xs shrink-0 mt-0.5">12</span>
-                                <div><b class="text-white block font-heading">Test on Timeline!</b> Double click <b>Main Timeline</b>. Turn your dial on Frame 1—it bends automatically like magic!</div>
+                                <div><b class="text-white block font-heading">Test on Timeline!</b> Double click <b>Main Timeline</b>. Turn dial on Frame 1—it bends automatically!</div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Right: Interactive Visualizer Widget -->
                 <div class="w-full md:w-80 bg-[#110d22] p-5 rounded-2xl border border-purple-800/60 flex flex-col items-center gap-4 text-center">
                     <span class="text-xs font-heading font-bold uppercase tracking-wider text-brandCyan bg-cyan-950/80 px-3 py-1 rounded-full border border-cyan-800/50">
                         <i class="fa-solid fa-gamepad"></i> Interactive Demo
                     </span>
 
-                    <!-- SVG Character Demo -->
                     <div class="w-full h-44 bg-slate-900/80 rounded-xl border border-purple-900/50 flex items-center justify-center relative overflow-hidden">
                         <svg width="220" height="150" viewBox="0 0 220 150">
-                            <!-- Body base -->
                             <rect x="70" y="100" width="80" height="50" rx="20" fill="#8b5cf6" />
-                            <!-- Face -->
                             <circle cx="110" cy="65" r="40" fill="#fbcfe8" />
-                            <!-- Left Eye -->
                             <circle cx="95" cy="55" r="6" fill="#1e1b4b" />
-                            <!-- Right Eye (Dynamic Wink) -->
                             <circle id="rightEye" cx="125" cy="55" r="6" fill="#1e1b4b" />
-                            <!-- Smile Path (Dynamic Curve) -->
                             <path id="smilePath" d="M 95 75 Q 110 85 125 75" fill="transparent" stroke="#1e1b4b" stroke-width="4" stroke-linecap="round" />
                             
-                            <!-- Arm Joint (Dynamic Rotation) -->
                             <g transform="translate(60, 95)">
                                 <rect x="0" y="-8" width="30" height="16" rx="8" fill="#ec4899" />
                                 <g id="forearm" transform="rotate(0, 30, 0)">
@@ -280,7 +259,6 @@
                         </svg>
                     </div>
 
-                    <!-- Slider Control -->
                     <div class="w-full space-y-2">
                         <div class="flex justify-between text-xs text-purple-300 font-medium">
                             <span>Rotate Smart Dial:</span>
@@ -293,10 +271,9 @@
             </div>
         </section>
 
-        <section class="bg-brandCard rounded-3xl border border-brandBorder p-6 md:p-8 space-y-6 glow-pink transition-all duration-300">
+        <section id="hack-2" class="bg-brandCard rounded-3xl border border-brandBorder p-6 md:p-8 space-y-6 glow-pink transition-all duration-300">
             <div class="flex flex-col md:flex-row gap-6 items-start justify-between">
                 
-                <!-- Left: Hack Explanation -->
                 <div class="space-y-4 flex-1">
                     <div class="flex items-center gap-3">
                         <span class="bg-brandPink text-white font-heading font-black text-xl w-10 h-10 rounded-2xl flex items-center justify-center shadow-lg">2</span>
@@ -322,7 +299,6 @@
                         <i class="fa-solid fa-book-open"></i> Learn How To Do It! (11 Easy Steps)
                     </button>
 
-                    <!-- Expandable Step-by-Step Instructions -->
                     <div id="tutorial-2" class="hidden p-5 md:p-6 bg-[#120d24] rounded-2xl border border-brandPink/60 space-y-4 transition-all">
                         <div class="flex items-center justify-between border-b border-pink-800/40 pb-3">
                             <h4 class="text-brandYellow font-heading font-bold text-lg flex items-center gap-2">
@@ -338,31 +314,31 @@
                             </div>
                             <div class="bg-slate-900/80 p-3 rounded-xl border border-pink-950 flex items-start gap-3">
                                 <span class="bg-brandPink text-white font-bold w-6 h-6 rounded-full flex items-center justify-center text-xs shrink-0 mt-0.5">2</span>
-                                <div><b class="text-white block font-heading">Draw the Shape</b> On a Drawing (Vector) layer, draw your ponytail hanging naturally down.</div>
+                                <div><b class="text-white block font-heading">Draw the Shape</b> On a Drawing layer, draw your ponytail hanging naturally down.</div>
                             </div>
                             <div class="bg-slate-900/80 p-3 rounded-xl border border-pink-950 flex items-start gap-3">
                                 <span class="bg-brandPink text-white font-bold w-6 h-6 rounded-full flex items-center justify-center text-xs shrink-0 mt-0.5">3</span>
-                                <div><b class="text-white block font-heading">Create Bone Chain</b> Add 3 or 4 small bones in a straight line down the ponytail (<kbd class="bg-slate-800 px-1 rounded border border-slate-700">A</kbd>).</div>
+                                <div><b class="text-white block font-heading">Create Bone Chain</b> Add 3 or 4 small bones in a straight line down ponytail (<kbd class="bg-slate-800 px-1 rounded border border-slate-700">A</kbd>).</div>
                             </div>
                             <div class="bg-slate-900/80 p-3 rounded-xl border border-pink-950 flex items-start gap-3">
                                 <span class="bg-brandPink text-white font-bold w-6 h-6 rounded-full flex items-center justify-center text-xs shrink-0 mt-0.5">4</span>
-                                <div><b class="text-white block font-heading">Connect the Bones</b> Make sure each bone is linked (like a toy chain) to the bone right above it (<kbd class="bg-slate-800 px-1 rounded border border-slate-700">P</kbd>).</div>
+                                <div><b class="text-white block font-heading">Connect the Bones</b> Make sure each bone is linked (like a toy chain) to bone above it (<kbd class="bg-slate-800 px-1 rounded border border-slate-700">P</kbd>).</div>
                             </div>
                             <div class="bg-slate-900/80 p-3 rounded-xl border border-pink-950 flex items-start gap-3">
                                 <span class="bg-brandPink text-white font-bold w-6 h-6 rounded-full flex items-center justify-center text-xs shrink-0 mt-0.5">5</span>
-                                <div><b class="text-white block font-heading">Select Hair Bones</b> Hold <kbd class="bg-slate-800 px-1 rounded border border-slate-700">Shift</kbd> and click all hair bones with <b>Select Bone</b> (<kbd class="bg-slate-800 px-1 rounded border border-slate-700">B</kbd>).</div>
+                                <div><b class="text-white block font-heading">Select Hair Bones</b> Hold <kbd class="bg-slate-800 px-1 rounded border border-slate-700">Shift</kbd> and click all hair bones (<kbd class="bg-slate-800 px-1 rounded border border-slate-700">B</kbd>).</div>
                             </div>
                             <div class="bg-slate-900/80 p-3 rounded-xl border border-pink-950 flex items-start gap-3">
                                 <span class="bg-brandPink text-white font-bold w-6 h-6 rounded-full flex items-center justify-center text-xs shrink-0 mt-0.5">6</span>
-                                <div><b class="text-white block font-heading">Open Bone Settings</b> Press <kbd class="bg-slate-800 px-1 rounded border border-slate-700">Ctrl + F</kbd> to open <b>Bone Constraints</b> (Bone Rules window).</div>
+                                <div><b class="text-white block font-heading">Open Bone Settings</b> Press <kbd class="bg-slate-800 px-1 rounded border border-slate-700">Ctrl + F</kbd> for <b>Bone Constraints</b> (Bone Rules window).</div>
                             </div>
                             <div class="bg-slate-900/80 p-3 rounded-xl border border-pink-950 flex items-start gap-3">
                                 <span class="bg-brandPink text-white font-bold w-6 h-6 rounded-full flex items-center justify-center text-xs shrink-0 mt-0.5">7</span>
-                                <div><b class="text-white block font-heading">Turn On Magic Spring</b> Check the box labeled <b>Dynamic Bone</b> to turn on bounce movement!</div>
+                                <div><b class="text-white block font-heading">Turn On Magic Spring</b> Check box labeled <b>Dynamic Bone</b> to activate bounce!</div>
                             </div>
                             <div class="bg-slate-900/80 p-3 rounded-xl border border-pink-950 flex items-start gap-3">
                                 <span class="bg-brandPink text-white font-bold w-6 h-6 rounded-full flex items-center justify-center text-xs shrink-0 mt-0.5">8</span>
-                                <div><b class="text-white block font-heading">Set Bounciness</b> Change <b>Spring Force</b> (bounciness amount) to <code class="bg-purple-950 px-1.5 py-0.5 rounded text-brandYellow">0.5</code> for extra wiggle.</div>
+                                <div><b class="text-white block font-heading">Set Bounciness</b> Set <b>Spring Force</b> (bounciness amount) to <code class="bg-purple-950 px-1.5 py-0.5 rounded text-brandYellow">0.5</code>.</div>
                             </div>
                             <div class="bg-slate-900/80 p-3 rounded-xl border border-pink-950 flex items-start gap-3">
                                 <span class="bg-brandPink text-white font-bold w-6 h-6 rounded-full flex items-center justify-center text-xs shrink-0 mt-0.5">9</span>
@@ -374,41 +350,33 @@
                             </div>
                             <div class="bg-slate-900/80 p-3 rounded-xl border border-pink-950 flex items-start gap-3">
                                 <span class="bg-brandPink text-white font-bold w-6 h-6 rounded-full flex items-center justify-center text-xs shrink-0 mt-0.5">11</span>
-                                <div><b class="text-white block font-heading">Hit Play!</b> Press <kbd class="bg-slate-800 px-1 rounded border border-slate-700">Spacebar</kbd>—the ponytail bounces automatically with physics!</div>
+                                <div><b class="text-white block font-heading">Hit Play!</b> Press <kbd class="bg-slate-800 px-1 rounded border border-slate-700">Spacebar</kbd>—ponytail bounces automatically!</div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Right: Interactive Visualizer Widget -->
                 <div class="w-full md:w-80 bg-[#110d22] p-5 rounded-2xl border border-purple-800/60 flex flex-col items-center gap-4 text-center">
                     <span class="text-xs font-heading font-bold uppercase tracking-wider text-brandPink bg-pink-950/80 px-3 py-1 rounded-full border border-pink-800/50">
                         <i class="fa-solid fa-gamepad"></i> Interactive Physics
                     </span>
 
-                    <!-- SVG Physics Character -->
                     <div class="w-full h-44 bg-slate-900/80 rounded-xl border border-purple-900/50 flex items-center justify-center relative overflow-hidden">
                         <div id="physicsChar" class="transition-transform">
                             <svg width="180" height="140" viewBox="0 0 180 140">
-                                <!-- Ponytail Hair (Bounces automatically) -->
                                 <g id="ponytail" transform-origin="80 30">
                                     <path d="M 75 35 C 40 10, 20 40, 25 70 C 35 45, 60 40, 75 35 Z" fill="#ff2a85" />
                                     <circle cx="25" cy="70" r="5" fill="#ffc837" />
                                 </g>
-                                
-                                <!-- Character Head -->
                                 <circle cx="90" cy="55" r="32" fill="#fed7aa" />
                                 <circle cx="80" cy="50" r="5" fill="#1e1b4b" />
                                 <circle cx="100" cy="50" r="5" fill="#1e1b4b" />
                                 <path d="M 82 65 Q 90 73 98 65" fill="transparent" stroke="#1e1b4b" stroke-width="3" stroke-linecap="round" />
-                                
-                                <!-- Body -->
                                 <path d="M 65 87 L 115 87 L 125 130 L 55 130 Z" fill="#00f0ff" rx="10" />
                             </svg>
                         </div>
                     </div>
 
-                    <!-- Jump Button -->
                     <button id="jumpBtn" class="w-full bg-gradient-to-r from-brandYellow to-amber-400 hover:from-yellow-300 hover:to-amber-300 text-slate-950 font-heading font-bold py-3 rounded-xl shadow-lg bouncy-hover flex items-center justify-center gap-2 text-sm">
                         <i class="fa-solid fa-person-running text-lg"></i> Test Dynamic Jump Bounce!
                     </button>
@@ -416,10 +384,9 @@
             </div>
         </section>
 
-        <section class="bg-brandCard rounded-3xl border border-brandBorder p-6 md:p-8 space-y-6 glow-cyan transition-all duration-300">
+        <section id="hack-3" class="bg-brandCard rounded-3xl border border-brandBorder p-6 md:p-8 space-y-6 glow-cyan transition-all duration-300">
             <div class="flex flex-col md:flex-row gap-6 items-start justify-between">
                 
-                <!-- Left: Hack Explanation -->
                 <div class="space-y-4 flex-1">
                     <div class="flex items-center gap-3">
                         <span class="bg-brandCyan text-slate-950 font-heading font-black text-xl w-10 h-10 rounded-2xl flex items-center justify-center shadow-lg">3</span>
@@ -445,7 +412,6 @@
                         <i class="fa-solid fa-book-open"></i> Learn How To Do It! (11 Easy Steps)
                     </button>
 
-                    <!-- Expandable Step-by-Step Instructions -->
                     <div id="tutorial-3" class="hidden p-5 md:p-6 bg-[#120d24] rounded-2xl border border-brandCyan/60 space-y-4 transition-all">
                         <div class="flex items-center justify-between border-b border-cyan-800/40 pb-3">
                             <h4 class="text-brandYellow font-heading font-bold text-lg flex items-center gap-2">
@@ -457,11 +423,11 @@
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2 text-xs md:text-sm">
                             <div class="bg-slate-900/80 p-3 rounded-xl border border-cyan-950 flex items-start gap-3">
                                 <span class="bg-brandCyan text-slate-950 font-bold w-6 h-6 rounded-full flex items-center justify-center text-xs shrink-0 mt-0.5">1</span>
-                                <div><b class="text-white block font-heading">Open Style Panel</b> Find the <b>Style Window</b> on the right side of screen (<kbd class="bg-slate-800 px-1 rounded border border-slate-700">Ctrl + 1</kbd>).</div>
+                                <div><b class="text-white block font-heading">Open Style Panel</b> Find <b>Style Window</b> on right side of screen (<kbd class="bg-slate-800 px-1 rounded border border-slate-700">Ctrl + 1</kbd>).</div>
                             </div>
                             <div class="bg-slate-900/80 p-3 rounded-xl border border-cyan-950 flex items-start gap-3">
                                 <span class="bg-brandCyan text-slate-950 font-bold w-6 h-6 rounded-full flex items-center justify-center text-xs shrink-0 mt-0.5">2</span>
-                                <div><b class="text-white block font-heading">Click "New Style"</b> Under the Styles drop-down menu, click the <b>New</b> button.</div>
+                                <div><b class="text-white block font-heading">Click "New Style"</b> Under Styles menu, click <b>New</b> button.</div>
                             </div>
                             <div class="bg-slate-900/80 p-3 rounded-xl border border-cyan-950 flex items-start gap-3">
                                 <span class="bg-brandCyan text-slate-950 font-bold w-6 h-6 rounded-full flex items-center justify-center text-xs shrink-0 mt-0.5">3</span>
@@ -469,19 +435,19 @@
                             </div>
                             <div class="bg-slate-900/80 p-3 rounded-xl border border-cyan-950 flex items-start gap-3">
                                 <span class="bg-brandCyan text-slate-950 font-bold w-6 h-6 rounded-full flex items-center justify-center text-xs shrink-0 mt-0.5">4</span>
-                                <div><b class="text-white block font-heading">Pick Fill Color</b> Click the <b>Fill Color</b> square box and pick your favorite hero color.</div>
+                                <div><b class="text-white block font-heading">Pick Fill Color</b> Click <b>Fill Color</b> square color box and pick favorite hero color.</div>
                             </div>
                             <div class="bg-slate-900/80 p-3 rounded-xl border border-cyan-950 flex items-start gap-3">
                                 <span class="bg-brandCyan text-slate-950 font-bold w-6 h-6 rounded-full flex items-center justify-center text-xs shrink-0 mt-0.5">5</span>
-                                <div><b class="text-white block font-heading">Set Outer Border</b> Set stroke width (outer line border) to <code class="bg-purple-950 px-1.5 py-0.5 rounded text-brandYellow">4px</code> with a dark line.</div>
+                                <div><b class="text-white block font-heading">Set Outer Border</b> Set stroke width (outer line border) to <code class="bg-purple-950 px-1.5 py-0.5 rounded text-brandYellow">4px</code>.</div>
                             </div>
                             <div class="bg-slate-900/80 p-3 rounded-xl border border-cyan-950 flex items-start gap-3">
                                 <span class="bg-brandCyan text-slate-950 font-bold w-6 h-6 rounded-full flex items-center justify-center text-xs shrink-0 mt-0.5">6</span>
-                                <div><b class="text-white block font-heading">Select Character Shirt</b> Use <b>Select Shape Tool</b> (<kbd class="bg-slate-800 px-1 rounded border border-slate-700">Q</kbd>) and click character shirt.</div>
+                                <div><b class="text-white block font-heading">Select Character Shirt</b> Use <b>Select Shape Tool</b> (<kbd class="bg-slate-800 px-1 rounded border border-slate-700">Q</kbd>) and click shirt.</div>
                             </div>
                             <div class="bg-slate-900/80 p-3 rounded-xl border border-cyan-950 flex items-start gap-3">
                                 <span class="bg-brandCyan text-slate-950 font-bold w-6 h-6 rounded-full flex items-center justify-center text-xs shrink-0 mt-0.5">7</span>
-                                <div><b class="text-white block font-heading">Apply Shared Style</b> In Style window drop-down, pick "Shirt Outfit".</div>
+                                <div><b class="text-white block font-heading">Apply Shared Style</b> In Style drop-down, pick "Shirt Outfit".</div>
                             </div>
                             <div class="bg-slate-900/80 p-3 rounded-xl border border-cyan-950 flex items-start gap-3">
                                 <span class="bg-brandCyan text-slate-950 font-bold w-6 h-6 rounded-full flex items-center justify-center text-xs shrink-0 mt-0.5">8</span>
@@ -489,7 +455,7 @@
                             </div>
                             <div class="bg-slate-900/80 p-3 rounded-xl border border-cyan-950 flex items-start gap-3">
                                 <span class="bg-brandCyan text-slate-950 font-bold w-6 h-6 rounded-full flex items-center justify-center text-xs shrink-0 mt-0.5">9</span>
-                                <div><b class="text-white block font-heading">Double Click Style</b> Anytime you want a new color, double-click "Shirt Outfit" in list.</div>
+                                <div><b class="text-white block font-heading">Double Click Style</b> Anytime you want a new color, double-click "Shirt Outfit".</div>
                             </div>
                             <div class="bg-slate-900/80 p-3 rounded-xl border border-cyan-950 flex items-start gap-3">
                                 <span class="bg-brandCyan text-slate-950 font-bold w-6 h-6 rounded-full flex items-center justify-center text-xs shrink-0 mt-0.5">10</span>
@@ -497,44 +463,32 @@
                             </div>
                             <div class="bg-slate-900/80 p-3 rounded-xl border border-cyan-950 flex items-start gap-3">
                                 <span class="bg-brandCyan text-slate-950 font-bold w-6 h-6 rounded-full flex items-center justify-center text-xs shrink-0 mt-0.5">11</span>
-                                <div><b class="text-white block font-heading">Instant Color Swap!</b> ALL shirt parts across the entire animation change color in 1 second!</div>
+                                <div><b class="text-white block font-heading">Instant Color Swap!</b> ALL shirt parts across entire animation change color in 1 second!</div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Right: Interactive Visualizer Widget -->
                 <div class="w-full md:w-80 bg-[#110d22] p-5 rounded-2xl border border-purple-800/60 flex flex-col items-center gap-4 text-center">
                     <span class="text-xs font-heading font-bold uppercase tracking-wider text-brandYellow bg-yellow-950/80 px-3 py-1 rounded-full border border-yellow-800/50">
                         <i class="fa-solid fa-palette"></i> Instant Style Swapper
                     </span>
 
-                    <!-- SVG Hero Outfit Swapper -->
                     <div class="w-full h-44 bg-slate-900/80 rounded-xl border border-purple-900/50 flex items-center justify-center relative overflow-hidden">
                         <svg width="200" height="150" viewBox="0 0 200 150">
-                            <!-- Hero Cap / Hat (Uses Outfit Style Class) -->
                             <path class="outfit-style transition-colors duration-300" d="M 70 35 Q 100 15 130 35 L 140 42 L 60 42 Z" fill="#ff2a85" />
-                            
-                            <!-- Head -->
                             <circle cx="100" cy="55" r="22" fill="#fde68a" />
                             <circle cx="92" cy="52" r="3" fill="#1e1b4b" />
                             <circle cx="108" cy="52" r="3" fill="#1e1b4b" />
                             <path d="M 94 62 Q 100 68 106 62" fill="transparent" stroke="#1e1b4b" stroke-width="2" />
-
-                            <!-- Hero Shirt (Uses Outfit Style Class) -->
                             <rect class="outfit-style transition-colors duration-300" x="70" y="78" width="60" height="42" rx="10" fill="#ff2a85" />
-                            
-                            <!-- Sleeves (Uses Outfit Style Class) -->
                             <rect class="outfit-style transition-colors duration-300" x="52" y="80" width="16" height="25" rx="6" fill="#ff2a85" />
                             <rect class="outfit-style transition-colors duration-300" x="132" y="80" width="16" height="25" rx="6" fill="#ff2a85" />
-
-                            <!-- Pants -->
                             <rect x="75" y="120" width="22" height="25" fill="#334155" />
                             <rect x="103" y="120" width="22" height="25" fill="#334155" />
                         </svg>
                     </div>
 
-                    <!-- Palette Swatch Buttons -->
                     <div class="w-full space-y-2">
                         <p class="text-xs text-purple-300 font-medium">Click a style palette swatch:</p>
                         <div class="flex justify-center items-center gap-2.5">
@@ -549,46 +503,388 @@
             </div>
         </section>
 
-        <section class="bg-gradient-to-r from-purple-950 via-indigo-950 to-purple-900 p-8 md:p-12 rounded-3xl border border-purple-700/50 text-center space-y-6 shadow-2xl relative overflow-hidden">
-            <div class="max-w-2xl mx-auto space-y-4">
-                <span class="bg-brandYellow text-slate-950 font-heading font-bold text-xs uppercase px-4 py-1.5 rounded-full">
-                    <i class="fa-solid fa-paper-plane"></i> Free Weekly Cheat Sheets
-                </span>
-                <h3 class="text-3xl md:text-4xl font-extrabold font-heading text-white">
-                    Get Weekly Moho Tips & Free Rigs!
-                </h3>
-                <p class="text-purple-200 text-sm md:text-base">
-                    Want easy drawing prompts, downloadable character rigs, and quick Moho animation challenges sent to your inbox? Ask a parent to sign up below!
-                </p>
+        <section id="hack-4" class="bg-brandCard rounded-3xl border border-brandBorder p-6 md:p-8 space-y-6 glow-green transition-all duration-300">
+            <div class="flex flex-col md:flex-row gap-6 items-start justify-between">
+                
+                <div class="space-y-4 flex-1">
+                    <div class="flex items-center gap-3">
+                        <span class="bg-brandGreen text-slate-950 font-heading font-black text-xl w-10 h-10 rounded-2xl flex items-center justify-center shadow-lg">4</span>
+                        <h3 class="text-2xl md:text-3xl font-heading font-bold text-white">Target Bones (Floor Pin Lock)</h3>
+                    </div>
 
-                <form id="tipsForm" class="flex flex-col sm:flex-row gap-3 pt-3 max-w-lg mx-auto">
-                    <input type="email" id="parentEmail" required placeholder="Enter Parent's Email Address" class="px-5 py-3.5 rounded-2xl bg-slate-900/90 text-white border border-purple-500/50 focus:outline-none focus:border-brandYellow text-sm flex-grow">
-                    <button type="submit" class="bg-gradient-to-r from-brandYellow to-amber-400 hover:from-yellow-300 hover:to-amber-300 text-slate-950 font-heading font-bold px-7 py-3.5 rounded-2xl shadow-lg bouncy-hover whitespace-nowrap text-sm">
-                        Send Me Tips!
+                    <p class="text-purple-200 text-sm md:text-base leading-relaxed">
+                        Stop your character's feet from sliding like they are ice skating! Use a <b>Target Pin</b> to stick their feet firmly to the ground so knees bend automatically when they squat or walk!
+                    </p>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+                        <div class="bg-purple-950/60 p-3.5 rounded-2xl border border-purple-800/40 text-xs text-purple-200 flex items-start gap-2.5">
+                            <i class="fa-solid fa-circle-check text-brandGreen text-base mt-0.5"></i>
+                            <span><b>Why it helps:</b> Locks feet to the ground automatically so walk animations look natural!</span>
+                        </div>
+                        <div class="bg-purple-950/60 p-3.5 rounded-2xl border border-purple-800/40 text-xs text-purple-200 flex items-start gap-2.5">
+                            <i class="fa-solid fa-lightbulb text-brandYellow text-base mt-0.5"></i>
+                            <span><b>Kid Tip:</b> Essential for jumping, dancing, crouching, and walking cycles!</span>
+                        </div>
+                    </div>
+
+                    <button onclick="toggleTutorial('tutorial-4')" class="bg-gradient-to-r from-brandGreen to-emerald-600 hover:from-emerald-500 hover:to-teal-500 text-slate-950 font-heading font-bold px-6 py-3 rounded-2xl transition flex items-center gap-2 shadow-lg bouncy-hover text-sm">
+                        <i class="fa-solid fa-book-open"></i> Learn How To Do It! (11 Easy Steps)
                     </button>
-                </form>
 
-                <div id="successMsg" class="hidden bg-brandGreen/20 border border-brandGreen/50 text-brandGreen font-bold p-4 rounded-2xl text-sm flex items-center justify-center gap-2">
-                    <i class="fa-solid fa-circle-check text-xl"></i>
-                    <span>Awesome! Check your inbox for your first free Moho shortcut sheet!</span>
+                    <div id="tutorial-4" class="hidden p-5 md:p-6 bg-[#120d24] rounded-2xl border border-brandGreen/60 space-y-4 transition-all">
+                        <div class="flex items-center justify-between border-b border-green-800/40 pb-3">
+                            <h4 class="text-brandYellow font-heading font-bold text-lg flex items-center gap-2">
+                                <i class="fa-solid fa-graduation-cap text-xl"></i> Hack 4: Step-by-Step Floor Pin Lock Setup
+                            </h4>
+                            <span class="bg-emerald-950 text-brandGreen text-xs px-3 py-1 rounded-full border border-emerald-800/50">11 Easy Steps</span>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2 text-xs md:text-sm">
+                            <div class="bg-slate-900/80 p-3 rounded-xl border border-green-950 flex items-start gap-3">
+                                <span class="bg-brandGreen text-slate-950 font-bold w-6 h-6 rounded-full flex items-center justify-center text-xs shrink-0 mt-0.5">1</span>
+                                <div><b class="text-white block font-heading">Draw Leg Skeleton</b> Draw thigh bone and leg bone using <b>Add Bone Tool</b> (<kbd class="bg-slate-800 px-1 rounded border border-slate-700">A</kbd>).</div>
+                            </div>
+                            <div class="bg-slate-900/80 p-3 rounded-xl border border-green-950 flex items-start gap-3">
+                                <span class="bg-brandGreen text-slate-950 font-bold w-6 h-6 rounded-full flex items-center justify-center text-xs shrink-0 mt-0.5">2</span>
+                                <div><b class="text-white block font-heading">Add Floor Target Pin</b> Draw a tiny extra bone right below foot pointing down. Name it "Floor Pin".</div>
+                            </div>
+                            <div class="bg-slate-900/80 p-3 rounded-xl border border-green-950 flex items-start gap-3">
+                                <span class="bg-brandGreen text-slate-950 font-bold w-6 h-6 rounded-full flex items-center justify-center text-xs shrink-0 mt-0.5">3</span>
+                                <div><b class="text-white block font-heading">Unlink Floor Pin</b> Click Floor Pin bone and press <kbd class="bg-slate-800 px-1 rounded border border-slate-700">P</kbd>, then click empty space so it floats free.</div>
+                            </div>
+                            <div class="bg-slate-900/80 p-3 rounded-xl border border-green-950 flex items-start gap-3">
+                                <span class="bg-brandGreen text-slate-950 font-bold w-6 h-6 rounded-full flex items-center justify-center text-xs shrink-0 mt-0.5">4</span>
+                                <div><b class="text-white block font-heading">Select Lower Leg</b> Click lower leg bone with <b>Select Bone Tool</b> (<kbd class="bg-slate-800 px-1 rounded border border-slate-700">B</kbd>).</div>
+                            </div>
+                            <div class="bg-slate-900/80 p-3 rounded-xl border border-green-950 flex items-start gap-3">
+                                <span class="bg-brandGreen text-slate-950 font-bold w-6 h-6 rounded-full flex items-center justify-center text-xs shrink-0 mt-0.5">5</span>
+                                <div><b class="text-white block font-heading">Open Bone Rules</b> Press <kbd class="bg-slate-800 px-1 rounded border border-slate-700">Ctrl + F</kbd> to open <b>Bone Constraints</b> (Bone Rules window).</div>
+                            </div>
+                            <div class="bg-slate-900/80 p-3 rounded-xl border border-green-950 flex items-start gap-3">
+                                <span class="bg-brandGreen text-slate-950 font-bold w-6 h-6 rounded-full flex items-center justify-center text-xs shrink-0 mt-0.5">6</span>
+                                <div><b class="text-white block font-heading">Find Target Menu</b> Look for drop-down menu labeled <b>Target Bone</b>.</div>
+                            </div>
+                            <div class="bg-slate-900/80 p-3 rounded-xl border border-green-950 flex items-start gap-3">
+                                <span class="bg-brandGreen text-slate-950 font-bold w-6 h-6 rounded-full flex items-center justify-center text-xs shrink-0 mt-0.5">7</span>
+                                <div><b class="text-white block font-heading">Pick Floor Pin</b> Choose "Floor Pin" from list to tie leg tip to target bone.</div>
+                            </div>
+                            <div class="bg-slate-900/80 p-3 rounded-xl border border-green-950 flex items-start gap-3">
+                                <span class="bg-brandGreen text-slate-950 font-bold w-6 h-6 rounded-full flex items-center justify-center text-xs shrink-0 mt-0.5">8</span>
+                                <div><b class="text-white block font-heading">Close Popup</b> Click <b>Close</b> to save bone target connection.</div>
+                            </div>
+                            <div class="bg-slate-900/80 p-3 rounded-xl border border-green-950 flex items-start gap-3">
+                                <span class="bg-brandGreen text-slate-950 font-bold w-6 h-6 rounded-full flex items-center justify-center text-xs shrink-0 mt-0.5">9</span>
+                                <div><b class="text-white block font-heading">Grab Body Bone</b> Use <b>Manipulate Bones Tool</b> (<kbd class="bg-slate-800 px-1 rounded border border-slate-700">Z</kbd>) and drag body down.</div>
+                            </div>
+                            <div class="bg-slate-900/80 p-3 rounded-xl border border-green-950 flex items-start gap-3">
+                                <span class="bg-brandGreen text-slate-950 font-bold w-6 h-6 rounded-full flex items-center justify-center text-xs shrink-0 mt-0.5">10</span>
+                                <div><b class="text-white block font-heading">Watch Leg Bend!</b> The foot stays glued to ground while knee bends automatically!</div>
+                            </div>
+                            <div class="bg-slate-900/80 p-3 rounded-xl border border-green-950 flex items-start gap-3">
+                                <span class="bg-brandGreen text-slate-950 font-bold w-6 h-6 rounded-full flex items-center justify-center text-xs shrink-0 mt-0.5">11</span>
+                                <div><b class="text-white block font-heading">Zero Foot Slipping!</b> Your character can now jump and step cleanly without sliding!</div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="flex justify-center items-center gap-6 text-xs text-purple-300 pt-2">
-                    <span class="flex items-center gap-1.5"><i class="fa-solid fa-check text-brandGreen"></i> 100% Free</span>
-                    <span class="flex items-center gap-1.5"><i class="fa-solid fa-check text-brandGreen"></i> Kid Safe</span>
-                    <span class="flex items-center gap-1.5"><i class="fa-solid fa-check text-brandGreen"></i> No Spam</span>
+                <div class="w-full md:w-80 bg-[#110d22] p-5 rounded-2xl border border-purple-800/60 flex flex-col items-center gap-4 text-center">
+                    <span class="text-xs font-heading font-bold uppercase tracking-wider text-brandGreen bg-emerald-950/80 px-3 py-1 rounded-full border border-emerald-800/50">
+                        <i class="fa-solid fa-anchor"></i> Interactive Leg Pin
+                    </span>
+
+                    <div class="w-full h-44 bg-slate-900/80 rounded-xl border border-purple-900/50 flex items-center justify-center relative overflow-hidden">
+                        <svg width="200" height="150" viewBox="0 0 200 150">
+                            <!-- Floor Line -->
+                            <line x1="20" y1="130" x2="180" y2="130" stroke="#10b981" stroke-width="4" stroke-dasharray="6,4" />
+                            <text x="100" y="145" fill="#10b981" font-size="10" text-anchor="middle" font-weight="bold">LOCKED GROUND LINE</text>
+
+                            <!-- Body (Moves up and down) -->
+                            <g id="targetBodyGroup" transform="translate(0, 0)">
+                                <rect x="80" y="25" width="40" height="40" rx="12" fill="#8b5cf6" />
+                                <circle cx="100" cy="15" r="12" fill="#fde68a" />
+                                
+                                <!-- Dynamic Leg Bend -->
+                                <path id="leftLegPath" d="M 85 65 L 70 95 L 75 130" fill="transparent" stroke="#00f0ff" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" />
+                                <path id="rightLegPath" d="M 115 65 L 130 95 L 125 130" fill="transparent" stroke="#ff2a85" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" />
+
+                                <!-- Locked Feet -->
+                                <ellipse cx="75" cy="130" rx="10" ry="4" fill="#ffc837" />
+                                <ellipse cx="125" cy="130" rx="10" ry="4" fill="#ffc837" />
+                            </g>
+                        </svg>
+                    </div>
+
+                    <div class="w-full space-y-2">
+                        <div class="flex justify-between text-xs text-purple-300 font-medium">
+                            <span>Push Body Down (Crouch):</span>
+                            <span id="squatVal" class="text-brandGreen font-bold">0px</span>
+                        </div>
+                        <input id="squatSlider" type="range" min="0" max="30" value="0" class="w-full h-2.5 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-brandGreen">
+                        <p class="text-[11px] text-purple-400">Notice feet stay stuck to ground while knees bend!</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="hack-5" class="bg-brandCard rounded-3xl border border-brandBorder p-6 md:p-8 space-y-6 glow-orange transition-all duration-300">
+            <div class="flex flex-col md:flex-row gap-6 items-start justify-between">
+                
+                <div class="space-y-4 flex-1">
+                    <div class="flex items-center gap-3">
+                        <span class="bg-brandOrange text-white font-heading font-black text-xl w-10 h-10 rounded-2xl flex items-center justify-center shadow-lg">5</span>
+                        <h3 class="text-2xl md:text-3xl font-heading font-bold text-white">Switch Layers (Talking Mouth Swapper)</h3>
+                    </div>
+
+                    <p class="text-purple-200 text-sm md:text-base leading-relaxed">
+                        Group all your character's mouth shapes (Smile, O-mouth, Happy, Surprised) into a single <b>Switch Magic Folder</b>! Click any mouth shape to swap drawings in 1 second when talking.
+                    </p>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+                        <div class="bg-purple-950/60 p-3.5 rounded-2xl border border-purple-800/40 text-xs text-purple-200 flex items-start gap-2.5">
+                            <i class="fa-solid fa-circle-check text-brandGreen text-base mt-0.5"></i>
+                            <span><b>Why it helps:</b> Swap complex mouth and hand drawings instantly with no re-drawing!</span>
+                        </div>
+                        <div class="bg-purple-950/60 p-3.5 rounded-2xl border border-purple-800/40 text-xs text-purple-200 flex items-start gap-2.5">
+                            <i class="fa-solid fa-lightbulb text-brandYellow text-base mt-0.5"></i>
+                            <span><b>Kid Tip:</b> Great for character dialogue, hand gestures (fist, wave, peace sign), and eye states!</span>
+                        </div>
+                    </div>
+
+                    <button onclick="toggleTutorial('tutorial-5')" class="bg-gradient-to-r from-brandOrange to-amber-600 hover:from-orange-500 hover:to-amber-500 text-white font-heading font-bold px-6 py-3 rounded-2xl transition flex items-center gap-2 shadow-lg bouncy-hover text-sm">
+                        <i class="fa-solid fa-book-open"></i> Learn How To Do It! (11 Easy Steps)
+                    </button>
+
+                    <div id="tutorial-5" class="hidden p-5 md:p-6 bg-[#120d24] rounded-2xl border border-brandOrange/60 space-y-4 transition-all">
+                        <div class="flex items-center justify-between border-b border-orange-800/40 pb-3">
+                            <h4 class="text-brandYellow font-heading font-bold text-lg flex items-center gap-2">
+                                <i class="fa-solid fa-graduation-cap text-xl"></i> Hack 5: Step-by-Step Switch Folder Setup
+                            </h4>
+                            <span class="bg-orange-950 text-brandOrange text-xs px-3 py-1 rounded-full border border-orange-800/50">11 Easy Steps</span>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2 text-xs md:text-sm">
+                            <div class="bg-slate-900/80 p-3 rounded-xl border border-orange-950 flex items-start gap-3">
+                                <span class="bg-brandOrange text-white font-bold w-6 h-6 rounded-full flex items-center justify-center text-xs shrink-0 mt-0.5">1</span>
+                                <div><b class="text-white block font-heading">Open Layers Window</b> Click <code class="bg-purple-950 px-1.5 py-0.5 rounded text-brandCyan">+</code> button at top of Layers panel.</div>
+                            </div>
+                            <div class="bg-slate-900/80 p-3 rounded-xl border border-orange-950 flex items-start gap-3">
+                                <span class="bg-brandOrange text-white font-bold w-6 h-6 rounded-full flex items-center justify-center text-xs shrink-0 mt-0.5">2</span>
+                                <div><b class="text-white block font-heading">Select Switch Folder</b> Choose <b>Switch</b> (Magic Swapper Folder) from drop-down menu.</div>
+                            </div>
+                            <div class="bg-slate-900/80 p-3 rounded-xl border border-orange-950 flex items-start gap-3">
+                                <span class="bg-brandOrange text-white font-bold w-6 h-6 rounded-full flex items-center justify-center text-xs shrink-0 mt-0.5">3</span>
+                                <div><b class="text-white block font-heading">Name Your Folder</b> Type "Mouth Shapes" as folder name.</div>
+                            </div>
+                            <div class="bg-slate-900/80 p-3 rounded-xl border border-orange-950 flex items-start gap-3">
+                                <span class="bg-brandOrange text-white font-bold w-6 h-6 rounded-full flex items-center justify-center text-xs shrink-0 mt-0.5">4</span>
+                                <div><b class="text-white block font-heading">Add First Mouth Layer</b> Inside folder, add new Drawing Layer named "Smile".</div>
+                            </div>
+                            <div class="bg-slate-900/80 p-3 rounded-xl border border-orange-950 flex items-start gap-3">
+                                <span class="bg-brandOrange text-white font-bold w-6 h-6 rounded-full flex items-center justify-center text-xs shrink-0 mt-0.5">5</span>
+                                <div><b class="text-white block font-heading">Draw Big Smile</b> Draw a happy smiling mouth shape on this layer.</div>
+                            </div>
+                            <div class="bg-slate-900/80 p-3 rounded-xl border border-orange-950 flex items-start gap-3">
+                                <span class="bg-brandOrange text-white font-bold w-6 h-6 rounded-full flex items-center justify-center text-xs shrink-0 mt-0.5">6</span>
+                                <div><b class="text-white block font-heading">Duplicate Layer</b> Right-click "Smile" layer and click <b>Duplicate Layer</b> (copy layer).</div>
+                            </div>
+                            <div class="bg-slate-900/80 p-3 rounded-xl border border-orange-950 flex items-start gap-3">
+                                <span class="bg-brandOrange text-white font-bold w-6 h-6 rounded-full flex items-center justify-center text-xs shrink-0 mt-0.5">7</span>
+                                <div><b class="text-white block font-heading">Rename & Change Mouth</b> Rename to "O-Mouth" and adjust drawing into a open round "O".</div>
+                            </div>
+                            <div class="bg-slate-900/80 p-3 rounded-xl border border-orange-950 flex items-start gap-3">
+                                <span class="bg-brandOrange text-white font-bold w-6 h-6 rounded-full flex items-center justify-center text-xs shrink-0 mt-0.5">8</span>
+                                <div><b class="text-white block font-heading">Add More Mouths</b> Repeat steps to create "Surprised" and "Talking" mouth drawings!</div>
+                            </div>
+                            <div class="bg-slate-900/80 p-3 rounded-xl border border-orange-950 flex items-start gap-3">
+                                <span class="bg-brandOrange text-white font-bold w-6 h-6 rounded-full flex items-center justify-center text-xs shrink-0 mt-0.5">9</span>
+                                <div><b class="text-white block font-heading">Go To Timeline Frame 1</b> Move playback needle to frame 1 on timeline.</div>
+                            </div>
+                            <div class="bg-slate-900/80 p-3 rounded-xl border border-orange-950 flex items-start gap-3">
+                                <span class="bg-brandOrange text-white font-bold w-6 h-6 rounded-full flex items-center justify-center text-xs shrink-0 mt-0.5">10</span>
+                                <div><b class="text-white block font-heading">Right-Click Folder</b> Right-click "Mouth Shapes" folder on timeline and choose any mouth!</div>
+                            </div>
+                            <div class="bg-slate-900/80 p-3 rounded-xl border border-orange-950 flex items-start gap-3">
+                                <span class="bg-brandOrange text-white font-bold w-6 h-6 rounded-full flex items-center justify-center text-xs shrink-0 mt-0.5">11</span>
+                                <div><b class="text-white block font-heading">Instant Talking!</b> Switch mouth shapes along timeline—your character talks smoothly!</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="w-full md:w-80 bg-[#110d22] p-5 rounded-2xl border border-purple-800/60 flex flex-col items-center gap-4 text-center">
+                    <span class="text-xs font-heading font-bold uppercase tracking-wider text-brandOrange bg-orange-950/80 px-3 py-1 rounded-full border border-orange-800/50">
+                        <i class="fa-solid fa-comments"></i> Interactive Mouth Swapper
+                    </span>
+
+                    <div class="w-full h-44 bg-slate-900/80 rounded-xl border border-purple-900/50 flex items-center justify-center relative overflow-hidden">
+                        <svg width="200" height="150" viewBox="0 0 200 150">
+                            <circle cx="100" cy="70" r="45" fill="#fbcfe8" />
+                            <circle cx="82" cy="60" r="6" fill="#1e1b4b" />
+                            <circle cx="118" cy="60" r="6" fill="#1e1b4b" />
+                            
+                            <!-- Dynamic Mouth Shapes -->
+                            <path id="mouthSmile" class="mouth-shape" d="M 85 85 Q 100 100 115 85" fill="transparent" stroke="#1e1b4b" stroke-width="4" stroke-linecap="round" />
+                            <circle id="mouthO" class="mouth-shape hidden" cx="100" cy="90" r="10" fill="#1e1b4b" />
+                            <path id="mouthOpen" class="mouth-shape hidden" d="M 85 85 Q 100 115 115 85 Z" fill="#f43f5e" stroke="#1e1b4b" stroke-width="3" />
+                            <rect id="mouthSurprise" class="mouth-shape hidden" x="90" y="80" width="20" height="22" rx="10" fill="#1e1b4b" />
+                        </svg>
+                    </div>
+
+                    <div class="w-full space-y-2">
+                        <p class="text-xs text-purple-300 font-medium">Click a mouth shape pose:</p>
+                        <div class="grid grid-cols-2 gap-2">
+                            <button onclick="setMouth('mouthSmile')" class="bg-slate-800 hover:bg-purple-900 text-white font-heading text-xs py-2 rounded-xl border border-purple-700/50 flex items-center justify-center gap-1.5">
+                                😊 Smile
+                            </button>
+                            <button onclick="setMouth('mouthO')" class="bg-slate-800 hover:bg-purple-900 text-white font-heading text-xs py-2 rounded-xl border border-purple-700/50 flex items-center justify-center gap-1.5">
+                                😮 "O" Shape
+                            </button>
+                            <button onclick="setMouth('mouthOpen')" class="bg-slate-800 hover:bg-purple-900 text-white font-heading text-xs py-2 rounded-xl border border-purple-700/50 flex items-center justify-center gap-1.5">
+                                😀 Open Talk
+                            </button>
+                            <button onclick="setMouth('mouthSurprise')" class="bg-slate-800 hover:bg-purple-900 text-white font-heading text-xs py-2 rounded-xl border border-purple-700/50 flex items-center justify-center gap-1.5">
+                                😲 Surprised
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="hack-6" class="bg-brandCard rounded-3xl border border-brandBorder p-6 md:p-8 space-y-6 glow-purple transition-all duration-300">
+            <div class="flex flex-col md:flex-row gap-6 items-start justify-between">
+                
+                <div class="space-y-4 flex-1">
+                    <div class="flex items-center gap-3">
+                        <span class="bg-brandPurple text-white font-heading font-black text-xl w-10 h-10 rounded-2xl flex items-center justify-center shadow-lg">6</span>
+                        <h3 class="text-2xl md:text-3xl font-heading font-bold text-white">Actions Library (Save Your Best Moves)</h3>
+                    </div>
+
+                    <p class="text-purple-200 text-sm md:text-base leading-relaxed">
+                        Animate a wave, jump, or dance move once and save it into your <b>Actions Secret Box</b>! Paste that exact movement anytime anywhere in your cartoon with 1 simple click!
+                    </p>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+                        <div class="bg-purple-950/60 p-3.5 rounded-2xl border border-purple-800/40 text-xs text-purple-200 flex items-start gap-2.5">
+                            <i class="fa-solid fa-circle-check text-brandGreen text-base mt-0.5"></i>
+                            <span><b>Why it helps:</b> Reuse complex walking, waving, and dancing animations infinitely!</span>
+                        </div>
+                        <div class="bg-purple-950/60 p-3.5 rounded-2xl border border-purple-800/40 text-xs text-purple-200 flex items-start gap-2.5">
+                            <i class="fa-solid fa-lightbulb text-brandYellow text-base mt-0.5"></i>
+                            <span><b>Kid Tip:</b> Build your own reusable library of cool superhero moves and victory dances!</span>
+                        </div>
+                    </div>
+
+                    <button onclick="toggleTutorial('tutorial-6')" class="bg-gradient-to-r from-brandPurple to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-heading font-bold px-6 py-3 rounded-2xl transition flex items-center gap-2 shadow-lg bouncy-hover text-sm">
+                        <i class="fa-solid fa-book-open"></i> Learn How To Do It! (11 Easy Steps)
+                    </button>
+
+                    <div id="tutorial-6" class="hidden p-5 md:p-6 bg-[#120d24] rounded-2xl border border-brandPurple/60 space-y-4 transition-all">
+                        <div class="flex items-center justify-between border-b border-purple-800/40 pb-3">
+                            <h4 class="text-brandYellow font-heading font-bold text-lg flex items-center gap-2">
+                                <i class="fa-solid fa-graduation-cap text-xl"></i> Hack 6: Step-by-Step Action Library Setup
+                            </h4>
+                            <span class="bg-purple-950 text-brandPurple text-xs px-3 py-1 rounded-full border border-purple-800/50">11 Easy Steps</span>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2 text-xs md:text-sm">
+                            <div class="bg-slate-900/80 p-3 rounded-xl border border-purple-950 flex items-start gap-3">
+                                <span class="bg-brandPurple text-white font-bold w-6 h-6 rounded-full flex items-center justify-center text-xs shrink-0 mt-0.5">1</span>
+                                <div><b class="text-white block font-heading">Open Actions Window</b> Press <kbd class="bg-slate-800 px-1 rounded border border-slate-700">Ctrl + K</kbd> to open <b>Actions Panel</b>.</div>
+                            </div>
+                            <div class="bg-slate-900/80 p-3 rounded-xl border border-purple-950 flex items-start gap-3">
+                                <span class="bg-brandPurple text-white font-bold w-6 h-6 rounded-full flex items-center justify-center text-xs shrink-0 mt-0.5">2</span>
+                                <div><b class="text-white block font-heading">Click "New Action"</b> Click top right menu icon inside Actions window and pick <b>New Action</b>.</div>
+                            </div>
+                            <div class="bg-slate-900/80 p-3 rounded-xl border border-purple-950 flex items-start gap-3">
+                                <span class="bg-brandPurple text-white font-bold w-6 h-6 rounded-full flex items-center justify-center text-xs shrink-0 mt-0.5">3</span>
+                                <div><b class="text-white block font-heading">Name Your Move</b> Type a fun move title like "Happy Hand Wave".</div>
+                            </div>
+                            <div class="bg-slate-900/80 p-3 rounded-xl border border-purple-950 flex items-start gap-3">
+                                <span class="bg-brandPurple text-white font-bold w-6 h-6 rounded-full flex items-center justify-center text-xs shrink-0 mt-0.5">4</span>
+                                <div><b class="text-white block font-heading">Enter Action Space</b> Notice timeline turns red—you are inside secret motion editor!</div>
+                            </div>
+                            <div class="bg-slate-900/80 p-3 rounded-xl border border-purple-950 flex items-start gap-3">
+                                <span class="bg-brandPurple text-white font-bold w-6 h-6 rounded-full flex items-center justify-center text-xs shrink-0 mt-0.5">5</span>
+                                <div><b class="text-white block font-heading">Animate Hand Wave</b> Move arm left and right between frame 1 and 20.</div>
+                            </div>
+                            <div class="bg-slate-900/80 p-3 rounded-xl border border-purple-950 flex items-start gap-3">
+                                <span class="bg-brandPurple text-white font-bold w-6 h-6 rounded-full flex items-center justify-center text-xs shrink-0 mt-0.5">6</span>
+                                <div><b class="text-white block font-heading">Return to Main Show</b> Double-click <b>Main Timeline</b> at top of Actions list.</div>
+                            </div>
+                            <div class="bg-slate-900/80 p-3 rounded-xl border border-purple-950 flex items-start gap-3">
+                                <span class="bg-brandPurple text-white font-bold w-6 h-6 rounded-full flex items-center justify-center text-xs shrink-0 mt-0.5">7</span>
+                                <div><b class="text-white block font-heading">Choose Timeline Frame</b> Click frame 40 where you want character to wave.</div>
+                            </div>
+                            <div class="bg-slate-900/80 p-3 rounded-xl border border-purple-950 flex items-start gap-3">
+                                <span class="bg-brandPurple text-white font-bold w-6 h-6 rounded-full flex items-center justify-center text-xs shrink-0 mt-0.5">8</span>
+                                <div><b class="text-white block font-heading">Select Saved Move</b> Single-click "Happy Hand Wave" inside Actions window.</div>
+                            </div>
+                            <div class="bg-slate-900/80 p-3 rounded-xl border border-purple-950 flex items-start gap-3">
+                                <span class="bg-brandPurple text-white font-bold w-6 h-6 rounded-full flex items-center justify-center text-xs shrink-0 mt-0.5">9</span>
+                                <div><b class="text-white block font-heading">Click "Insert Reference"</b> Click <b>Insert Reference</b> button at top of panel.</div>
+                            </div>
+                            <div class="bg-slate-900/80 p-3 rounded-xl border border-purple-950 flex items-start gap-3">
+                                <span class="bg-brandPurple text-white font-bold w-6 h-6 rounded-full flex items-center justify-center text-xs shrink-0 mt-0.5">10</span>
+                                <div><b class="text-white block font-heading">Instant Motion Paste!</b> Your complete hand wave animation appears instantly on timeline!</div>
+                            </div>
+                            <div class="bg-slate-900/80 p-3 rounded-xl border border-purple-950 flex items-start gap-3">
+                                <span class="bg-brandPurple text-white font-bold w-6 h-6 rounded-full flex items-center justify-center text-xs shrink-0 mt-0.5">11</span>
+                                <div><b class="text-white block font-heading">Reuse 100 Times!</b> Paste your wave anywhere in your cartoon with zero extra drawing work!</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="w-full md:w-80 bg-[#110d22] p-5 rounded-2xl border border-purple-800/60 flex flex-col items-center gap-4 text-center">
+                    <span class="text-xs font-heading font-bold uppercase tracking-wider text-brandPurple bg-purple-950/80 px-3 py-1 rounded-full border border-purple-800/50">
+                        <i class="fa-solid fa-clapperboard"></i> Action Motion Player
+                    </span>
+
+                    <div class="w-full h-44 bg-slate-900/80 rounded-xl border border-purple-900/50 flex items-center justify-center relative overflow-hidden">
+                        <svg width="200" height="150" viewBox="0 0 200 150">
+                            <rect x="75" y="80" width="50" height="50" rx="15" fill="#8b5cf6" />
+                            <circle cx="100" cy="50" r="22" fill="#fde68a" />
+                            <circle cx="92" cy="46" r="3" fill="#1e1b4b" />
+                            <circle cx="108" cy="46" r="3" fill="#1e1b4b" />
+                            <path d="M 94 58 Q 100 65 106 58" fill="transparent" stroke="#1e1b4b" stroke-width="2" />
+                            
+                            <!-- Animated Arm Wave -->
+                            <g id="actionArm" transform="translate(120, 85)">
+                                <rect x="0" y="-6" width="35" height="12" rx="6" fill="#00f0ff" />
+                                <circle cx="35" cy="0" r="7" fill="#fde68a" />
+                            </g>
+                        </svg>
+                    </div>
+
+                    <div class="w-full space-y-2">
+                        <p class="text-xs text-purple-300 font-medium">Click a saved action move to play:</p>
+                        <button id="playWaveBtn" class="w-full bg-gradient-to-r from-brandPurple to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-heading font-bold py-2.5 rounded-xl shadow bouncy-hover text-xs flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-play"></i> Replay Action: "Happy Hand Wave"
+                        </button>
+                    </div>
                 </div>
             </div>
         </section>
 
     </main>
 
-    <footer class="max-w-6xl mx-auto px-4 text-center text-purple-400 text-xs border-t border-brandBorder/40 pt-8 mt-6">
-        <p>© 2026 Moho Kid Academy. Created for young animators & storytellers everywhere!</p>
+    <footer class="max-w-6xl mx-auto px-4 text-center text-purple-400 text-xs border-t border-brandBorder/40 pt-8 mt-6 space-y-2">
+        <p>© 2026 SCG Anime Pro. Created for young animators & storytellers everywhere!</p>
+        <p class="text-base font-heading font-bold text-brandYellow flex items-center justify-center gap-2 pt-1">
+            <i class="fa-solid fa-heart text-brandPink"></i> Made by Damiru Minthula
+        </p>
     </footer>
 
     <script>
-        /* Toggle expandable step-by-step guides */
+        function scrollToTopic(id) {
+            const el = document.getElementById(id);
+            if (el) {
+                el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+
         function toggleTutorial(id) {
             const el = document.getElementById(id);
             if (el) {
@@ -596,7 +892,6 @@
             }
         }
 
-        /* Change Shared Style outfit color live */
         function changeStyle(colorHex) {
             const elements = document.querySelectorAll('.outfit-style');
             elements.forEach(el => {
@@ -604,10 +899,15 @@
             });
         }
 
-        /* Safely attach event listeners once DOM is ready */
+        function setMouth(mouthId) {
+            const mouths = document.querySelectorAll('.mouth-shape');
+            mouths.forEach(m => m.classList.add('hidden'));
+            const target = document.getElementById(mouthId);
+            if (target) target.classList.remove('hidden');
+        }
+
         document.addEventListener('DOMContentLoaded', () => {
-            
-            // 1. Smart Bone Slider Logic
+            // Hack 1 Slider
             const slider = document.getElementById('smartBoneSlider');
             const dialVal = document.getElementById('dialVal');
             const smilePath = document.getElementById('smilePath');
@@ -619,22 +919,15 @@
                     const val = parseInt(e.target.value, 10);
                     if (dialVal) dialVal.textContent = val + '°';
 
-                    // Curve smile dynamically
                     if (smilePath) {
                         const curveY = 85 + (val * 0.18);
                         smilePath.setAttribute('d', `M 95 75 Q 110 ${curveY} 125 75`);
                     }
 
-                    // Eye Wink dynamic state
                     if (rightEye) {
-                        if (val > 65) {
-                            rightEye.setAttribute('r', '1');
-                        } else {
-                            rightEye.setAttribute('r', '6');
-                        }
+                        rightEye.setAttribute('r', val > 65 ? '1' : '6');
                     }
 
-                    // Rotate forearm bone
                     if (forearm) {
                         const angle = val * 0.95;
                         forearm.setAttribute('transform', `rotate(${-angle}, 30, 0)`);
@@ -642,7 +935,7 @@
                 });
             }
 
-            // 2. Dynamic Bone Physics Jump Trigger
+            // Hack 2 Physics Jump
             const jumpBtn = document.getElementById('jumpBtn');
             const physicsChar = document.getElementById('physicsChar');
             const ponytail = document.getElementById('ponytail');
@@ -651,7 +944,7 @@
                 jumpBtn.addEventListener('click', () => {
                     if (physicsChar) {
                         physicsChar.classList.remove('animate-jump');
-                        void physicsChar.offsetWidth; // Force CSS reflow
+                        void physicsChar.offsetWidth;
                         physicsChar.classList.add('animate-jump');
                     }
 
@@ -664,14 +957,45 @@
                 });
             }
 
-            // 3. Newsletter Form Handler
-            const tipsForm = document.getElementById('tipsForm');
-            if (tipsForm) {
-                tipsForm.addEventListener('submit', (e) => {
-                    e.preventDefault();
-                    const msg = document.getElementById('successMsg');
-                    tipsForm.classList.add('hidden');
-                    if (msg) msg.classList.remove('hidden');
+            // Hack 4 Target Pin Squat Slider
+            const squatSlider = document.getElementById('squatSlider');
+            const squatVal = document.getElementById('squatVal');
+            const targetBodyGroup = document.getElementById('targetBodyGroup');
+            const leftLegPath = document.getElementById('leftLegPath');
+            const rightLegPath = document.getElementById('rightLegPath');
+
+            if (squatSlider) {
+                squatSlider.addEventListener('input', (e) => {
+                    const offset = parseInt(e.target.value, 10);
+                    if (squatVal) squatVal.textContent = offset + 'px';
+
+                    if (targetBodyGroup) {
+                        targetBodyGroup.setAttribute('transform', `translate(0, ${offset})`);
+                    }
+
+                    // Bend leg knees outwards while feet stay anchored at Y=130
+                    if (leftLegPath && rightLegPath) {
+                        const kneeLeftX = 70 - offset * 0.6;
+                        const kneeRightX = 130 + offset * 0.6;
+                        leftLegPath.setAttribute('d', `M 85 65 L ${kneeLeftX} ${95 + offset * 0.2} L 75 ${130 - offset}`);
+                        rightLegPath.setAttribute('d', `M 115 65 L ${kneeRightX} ${95 + offset * 0.2} L 125 ${130 - offset}`);
+                    }
+                });
+            }
+
+            // Hack 6 Wave Action Button
+            const playWaveBtn = document.getElementById('playWaveBtn');
+            const actionArm = document.getElementById('actionArm');
+
+            if (playWaveBtn && actionArm) {
+                playWaveBtn.addEventListener('click', () => {
+                    actionArm.classList.remove('animate-wave');
+                    void actionArm.offsetWidth;
+                    actionArm.classList.add('animate-wave');
+
+                    setTimeout(() => {
+                        actionArm.classList.remove('animate-wave');
+                    }, 2500);
                 });
             }
         });
