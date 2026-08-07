@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Moho Switch Layers Interactive Workshop | SCG Anime Pro</title>
+    <title>SCG Anime Pro | Moho Animation Masterclass for Kids</title>
 
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -74,6 +74,25 @@
             transform: translateY(-2px) scale(1.02);
         }
 
+        /* Bone strength field animation */
+        @keyframes auraPulse {
+            0% { opacity: 0.3; }
+            50% { opacity: 0.6; }
+            100% { opacity: 0.3; }
+        }
+        .bone-aura {
+            animation: auraPulse 2s infinite ease-in-out;
+        }
+
+        .joint-handle {
+            cursor: grab;
+            transition: r 0.15s ease, fill 0.15s ease;
+        }
+        .joint-handle:hover {
+            r: 9;
+            cursor: grabbing;
+        }
+
         /* Custom Scrollbar */
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: #0e0c1a; }
@@ -83,8 +102,8 @@
 </head>
 <body class="min-h-screen flex flex-col justify-between antialiased selection:bg-brandPink selection:text-white pb-8">
 
-    <header class="bg-[#151128]/90 border-b border-mohoBorder sticky top-0 z-50 backdrop-blur-md">
-        <div class="max-w-6xl mx-auto px-4 py-3.5 flex flex-wrap justify-between items-center gap-3">
+    <header class="bg-[#151128]/95 border-b border-mohoBorder sticky top-0 z-50 backdrop-blur-md shadow-xl">
+        <div class="max-w-6xl mx-auto px-4 py-3 flex flex-wrap justify-between items-center gap-4">
             <div class="flex items-center gap-3">
                 <div class="bg-gradient-to-tr from-brandPink to-brandYellow p-2.5 rounded-2xl shadow-lg transform -rotate-3 text-slate-950">
                     <i class="fa-solid fa-wand-magic-sparkles text-xl"></i>
@@ -97,326 +116,530 @@
                 </div>
             </div>
 
-            <div class="flex items-center gap-3">
-                <a href="#tutorialSection" class="bg-mohoPanel hover:bg-mohoHeader text-xs text-mohoAccent font-heading font-semibold px-3 py-1.5 rounded-full border border-mohoBorder transition flex items-center gap-1.5">
-                    <i class="fa-solid fa-book-open"></i> Step-by-Step Guide
-                </a>
-                <a href="#simulatorSection" class="bg-mohoAccent text-slate-950 hover:bg-cyan-300 text-xs font-heading font-bold px-3 py-1.5 rounded-full shadow transition flex items-center gap-1.5">
-                    <i class="fa-solid fa-gamepad"></i> Interactive Studio
-                </a>
+            <!-- TOPIC SELECTION DROPDOWN -->
+            <div class="flex items-center gap-2 bg-mohoPanel p-1.5 rounded-2xl border border-mohoAccent/50 shadow-inner w-full sm:w-auto">
+                <label for="topicSelect" class="text-xs font-heading font-bold text-brandYellow pl-2 flex items-center gap-1.5 shrink-0">
+                    <i class="fa-solid fa-graduation-cap text-mohoAccent"></i> Select Lesson Topic:
+                </label>
+                <select id="topicSelect" onchange="switchTopic(this.value)" class="bg-slate-950 text-mohoAccent text-xs font-heading font-bold py-2 px-3 rounded-xl border border-mohoBorder focus:outline-none focus:border-mohoAccent w-full cursor-pointer hover:bg-slate-900 transition">
+                    <option value="topic2" selected>🦴 Topic 1: Multi-Layer Stickman & Bone Rigging (Interactive)</option>
+                    <option value="topic1">✨ Topic 2: Switch Layers (Mouth Lip-Sync Studio)</option>
+                </select>
             </div>
         </div>
     </header>
 
-    <main class="max-w-6xl mx-auto px-4 py-6 space-y-10 flex-grow w-full">
+    <main class="max-w-6xl mx-auto px-4 py-6 space-y-8 flex-grow w-full">
 
-        <section class="bg-gradient-to-r from-mohoPanel to-[#201a38] p-6 md:p-8 rounded-3xl border border-mohoBorder/80 space-y-4 relative overflow-hidden shadow-xl">
-            <div class="absolute -top-12 -right-12 w-44 h-44 bg-mohoAccent/10 rounded-full blur-3xl pointer-events-none"></div>
-            <div class="flex items-center gap-2">
-                <span class="bg-mohoAccent/20 border border-mohoAccent/40 text-mohoAccent font-heading font-bold text-xs uppercase tracking-widest px-3.5 py-1 rounded-full">
-                    ✨ Animation Magic Trick #1
-                </span>
-                <span class="bg-brandPink/20 border border-brandPink/40 text-brandPink font-heading font-bold text-xs px-3 py-1 rounded-full">
-                    Easy Level
-                </span>
-            </div>
-            <h2 class="text-3xl md:text-4xl font-heading font-bold text-white">
-                Mastering <span class="text-brandYellow">Switch Layers</span> in Moho
-            </h2>
-            <p class="text-purple-200 text-sm md:text-base leading-relaxed max-w-4xl">
-                Imagine you have a magic deck of picture cards stored in a single folder. One card shows a <b>Smile 😊</b>, one shows an <b>"O" mouth 😮</b>, another shows a <b>Surprise 😲</b>, and another shows a <b>Talking Mouth 🗣️</b>. A <b>Switch Layer</b> lets you pick which card is visible with <b>1 click</b>! It is the secret trick professional studios use for mouth talking (lip sync), eye blinks, and hand shapes!
-            </p>
-        </section>
-
-        <!-- SECTION 1: DETAILED COMPREHENSIVE GUIDE (ENABLE ALL STEPS) -->
-        <section id="tutorialSection" class="bg-mohoPanel p-6 md:p-8 rounded-3xl border border-mohoBorder space-y-6 shadow-xl">
-            <div class="border-b border-mohoBorder pb-4 flex flex-col md:flex-row md:items-center justify-between gap-2">
-                <div>
-                    <h3 class="font-heading font-bold text-2xl text-white flex items-center gap-2">
-                        <i class="fa-solid fa-list-check text-brandYellow"></i> 📖 Complete How-To Guide (All Steps Unlocked)
-                    </h3>
-                    <p class="text-xs text-purple-300 mt-1">Read through each step below to learn how Moho Switch Layers work, then try it in the simulator below!</p>
-                </div>
-                <span class="bg-brandGreen/20 text-brandGreen font-heading text-xs font-bold px-3 py-1.5 rounded-full border border-brandGreen/40 w-fit">
-                    <i class="fa-solid fa-lock-open mr-1"></i> All 5 Steps Active
-                </span>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-
-                <!-- STEP 1 -->
-                <div class="p-4 rounded-2xl bg-slate-900/90 border border-mohoAccent/70 hover:border-mohoAccent transition space-y-2 shadow-lg">
-                    <div class="flex items-center justify-between">
-                        <span class="bg-mohoAccent text-slate-950 font-bold px-3 py-1 rounded-full text-xs font-heading flex items-center gap-1.5">
-                            <span class="w-5 h-5 bg-slate-950 text-mohoAccent rounded-full flex items-center justify-center text-[10px]">1</span>
-                            Open New Layer Menu
-                        </span>
-                        <span class="text-[11px] font-mono text-purple-300 bg-slate-800 px-2 py-0.5 rounded border border-purple-800">Moho Layers Window</span>
-                    </div>
-                    <h4 class="font-heading font-bold text-base text-white">Click the "+" New Layer Button</h4>
-                    <p class="text-xs text-purple-200 leading-relaxed">
-                        Look at the <b>Layers Panel</b> on the right side of Moho. At the top left of the panel, click the button marked with a glowing <b><code class="bg-mohoHeader text-mohoAccent px-1.5 py-0.5 rounded font-bold">+</code> (New Layer)</b> icon.
-                    </p>
-                    <div class="bg-purple-950/60 p-2.5 rounded-xl border border-purple-800/50 text-[11px] text-purple-300 flex items-start gap-2">
-                        <i class="fa-solid fa-lightbulb text-brandYellow text-sm mt-0.5 shrink-0"></i>
-                        <span><b>Pro Tip:</b> You can also go to the top screen menu and click <b>Layer &gt; New Layer</b>!</span>
-                    </div>
-                </div>
-
-                <!-- STEP 2 -->
-                <div class="p-4 rounded-2xl bg-slate-900/90 border border-mohoAccent/70 hover:border-mohoAccent transition space-y-2 shadow-lg">
-                    <div class="flex items-center justify-between">
-                        <span class="bg-brandPink text-white font-bold px-3 py-1 rounded-full text-xs font-heading flex items-center gap-1.5">
-                            <span class="w-5 h-5 bg-white text-brandPink rounded-full flex items-center justify-center text-[10px]">2</span>
-                            Select Layer Type
-                        </span>
-                        <span class="text-[11px] font-mono text-purple-300 bg-slate-800 px-2 py-0.5 rounded border border-purple-800">Dropdown List</span>
-                    </div>
-                    <h4 class="font-heading font-bold text-base text-white">Choose "Switch" Folder</h4>
-                    <p class="text-xs text-purple-200 leading-relaxed">
-                        A menu will pop up showing options like <i>Vector</i>, <i>Bone</i>, and <i>Group</i>. Click on <b>Switch</b> (it has a double-arrow icon 🔁). This creates a special magic folder!
-                    </p>
-                    <div class="bg-purple-950/60 p-2.5 rounded-xl border border-purple-800/50 text-[11px] text-purple-300 flex items-start gap-2">
-                        <i class="fa-solid fa-star text-brandYellow text-sm mt-0.5 shrink-0"></i>
-                        <span><b>What it does:</b> A Switch folder automatically hides all drawings inside except for the ONE drawing you select!</span>
-                    </div>
-                </div>
-
-                <!-- STEP 3 -->
-                <div class="p-4 rounded-2xl bg-slate-900/90 border border-mohoAccent/70 hover:border-mohoAccent transition space-y-2 shadow-lg">
-                    <div class="flex items-center justify-between">
-                        <span class="bg-brandYellow text-slate-950 font-bold px-3 py-1 rounded-full text-xs font-heading flex items-center gap-1.5">
-                            <span class="w-5 h-5 bg-slate-950 text-brandYellow rounded-full flex items-center justify-center text-[10px]">3</span>
-                            Name Folder
-                        </span>
-                        <span class="text-[11px] font-mono text-purple-300 bg-slate-800 px-2 py-0.5 rounded border border-purple-800">Organization</span>
-                    </div>
-                    <h4 class="font-heading font-bold text-base text-white">Give Your Switch Folder a Name</h4>
-                    <p class="text-xs text-purple-200 leading-relaxed">
-                        Type a clear name like <b>"Mouth Shapes"</b>, <b>"Eye Blinks"</b>, or <b>"Hand Gestures"</b>. Good names keep your Moho project tidy when you build bigger cartoon characters!
-                    </p>
-                    <div class="bg-purple-950/60 p-2.5 rounded-xl border border-purple-800/50 text-[11px] text-purple-300 flex items-start gap-2">
-                        <i class="fa-solid fa-tag text-mohoAccent text-sm mt-0.5 shrink-0"></i>
-                        <span><b>Moho Naming Tip:</b> Always use plural names like "Mouths" so you remember it holds multiple drawings inside!</span>
-                    </div>
-                </div>
-
-                <!-- STEP 4 -->
-                <div class="p-4 rounded-2xl bg-slate-900/90 border border-mohoAccent/70 hover:border-mohoAccent transition space-y-2 shadow-lg">
-                    <div class="flex items-center justify-between">
-                        <span class="bg-brandPurple text-white font-bold px-3 py-1 rounded-full text-xs font-heading flex items-center gap-1.5">
-                            <span class="w-5 h-5 bg-white text-brandPurple rounded-full flex items-center justify-center text-[10px]">4</span>
-                            Add Sub-Drawings
-                        </span>
-                        <span class="text-[11px] font-mono text-purple-300 bg-slate-800 px-2 py-0.5 rounded border border-purple-800">Vector Layers</span>
-                    </div>
-                    <h4 class="font-heading font-bold text-base text-white">Drag Vector Drawings Inside the Switch Folder</h4>
-                    <p class="text-xs text-purple-200 leading-relaxed">
-                        Create vector layers for each mouth shape (e.g., <i>Smile</i>, <i>O-Mouth</i>, <i>Talk</i>, <i>Surprise</i>). Drag and drop these drawings directly <b>INSIDE</b> your new Switch Folder.
-                    </p>
-                    <div class="bg-purple-950/60 p-2.5 rounded-xl border border-purple-800/50 text-[11px] text-purple-300 flex items-start gap-2">
-                        <i class="fa-solid fa-folder-tree text-brandPink text-sm mt-0.5 shrink-0"></i>
-                        <span><b>Check alignment:</b> Make sure all drawings are aligned to the middle of your character's face!</span>
-                    </div>
-                </div>
-
-                <!-- STEP 5 -->
-                <div class="md:col-span-2 p-4 rounded-2xl bg-gradient-to-r from-slate-900 to-purple-950 border border-brandGreen/80 hover:border-brandGreen transition space-y-2 shadow-lg">
-                    <div class="flex items-center justify-between">
-                        <span class="bg-brandGreen text-slate-950 font-bold px-3 py-1 rounded-full text-xs font-heading flex items-center gap-1.5">
-                            <span class="w-5 h-5 bg-slate-950 text-brandGreen rounded-full flex items-center justify-center text-[10px]">5</span>
-                            Swap & Animate
-                        </span>
-                        <span class="text-[11px] font-mono text-brandGreen bg-slate-900 px-2 py-0.5 rounded border border-brandGreen/40">Timeline Animation</span>
-                    </div>
-                    <h4 class="font-heading font-bold text-base text-white">Right-Click or Select Shapes to Swap Instantly!</h4>
-                    <p class="text-xs text-purple-200 leading-relaxed">
-                        When you are on your animation timeline, simply <b>Right-Click</b> on the Switch Folder (or click a mouth in the layer list). Moho will instantly switch the character's mouth on screen!
-                    </p>
-                    <div class="bg-slate-950/80 p-3 rounded-xl border border-brandGreen/30 text-xs text-purple-200 flex items-center justify-between flex-wrap gap-2">
-                        <span><b>🎉 You are now ready!</b> Try every single step yourself in the interactive simulator below!</span>
-                        <a href="#simulatorSection" class="bg-brandGreen text-slate-950 font-heading font-bold px-3.5 py-1.5 rounded-lg hover:bg-emerald-400 transition text-xs">
-                            Jump to Simulator ↓
-                        </a>
-                    </div>
-                </div>
-
-            </div>
-        </section>
-
-        <!-- SECTION 2: SEPARATE INTERACTIVE SIMULATOR PLAYGROUND -->
-        <section id="simulatorSection" class="bg-mohoDark rounded-3xl border-2 border-mohoAccent shadow-2xl overflow-hidden glow-cyan space-y-0">
+        <!-- =================================================================== -->
+        <!-- TOPIC 2: STICKMAN & BONES WORKSHOP (MULTI-LAYER SETUP & DRAGGABLE BONES) -->
+        <!-- =================================================================== -->
+        <div id="topic2View" class="space-y-10">
             
-            <!-- Simulator Top Bar -->
-            <div class="bg-mohoHeader px-5 py-3 border-b border-mohoBorder flex flex-wrap items-center justify-between gap-2">
-                <div class="flex items-center gap-3">
-                    <div class="flex gap-1.5">
-                        <span class="w-3.5 h-3.5 rounded-full bg-rose-500 inline-block"></span>
-                        <span class="w-3.5 h-3.5 rounded-full bg-amber-500 inline-block"></span>
-                        <span class="w-3.5 h-3.5 rounded-full bg-emerald-500 inline-block"></span>
-                    </div>
-                    <span class="text-xs font-mono text-purple-300 font-semibold flex items-center gap-2">
-                        <i class="fa-solid fa-desktop text-mohoAccent"></i> 🕹️ Interactive Moho Studio Sandbox
+            <section class="bg-gradient-to-r from-mohoPanel via-[#1e1738] to-purple-950 p-6 md:p-8 rounded-3xl border border-mohoBorder space-y-4 relative overflow-hidden shadow-2xl">
+                <div class="absolute -top-12 -right-12 w-48 h-48 bg-brandYellow/10 rounded-full blur-3xl pointer-events-none"></div>
+                <div class="flex items-center gap-2 flex-wrap">
+                    <span class="bg-brandYellow/20 border border-brandYellow/40 text-brandYellow font-heading font-bold text-xs uppercase tracking-widest px-3.5 py-1 rounded-full flex items-center gap-1.5">
+                        <i class="fa-solid fa-bone"></i> Master Animation Lesson
+                    </span>
+                    <span class="bg-mohoAccent/20 border border-mohoAccent/40 text-mohoAccent font-heading font-bold text-xs px-3 py-1 rounded-full">
+                        Easy Multi-Layer Rigging
                     </span>
                 </div>
-                <div class="flex items-center gap-2">
-                    <span class="text-[11px] bg-mohoAccent/20 text-mohoAccent px-3 py-1 rounded-full font-bold border border-mohoAccent/40">
-                        Practice Mode Active
+                <h2 class="text-3xl md:text-4xl font-heading font-bold text-white">
+                    How to Draw & Rig a <span class="text-brandYellow">Multi-Layer Stickman</span> with Bones
+                </h2>
+                <p class="text-purple-200 text-sm md:text-base leading-relaxed max-w-4xl">
+                    Think of your stickman like a <b>paper cutout doll</b>! If you draw the head, body, arms, and legs all on separate drawing layers inside one magic <b>Bone Folder</b>, you can move each part cleanly without stretching the rest of the character!
+                </p>
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2 text-xs font-mono">
+                    <div class="bg-slate-900/80 p-2.5 rounded-xl border border-mohoAccent/50 flex items-center gap-2">
+                        <span class="w-6 h-6 rounded-full bg-mohoAccent text-slate-950 font-bold flex items-center justify-center text-xs">1</span>
+                        <span>👤 Head Layer</span>
+                    </div>
+                    <div class="bg-slate-900/80 p-2.5 rounded-xl border border-brandPink/50 flex items-center gap-2">
+                        <span class="w-6 h-6 rounded-full bg-brandPink text-white font-bold flex items-center justify-center text-xs">2</span>
+                        <span>👕 Spine/Torso Layer</span>
+                    </div>
+                    <div class="bg-slate-900/80 p-2.5 rounded-xl border border-brandYellow/50 flex items-center gap-2">
+                        <span class="w-6 h-6 rounded-full bg-brandYellow text-slate-950 font-bold flex items-center justify-center text-xs">3</span>
+                        <span>💪 Arm Layers (L/R)</span>
+                    </div>
+                    <div class="bg-slate-900/80 p-2.5 rounded-xl border border-brandGreen/50 flex items-center gap-2">
+                        <span class="w-6 h-6 rounded-full bg-brandGreen text-slate-950 font-bold flex items-center justify-center text-xs">4</span>
+                        <span>🦵 Leg Layers (L/R)</span>
+                    </div>
+                </div>
+            </section>
+
+            <section id="simulatorSection2" class="bg-mohoDark rounded-3xl border-2 border-brandYellow shadow-2xl overflow-hidden glow-yellow space-y-0">
+                <div class="bg-mohoHeader px-5 py-3 border-b border-mohoBorder flex flex-wrap items-center justify-between gap-2">
+                    <span class="text-xs font-mono text-purple-300 font-semibold flex items-center gap-2">
+                        <i class="fa-solid fa-gamepad text-brandYellow"></i> 🕹️ Interactive Drag & Play Bone Studio
                     </span>
-                    <button onclick="resetWorkshop()" class="bg-slate-800 hover:bg-slate-700 text-purple-200 text-xs font-heading font-bold px-3 py-1 rounded-lg border border-mohoBorder transition flex items-center gap-1">
+                    <div class="flex items-center gap-2">
+                        <span class="text-[11px] bg-brandYellow/20 text-brandYellow px-2.5 py-0.5 rounded-full font-bold border border-brandYellow/40">
+                            🎮 Interactive Puppet
+                        </span>
+                        <button onclick="resetStickmanStudio()" class="bg-slate-800 hover:bg-slate-700 text-purple-200 text-xs font-heading font-bold px-3 py-1 rounded-lg border border-mohoBorder transition flex items-center gap-1">
+                            <i class="fa-solid fa-rotate-left text-mohoAccent"></i> Reset Pose
+                        </button>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-12 min-h-[480px]">
+                    <!-- Left Canvas Stickman Viewport -->
+                    <div class="lg:col-span-7 bg-[#070510] p-5 flex flex-col justify-between border-b lg:border-b-0 lg:border-r border-mohoBorder relative min-h-[380px] select-none">
+                        <div class="w-full flex justify-between items-center text-xs font-mono border-b border-purple-950 pb-2">
+                            <span class="text-purple-300 flex items-center gap-1.5"><i class="fa-solid fa-bone text-brandYellow"></i> Stickman Multi-Layer Canvas</span>
+                            <span id="activeToolLabel" class="text-mohoAccent font-bold bg-purple-950 px-2.5 py-1 rounded border border-purple-800">
+                                Mode: Interactive Dragging (Z)
+                            </span>
+                        </div>
+
+                        <!-- Instruction helper banner on top of canvas -->
+                        <div class="absolute top-12 left-1/2 -translate-x-1/2 bg-purple-950/90 border border-mohoAccent/60 text-mohoAccent text-[11px] px-3.5 py-1 rounded-full shadow-lg font-heading font-bold flex items-center gap-2 pointer-events-none z-10">
+                            <i class="fa-solid fa-hand-pointer animate-bounce"></i> Click & Drag any glowing joint dot to animate live!
+                        </div>
+
+                        <!-- SVG Interactive Stickman Drawing & Skeleton Overlay -->
+                        <div class="my-auto py-6 flex justify-center items-center relative cursor-crosshair">
+                            <svg id="stickmanSvg" width="320" height="290" viewBox="0 0 320 290" class="drop-shadow-2xl overflow-visible">
+                                
+                                <!-- BONE STRENGTH GLOWING AURA FIELD -->
+                                <g id="boneAuraGroup" class="bone-aura transition-opacity duration-300">
+                                    <circle id="auraHead" cx="160" cy="55" r="45" fill="#f43f5e" opacity="0.25" stroke="#f43f5e" stroke-dasharray="3,3" />
+                                    <ellipse id="auraSpine" cx="160" cy="115" rx="30" ry="40" fill="#f43f5e" opacity="0.25" stroke="#f43f5e" stroke-dasharray="3,3" />
+                                    <line id="auraLeftArm" x1="160" y1="95" x2="100" y2="105" stroke="#f43f5e" stroke-width="40" stroke-linecap="round" opacity="0.25" />
+                                    <line id="auraRightArm" x1="160" y1="95" x2="220" y2="80" stroke="#f43f5e" stroke-width="40" stroke-linecap="round" opacity="0.25" />
+                                    <line id="auraLeftLeg" x1="160" y1="150" x2="120" y2="220" stroke="#f43f5e" stroke-width="35" stroke-linecap="round" opacity="0.25" />
+                                    <line id="auraRightLeg" x1="160" y1="150" x2="200" y2="220" stroke="#f43f5e" stroke-width="35" stroke-linecap="round" opacity="0.25" />
+                                </g>
+
+                                <!-- MULTI-LAYER STICKMAN DRAWINGS (SEPARATE GROUP PER BODY PART) -->
+                                <g id="stickmanBodyGroup">
+                                    <!-- LAYER 1: TORSO / SPINE -->
+                                    <g id="layerTorso">
+                                        <line id="stickSpine" x1="160" y1="77" x2="160" y2="150" stroke="#ff2a85" stroke-width="7" stroke-linecap="round" />
+                                    </g>
+
+                                    <!-- LAYER 2: HEAD -->
+                                    <g id="layerHead">
+                                        <circle id="stickHead" cx="160" cy="55" r="22" fill="#00f0ff" stroke="#ffffff" stroke-width="3" />
+                                        <circle id="stickEyeL" cx="152" cy="50" r="2.5" fill="#0e0c1a" />
+                                        <circle id="stickEyeR" cx="168" cy="50" r="2.5" fill="#0e0c1a" />
+                                        <path id="stickSmile" d="M 152 60 Q 160 68 168 60" fill="none" stroke="#0e0c1a" stroke-width="2.5" stroke-linecap="round" />
+                                    </g>
+
+                                    <!-- LAYER 3: LEFT ARM -->
+                                    <g id="layerLeftArm">
+                                        <line id="stickLeftArm" x1="160" y1="95" x2="100" y2="115" stroke="#ffc837" stroke-width="5" stroke-linecap="round" />
+                                    </g>
+
+                                    <!-- LAYER 4: RIGHT ARM -->
+                                    <g id="layerRightArm">
+                                        <line id="stickRightArm" x1="160" y1="95" x2="220" y2="70" stroke="#ffc837" stroke-width="5" stroke-linecap="round" />
+                                    </g>
+
+                                    <!-- LAYER 5: LEFT LEG -->
+                                    <g id="layerLeftLeg">
+                                        <line id="stickLeftLeg" x1="160" y1="150" x2="125" y2="220" stroke="#10b981" stroke-width="5" stroke-linecap="round" />
+                                    </g>
+
+                                    <!-- LAYER 6: RIGHT LEG -->
+                                    <g id="layerRightLeg">
+                                        <line id="stickRightLeg" x1="160" y1="150" x2="195" y2="220" stroke="#10b981" stroke-width="5" stroke-linecap="round" />
+                                    </g>
+                                </g>
+
+                                <!-- SKELETON BONES OVERLAY (BONE POLYGONS & PINS) -->
+                                <g id="skeletonBonesGroup">
+                                    <!-- Spine Bone -->
+                                    <polygon id="polySpine" points="160,150 156,110 160,80 164,110" fill="#ff2a85" opacity="0.8" stroke="#ffffff" stroke-width="1.5" />
+                                    <!-- Head Bone -->
+                                    <polygon id="polyHead" points="160,77 157,55 160,35 163,55" fill="#00f0ff" opacity="0.8" stroke="#ffffff" stroke-width="1.5" />
+
+                                    <!-- Left Arm Bone -->
+                                    <polygon id="polyLeftArm" points="160,95 130,103 100,115 130,107" fill="#ffc837" opacity="0.8" stroke="#ffffff" stroke-width="1.5" />
+                                    <!-- Right Arm Bone -->
+                                    <polygon id="polyRightArm" points="160,95 190,80 220,70 190,88" fill="#ffc837" opacity="0.8" stroke="#ffffff" stroke-width="1.5" />
+
+                                    <!-- Left Leg Bone -->
+                                    <polygon id="polyLeftLeg" points="160,150 140,185 125,220 145,185" fill="#10b981" opacity="0.8" stroke="#ffffff" stroke-width="1.5" />
+                                    <!-- Right Leg Bone -->
+                                    <polygon id="polyRightLeg" points="160,150 180,185 195,220 175,185" fill="#10b981" opacity="0.8" stroke="#ffffff" stroke-width="1.5" />
+
+                                    <!-- Root Hips Pin -->
+                                    <circle cx="160" cy="150" r="5" fill="#ffffff" stroke="#0e0c1a" stroke-width="2" />
+                                    <circle cx="160" cy="95" r="5" fill="#ffffff" stroke="#0e0c1a" stroke-width="2" />
+
+                                    <!-- INTERACTIVE DRAGGABLE BONE JOINT HANDLES -->
+                                    <g id="draggableJoints">
+                                        <!-- Head Handle -->
+                                        <circle id="jointHead" class="joint-handle pulse-target" cx="160" cy="35" r="7.5" fill="#00f0ff" stroke="#ffffff" stroke-width="2.5" />
+                                        <!-- Right Hand Handle -->
+                                        <circle id="jointRightHand" class="joint-handle pulse-target" cx="220" cy="70" r="7.5" fill="#ffc837" stroke="#ffffff" stroke-width="2.5" />
+                                        <!-- Left Hand Handle -->
+                                        <circle id="jointLeftHand" class="joint-handle pulse-target" cx="100" cy="115" r="7.5" fill="#ffc837" stroke="#ffffff" stroke-width="2.5" />
+                                        <!-- Right Foot Handle -->
+                                        <circle id="jointRightFoot" class="joint-handle pulse-target" cx="195" cy="220" r="7.5" fill="#10b981" stroke="#ffffff" stroke-width="2.5" />
+                                        <!-- Left Foot Handle -->
+                                        <circle id="jointLeftFoot" class="joint-handle pulse-target" cx="125" cy="220" r="7.5" fill="#10b981" stroke="#ffffff" stroke-width="2.5" />
+                                    </g>
+                                </g>
+
+                            </svg>
+                        </div>
+
+                        <!-- Pose Preset Quick Buttons -->
+                        <div class="space-y-2 pt-2 border-t border-purple-950">
+                            <span class="text-xs text-purple-300 block">Quick Action Poses:</span>
+                            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                                <button onclick="setStickmanPose('wave')" class="bg-slate-800 hover:bg-slate-700 border border-mohoBorder hover:border-brandYellow text-white text-xs py-1.5 px-2 rounded-xl transition font-heading flex items-center justify-center gap-1">
+                                    👋 Wave Arm
+                                </button>
+                                <button onclick="setStickmanPose('star')" class="bg-slate-800 hover:bg-slate-700 border border-mohoBorder hover:border-mohoAccent text-white text-xs py-1.5 px-2 rounded-xl transition font-heading flex items-center justify-center gap-1">
+                                    ⭐ Star Jump
+                                </button>
+                                <button onclick="setStickmanPose('kick')" class="bg-slate-800 hover:bg-slate-700 border border-mohoBorder hover:border-brandPink text-white text-xs py-1.5 px-2 rounded-xl transition font-heading flex items-center justify-center gap-1">
+                                    ⚽ High Kick
+                                </button>
+                                <button onclick="setStickmanPose('dance')" class="bg-slate-800 hover:bg-slate-700 border border-mohoBorder hover:border-brandGreen text-white text-xs py-1.5 px-2 rounded-xl transition font-heading flex items-center justify-center gap-1">
+                                    🕺 Disco Dance
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="lg:col-span-5 bg-mohoPanel p-5 flex flex-col justify-between space-y-5">
+                        
+                        <!-- Tool Selector Radio Buttons -->
+                        <div class="space-y-3">
+                            <span class="text-xs font-heading font-bold text-brandYellow flex items-center gap-1.5">
+                                <i class="fa-solid fa-toolbox text-mohoAccent"></i> Choose Active Moho Bone Tool:
+                            </span>
+
+                            <div class="space-y-2">
+                                <button onclick="selectMohoTool('manipulate')" id="toolBtnManipulate" class="w-full text-left p-2.5 rounded-xl border bg-purple-950 border-mohoAccent text-mohoAccent font-bold text-xs font-mono flex items-center justify-between shadow">
+                                    <span class="flex items-center gap-2"><i class="fa-solid fa-hand-pointer text-brandYellow"></i> Drag Bones Directly (Key: Z)</span>
+                                    <span class="text-[10px] bg-mohoAccent text-slate-950 px-2 py-0.5 rounded font-bold">Active</span>
+                                </button>
+
+                                <button onclick="selectMohoTool('strength')" id="toolBtnStrength" class="w-full text-left p-2.5 rounded-xl border bg-slate-900 border-purple-900/60 text-purple-200 hover:border-mohoAccent font-bold text-xs font-mono flex items-center justify-between">
+                                    <span class="flex items-center gap-2"><i class="fa-solid fa-burst text-brandPink"></i> Bone Strength Radius (Key: S)</span>
+                                    <span class="text-[10px] bg-slate-800 text-purple-400 px-2 py-0.5 rounded">Select</span>
+                                </button>
+
+                                <button onclick="selectMohoTool('add')" id="toolBtnAdd" class="w-full text-left p-2.5 rounded-xl border bg-slate-900 border-purple-900/60 text-purple-200 hover:border-mohoAccent font-bold text-xs font-mono flex items-center justify-between">
+                                    <span class="flex items-center gap-2"><i class="fa-solid fa-plus-circle text-brandGreen"></i> Add Bone (Key: A)</span>
+                                    <span class="text-[10px] bg-slate-800 text-purple-400 px-2 py-0.5 rounded">Select</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Bone Strength Interactive Slider -->
+                        <div class="bg-slate-900 p-4 rounded-2xl border border-mohoBorder space-y-3">
+                            <div class="flex justify-between items-center text-xs font-heading">
+                                <span class="text-white flex items-center gap-1.5">
+                                    <i class="fa-solid fa-sliders text-brandPink"></i> Bone Strength Radius:
+                                </span>
+                                <span id="strengthValueText" class="text-brandYellow font-mono font-bold bg-purple-950 px-2 py-0.5 rounded border border-purple-800">
+                                    40% (Ideal)
+                                </span>
+                            </div>
+
+                            <input id="boneStrengthSlider" type="range" min="0" max="100" value="40" oninput="updateBoneStrength(this.value)" class="w-full accent-brandPink bg-slate-950 h-2 rounded-lg cursor-pointer">
+
+                            <div id="strengthFeedbackBox" class="text-[11px] text-brandGreen bg-emerald-950/40 p-2.5 rounded-xl border border-brandGreen/40 flex items-start gap-2">
+                                <i class="fa-solid fa-circle-check text-sm shrink-0 mt-0.5"></i>
+                                <span id="strengthFeedbackText"><b>Perfect Strength (40%):</b> Each bone cleanly controls its own separate drawing layer without pulling other limbs!</span>
+                            </div>
+                        </div>
+
+                        <!-- Toggle Options -->
+                        <div class="flex items-center justify-between bg-slate-900 p-3 rounded-xl border border-purple-900/50 text-xs">
+                            <span class="text-purple-200 font-heading">Show Skeleton Bones & Handles:</span>
+                            <button onclick="toggleSkeletonVisibility()" id="toggleBonesBtn" class="bg-brandGreen text-slate-950 font-bold px-3 py-1 rounded-lg text-xs hover:bg-emerald-400 transition">
+                                Visible ON
+                            </button>
+                        </div>
+
+                        <!-- Dynamic Tool Guidance Message -->
+                        <div id="stickmanStatusBox" class="text-[11px] text-purple-200 bg-slate-900/80 p-3 rounded-xl border border-mohoAccent/40 flex items-center gap-2">
+                            <i class="fa-solid fa-lightbulb text-brandYellow text-base shrink-0"></i>
+                            <span id="stickmanStatusText">Click and drag any glowing handle on the canvas stickman to test live bone movement!</span>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+            <section id="stickmanGuideSection" class="bg-mohoPanel p-6 md:p-8 rounded-3xl border border-mohoBorder space-y-6 shadow-xl">
+                <div class="border-b border-mohoBorder pb-4 flex flex-col md:flex-row md:items-center justify-between gap-2">
+                    <div>
+                        <h3 class="font-heading font-bold text-2xl text-white flex items-center gap-2">
+                            <i class="fa-solid fa-book-open-reader text-brandPink"></i> 🦴 Multi-Layer Stickman & Bones Guide (10 Simple Steps)
+                        </h3>
+                        <p class="text-xs text-purple-300 mt-1">Follow these simple steps to draw each body part on its own layer and attach bones easily!</p>
+                    </div>
+                    <span class="bg-brandGreen/20 text-brandGreen font-heading text-xs font-bold px-3 py-1.5 rounded-full border border-brandGreen/40 w-fit">
+                        <i class="fa-solid fa-check-double mr-1"></i> Easy 10-Step Method
+                    </span>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 text-xs">
+
+                    <!-- STEP 1 -->
+                    <div class="p-4 rounded-2xl bg-slate-900/90 border border-mohoAccent/50 hover:border-mohoAccent transition space-y-2 shadow-md">
+                        <div class="flex items-center justify-between">
+                            <span class="bg-mohoAccent text-slate-950 font-bold px-2.5 py-0.5 rounded-full font-heading">Step 1</span>
+                            <span class="text-[10px] bg-slate-800 text-purple-300 px-2 py-0.5 rounded border border-purple-800 font-mono">Bone Folder</span>
+                        </div>
+                        <h4 class="font-heading font-bold text-sm text-white">1. Create Master Bone Folder</h4>
+                        <p class="text-purple-200 leading-relaxed">
+                            Click <b>+ New Layer</b> and select <b>Bone Layer</b>. Name it <b>"Stickman Character"</b>. This folder will hold all drawing layers inside!
+                        </p>
+                    </div>
+
+                    <!-- STEP 2 -->
+                    <div class="p-4 rounded-2xl bg-slate-900/90 border border-mohoAccent/50 hover:border-mohoAccent transition space-y-2 shadow-md">
+                        <div class="flex items-center justify-between">
+                            <span class="bg-brandPink text-white font-bold px-2.5 py-0.5 rounded-full font-heading">Step 2</span>
+                            <span class="text-[10px] bg-slate-800 text-purple-300 px-2 py-0.5 rounded border border-purple-800 font-mono">Layer 1: Head</span>
+                        </div>
+                        <h4 class="font-heading font-bold text-sm text-white">2. Draw Head on "Head Layer"</h4>
+                        <p class="text-purple-200 leading-relaxed">
+                            Create a Vector layer named <b>"Head"</b> inside the bone folder. Draw the face circle, eyes, and smile here!
+                        </p>
+                    </div>
+
+                    <!-- STEP 3 -->
+                    <div class="p-4 rounded-2xl bg-slate-900/90 border border-mohoAccent/50 hover:border-mohoAccent transition space-y-2 shadow-md">
+                        <div class="flex items-center justify-between">
+                            <span class="bg-brandYellow text-slate-950 font-bold px-2.5 py-0.5 rounded-full font-heading">Step 3</span>
+                            <span class="text-[10px] bg-slate-800 text-purple-300 px-2 py-0.5 rounded border border-purple-800 font-mono">Layer 2: Torso</span>
+                        </div>
+                        <h4 class="font-heading font-bold text-sm text-white">3. Draw Body Spine on "Torso Layer"</h4>
+                        <p class="text-purple-200 leading-relaxed">
+                            Create a new Vector layer named <b>"Torso"</b>. Draw the vertical line for the body chest and spine line.
+                        </p>
+                    </div>
+
+                    <!-- STEP 4 -->
+                    <div class="p-4 rounded-2xl bg-slate-900/90 border border-mohoAccent/50 hover:border-mohoAccent transition space-y-2 shadow-md">
+                        <div class="flex items-center justify-between">
+                            <span class="bg-brandPurple text-white font-bold px-2.5 py-0.5 rounded-full font-heading">Step 4</span>
+                            <span class="text-[10px] bg-slate-800 text-purple-300 px-2 py-0.5 rounded border border-purple-800 font-mono">Layer 3 & 4: Arms</span>
+                        </div>
+                        <h4 class="font-heading font-bold text-sm text-white">4. Draw Arms on Separate Arm Layers</h4>
+                        <p class="text-purple-200 leading-relaxed">
+                            Create two separate layers: <b>"Left Arm"</b> and <b>"Right Arm"</b>. Draw straight arm lines on each layer starting from the shoulder!
+                        </p>
+                    </div>
+
+                    <!-- STEP 5 -->
+                    <div class="p-4 rounded-2xl bg-slate-900/90 border border-mohoAccent/50 hover:border-mohoAccent transition space-y-2 shadow-md">
+                        <div class="flex items-center justify-between">
+                            <span class="bg-brandGreen text-slate-950 font-bold px-2.5 py-0.5 rounded-full font-heading">Step 5</span>
+                            <span class="text-[10px] bg-slate-800 text-purple-300 px-2 py-0.5 rounded border border-purple-800 font-mono">Layer 5 & 6: Legs</span>
+                        </div>
+                        <h4 class="font-heading font-bold text-sm text-white">5. Draw Legs on Separate Leg Layers</h4>
+                        <p class="text-purple-200 leading-relaxed">
+                            Create layers named <b>"Left Leg"</b> and <b>"Right Leg"</b>. Draw leg lines down from the waist hip area!
+                        </p>
+                    </div>
+
+                    <!-- STEP 6 -->
+                    <div class="p-4 rounded-2xl bg-slate-900/90 border border-mohoAccent/50 hover:border-mohoAccent transition space-y-2 shadow-md">
+                        <div class="flex items-center justify-between">
+                            <span class="bg-mohoAccent text-slate-950 font-bold px-2.5 py-0.5 rounded-full font-heading">Step 6</span>
+                            <span class="text-[10px] bg-slate-800 text-purple-300 px-2 py-0.5 rounded border border-purple-800 font-mono">Add Bone Tool: A</span>
+                        </div>
+                        <h4 class="font-heading font-bold text-sm text-white">6. Add Spine & Head Bones</h4>
+                        <p class="text-purple-200 leading-relaxed">
+                            Select the Bone Folder, press <b>Key "A"</b> (Add Bone). Click at the waist and drag up to neck (Spine Bone). Drag again from neck to top of head (Head Bone)!
+                        </p>
+                    </div>
+
+                    <!-- STEP 7 -->
+                    <div class="p-4 rounded-2xl bg-slate-900/90 border border-mohoAccent/50 hover:border-mohoAccent transition space-y-2 shadow-md">
+                        <div class="flex items-center justify-between">
+                            <span class="bg-brandPink text-white font-bold px-2.5 py-0.5 rounded-full font-heading">Step 7</span>
+                            <span class="text-[10px] bg-slate-800 text-purple-300 px-2 py-0.5 rounded border border-purple-800 font-mono">Arm & Leg Bones</span>
+                        </div>
+                        <h4 class="font-heading font-bold text-sm text-white">7. Add Limb Bones</h4>
+                        <p class="text-purple-200 leading-relaxed">
+                            Drag bones from shoulder to hand for arms, and hip to foot for legs. Link each arm and leg bone back to the spine bone!
+                        </p>
+                    </div>
+
+                    <!-- STEP 8 -->
+                    <div class="p-4 rounded-2xl bg-slate-900/90 border border-mohoAccent/50 hover:border-mohoAccent transition space-y-2 shadow-md">
+                        <div class="flex items-center justify-between">
+                            <span class="bg-brandYellow text-slate-950 font-bold px-2.5 py-0.5 rounded-full font-heading">Step 8</span>
+                            <span class="text-[10px] bg-slate-800 text-purple-300 px-2 py-0.5 rounded border border-purple-800 font-mono">Bone Strength: S</span>
+                        </div>
+                        <h4 class="font-heading font-bold text-sm text-white">8. Adjust Bone Strength Radius</h4>
+                        <p class="text-purple-200 leading-relaxed">
+                            Press <b>Key "S"</b> and drag left to shrink the glowing red strength bubbles so each bone only influences its own layer!
+                        </p>
+                    </div>
+
+                    <!-- STEP 9 -->
+                    <div class="p-4 rounded-2xl bg-slate-900/90 border border-mohoAccent/50 hover:border-mohoAccent transition space-y-2 shadow-md">
+                        <div class="flex items-center justify-between">
+                            <span class="bg-brandPurple text-white font-bold px-2.5 py-0.5 rounded-full font-heading">Step 9</span>
+                            <span class="text-[10px] bg-slate-800 text-purple-300 px-2 py-0.5 rounded border border-purple-800 font-mono">Flexi-Bind</span>
+                        </div>
+                        <h4 class="font-heading font-bold text-sm text-white">9. Bind Layers to Bones</h4>
+                        <p class="text-purple-200 leading-relaxed">
+                            Select all bones (`Ctrl + A`) and click <b>Bone &gt; Flexi-Bind Layer</b> in the top menu. This glues your drawing lines to the skeleton!
+                        </p>
+                    </div>
+
+                    <!-- STEP 10 -->
+                    <div class="md:col-span-2 lg:col-span-1 p-4 rounded-2xl bg-gradient-to-r from-purple-900 to-slate-900 border border-brandGreen hover:border-emerald-400 transition space-y-2 shadow-md">
+                        <div class="flex items-center justify-between">
+                            <span class="bg-brandGreen text-slate-950 font-bold px-2.5 py-0.5 rounded-full font-heading">Step 10</span>
+                            <span class="text-[10px] bg-slate-900 text-brandGreen px-2 py-0.5 rounded border border-brandGreen/40 font-mono">Manipulate: Z</span>
+                        </div>
+                        <h4 class="font-heading font-bold text-sm text-white">10. Animate Live!</h4>
+                        <p class="text-purple-200 leading-relaxed">
+                            Press <b>Key "Z"</b> (Manipulate Tool) and drag any bone! Your stickman puppet will wave, jump, run, and dance!
+                        </p>
+                    </div>
+
+                </div>
+            </section>
+
+        </div>
+
+
+        <!-- =================================================================== -->
+        <!-- TOPIC 1: SWITCH LAYERS WORKSHOP -->
+        <!-- =================================================================== -->
+        <div id="topic1View" class="hidden space-y-10">
+            
+            <section class="bg-gradient-to-r from-mohoPanel to-[#201a38] p-6 md:p-8 rounded-3xl border border-mohoBorder/80 space-y-4 relative overflow-hidden shadow-xl">
+                <div class="absolute -top-12 -right-12 w-44 h-44 bg-mohoAccent/10 rounded-full blur-3xl pointer-events-none"></div>
+                <div class="flex items-center gap-2">
+                    <span class="bg-mohoAccent/20 border border-mohoAccent/40 text-mohoAccent font-heading font-bold text-xs uppercase tracking-widest px-3.5 py-1 rounded-full">
+                        ✨ Animation Lesson #2
+                    </span>
+                    <span class="bg-brandPink/20 border border-brandPink/40 text-brandPink font-heading font-bold text-xs px-3 py-1 rounded-full">
+                        Switch Layers
+                    </span>
+                </div>
+                <h2 class="text-3xl md:text-4xl font-heading font-bold text-white">
+                    Mastering <span class="text-brandYellow">Switch Layers</span> for Mouth Lip-Sync
+                </h2>
+                <p class="text-purple-200 text-sm md:text-base leading-relaxed max-w-4xl">
+                    Imagine having a magic deck of picture cards stored in a single folder. One card shows a <b>Smile 😊</b>, one shows an <b>"O" mouth 😮</b>, and another shows an <b>Open Mouth 🗣️</b>. A <b>Switch Layer</b> lets you pick which card is visible with <b>1 click</b>!
+                </p>
+            </section>
+
+            <section id="simulatorSection1" class="bg-mohoDark rounded-3xl border-2 border-mohoAccent shadow-2xl overflow-hidden glow-cyan space-y-0">
+                <div class="bg-mohoHeader px-5 py-3 border-b border-mohoBorder flex flex-wrap items-center justify-between gap-2">
+                    <span class="text-xs font-mono text-purple-300 font-semibold flex items-center gap-2">
+                        <i class="fa-solid fa-desktop text-mohoAccent"></i> 🕹️ Switch Layer Interactive Studio
+                    </span>
+                    <button onclick="resetWorkshop1()" class="bg-slate-800 hover:bg-slate-700 text-purple-200 text-xs font-heading font-bold px-3 py-1 rounded-lg border border-mohoBorder transition flex items-center gap-1">
                         <i class="fa-solid fa-rotate-left text-brandYellow"></i> Reset
                     </button>
                 </div>
-            </div>
 
-            <!-- Simulator Work Area Split -->
-            <div class="grid grid-cols-1 lg:grid-cols-12 min-h-[440px]">
-
-                <!-- Simulated Canvas Viewport (Left side) -->
-                <div class="lg:col-span-7 bg-[#090712] p-5 flex flex-col justify-between border-b lg:border-b-0 lg:border-r border-mohoBorder relative min-h-[320px]">
-                    
-                    <div class="w-full flex justify-between items-center text-xs font-mono border-b border-purple-950 pb-2">
-                        <span class="text-purple-300 flex items-center gap-1.5">
-                            <i class="fa-solid fa-eye text-mohoAccent"></i> Character Preview Canvas
-                        </span>
-                        <span id="activeMouthLabel" class="text-brandYellow font-bold bg-purple-950 px-2.5 py-1 rounded border border-purple-800">
-                            Active Shape: Default Line
-                        </span>
-                    </div>
-
-                    <!-- Live Character Canvas SVG -->
-                    <div class="my-auto py-4 flex justify-center items-center">
-                        <svg width="230" height="200" viewBox="0 0 210 190" class="drop-shadow-2xl">
-                            <!-- Hair Back -->
-                            <path d="M 60 70 C 50 10, 160 10, 150 70 Z" fill="#8b5cf6" />
-                            <!-- Head -->
-                            <circle cx="105" cy="95" r="50" fill="#fbcfe8" />
-                            <!-- Eyes -->
-                            <circle cx="85" cy="85" r="7" fill="#1e1b4b" />
-                            <circle cx="125" cy="85" r="7" fill="#1e1b4b" />
-                            <circle cx="87" cy="83" r="2.5" fill="#ffffff" />
-                            <circle cx="127" cy="83" r="2.5" fill="#ffffff" />
-                            <!-- Cheeks -->
-                            <circle cx="72" cy="98" r="8" fill="#f43f5e" opacity="0.3" />
-                            <circle cx="138" cy="98" r="8" fill="#f43f5e" opacity="0.3" />
-
-                            <!-- DYNAMIC MOUTH SHAPES SWITCH LAYER -->
-                            <g id="canvasMouthGroup">
-                                <!-- Default Line when no switch layer created -->
-                                <path id="mouthDefault" class="mouth-layer-item" d="M 92 118 Q 105 122 118 118" fill="transparent" stroke="#1e1b4b" stroke-width="3" stroke-linecap="round" />
-                                
-                                <!-- Switch Layer Mouth Options (Swapped via JS) -->
-                                <path id="mouthSmile" class="mouth-layer-item hidden" d="M 88 112 Q 105 132 122 112 Z" fill="#f43f5e" stroke="#1e1b4b" stroke-width="3" stroke-linejoin="round" />
-                                <circle id="mouthO" class="mouth-layer-item hidden" cx="105" cy="118" r="11" fill="#1e1b4b" />
-                                <path id="mouthTalk" class="mouth-layer-item hidden" d="M 90 112 Q 105 128 120 112 Q 105 106 90 112" fill="#1e1b4b" stroke="#f43f5e" stroke-width="2" />
-                                <rect id="mouthSurprise" class="mouth-layer-item hidden" x="95" y="108" width="20" height="24" rx="10" fill="#1e1b4b" stroke="#ffffff" stroke-width="2" />
-                            </g>
-                        </svg>
-                    </div>
-
-                    <!-- Canvas Animation Controls -->
-                    <div id="canvasControls" class="w-full space-y-2 pt-2 border-t border-purple-950">
-                        <div class="flex items-center justify-between text-xs text-purple-300">
-                            <span>Test Live Animation Cycle:</span>
-                            <span class="text-[11px] text-brandYellow">Simulates Timeline Playback</span>
+                <div class="grid grid-cols-1 lg:grid-cols-12 min-h-[420px]">
+                    <!-- Left Canvas -->
+                    <div class="lg:col-span-7 bg-[#090712] p-5 flex flex-col justify-between border-b lg:border-b-0 lg:border-r border-mohoBorder relative min-h-[300px]">
+                        <div class="w-full flex justify-between items-center text-xs font-mono border-b border-purple-950 pb-2">
+                            <span class="text-purple-300 flex items-center gap-1.5"><i class="fa-solid fa-eye text-mohoAccent"></i> Character Preview</span>
+                            <span id="activeMouthLabel" class="text-brandYellow font-bold bg-purple-950 px-2.5 py-1 rounded border border-purple-800">Active Shape: Default Line</span>
                         </div>
-                        <button onclick="triggerDialogueRoutine()" class="w-full bg-gradient-to-r from-brandPink to-brandYellow text-slate-950 font-heading font-bold text-xs py-2.5 px-3 rounded-xl shadow bouncy-hover flex items-center justify-center gap-2">
-                            <i class="fa-solid fa-play text-sm"></i> Play Animated Lip Sync Routine!
-                        </button>
+
+                        <div class="my-auto py-4 flex justify-center items-center">
+                            <svg width="220" height="180" viewBox="0 0 210 190" class="drop-shadow-2xl">
+                                <path d="M 60 70 C 50 10, 160 10, 150 70 Z" fill="#8b5cf6" />
+                                <circle cx="105" cy="95" r="50" fill="#fbcfe8" />
+                                <circle cx="85" cy="85" r="7" fill="#1e1b4b" />
+                                <circle cx="125" cy="85" r="7" fill="#1e1b4b" />
+                                <circle cx="87" cy="83" r="2.5" fill="#ffffff" />
+                                <circle cx="127" cy="83" r="2.5" fill="#ffffff" />
+                                <circle cx="72" cy="98" r="8" fill="#f43f5e" opacity="0.3" />
+                                <circle cx="138" cy="98" r="8" fill="#f43f5e" opacity="0.3" />
+
+                                <g id="canvasMouthGroup">
+                                    <path id="mouthDefault" class="mouth-layer-item" d="M 92 118 Q 105 122 118 118" fill="transparent" stroke="#1e1b4b" stroke-width="3" stroke-linecap="round" />
+                                    <path id="mouthSmile" class="mouth-layer-item hidden" d="M 88 112 Q 105 132 122 112 Z" fill="#f43f5e" stroke="#1e1b4b" stroke-width="3" stroke-linejoin="round" />
+                                    <circle id="mouthO" class="mouth-layer-item hidden" cx="105" cy="118" r="11" fill="#1e1b4b" />
+                                    <path id="mouthTalk" class="mouth-layer-item hidden" d="M 90 112 Q 105 128 120 112 Q 105 106 90 112" fill="#1e1b4b" stroke="#f43f5e" stroke-width="2" />
+                                    <rect id="mouthSurprise" class="mouth-layer-item hidden" x="95" y="108" width="20" height="24" rx="10" fill="#1e1b4b" stroke="#ffffff" stroke-width="2" />
+                                </g>
+                            </svg>
+                        </div>
+
+                        <div id="canvasControls" class="w-full space-y-2 pt-2 border-t border-purple-950">
+                            <button onclick="triggerDialogueRoutine()" class="w-full bg-gradient-to-r from-brandPink to-brandYellow text-slate-950 font-heading font-bold text-xs py-2.5 px-3 rounded-xl shadow bouncy-hover flex items-center justify-center gap-2">
+                                <i class="fa-solid fa-play text-sm"></i> Play Animated Lip Sync Routine!
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Right Controls -->
+                    <div class="lg:col-span-5 bg-mohoPanel p-4 flex flex-col justify-between space-y-4">
+                        <div class="space-y-4">
+                            <div class="bg-mohoHeader p-2.5 rounded-xl border border-mohoBorder flex items-center justify-between">
+                                <span class="text-xs font-heading font-bold text-white flex items-center gap-2">
+                                    <i class="fa-solid fa-layer-group text-mohoAccent"></i> Simulated Layers
+                                </span>
+                                <div class="relative">
+                                    <button id="addLayerBtn" onclick="toggleLayerMenu()" class="bg-mohoAccent text-slate-950 font-bold px-3 py-1.5 rounded-lg text-xs font-heading shadow hover:bg-cyan-300 transition flex items-center gap-1.5 pulse-target">
+                                        <i class="fa-solid fa-plus"></i> New Layer
+                                    </button>
+                                    <div id="layerDropdown" class="hidden absolute right-0 top-9 w-48 bg-slate-900 border-2 border-mohoAccent rounded-xl shadow-2xl z-30 py-2 text-xs text-purple-200">
+                                        <button id="selectSwitchOption" onclick="createSwitchLayer()" class="w-full text-left px-3 py-2 bg-mohoAccent/20 hover:bg-mohoAccent/40 text-mohoAccent font-bold flex items-center gap-2">
+                                            <i class="fa-solid fa-arrows-repeat text-mohoAccent"></i> Switch Layer 🌟
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="layerNameBox" class="hidden bg-slate-900 p-3 rounded-xl border border-mohoAccent/60 space-y-2">
+                                <label class="text-[11px] font-bold text-brandYellow block">Name Your Switch Folder:</label>
+                                <div class="flex gap-2">
+                                    <input id="layerNameInput" type="text" value="Mouth Shapes" class="bg-slate-950 text-white text-xs px-2.5 py-1.5 rounded-lg border border-purple-800 focus:outline-none focus:border-mohoAccent w-full font-mono">
+                                    <button onclick="confirmLayerName()" class="bg-brandGreen text-slate-950 font-bold px-3 py-1.5 rounded-lg text-xs hover:bg-emerald-400 transition whitespace-nowrap">Save Name</button>
+                                </div>
+                            </div>
+
+                            <div class="space-y-2 text-xs font-mono">
+                                <div id="switchLayerTree" class="hidden space-y-1.5">
+                                    <div class="bg-purple-950/90 p-2.5 rounded-xl border border-mohoAccent text-mohoAccent font-bold flex items-center justify-between shadow">
+                                        <span id="displayFolderName" class="flex items-center gap-2"><i class="fa-solid fa-folder-open text-brandYellow"></i> 📁 Switch: Mouth Shapes</span>
+                                        <span class="text-[10px] bg-mohoAccent text-slate-950 px-1.5 py-0.5 rounded font-bold">Switch</span>
+                                    </div>
+                                    <div id="subLayersContainer" class="pl-4 space-y-1 hidden"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="addDrawingsAction" class="hidden pt-2 border-t border-mohoBorder">
+                            <button onclick="populateSampleMouths()" class="w-full bg-gradient-to-r from-brandPurple to-indigo-600 hover:from-purple-500 text-white font-heading text-xs py-2.5 px-3 rounded-xl shadow bouncy-hover flex items-center justify-center gap-2">
+                                <i class="fa-solid fa-palette text-brandYellow"></i> Add Sample Mouth Drawings
+                            </button>
+                        </div>
+
+                        <div id="statusInstruction" class="text-[11px] text-purple-300 bg-slate-900/60 p-2.5 rounded-xl border border-purple-900/50 flex items-center gap-2">
+                            <i class="fa-solid fa-circle-info text-mohoAccent shrink-0"></i>
+                            <span id="statusText">Click the glowing <b>"+ New Layer"</b> button above to begin!</span>
+                        </div>
                     </div>
                 </div>
-
-                <!-- Simulated Moho Layers Panel (Right side inside studio) -->
-                <div class="lg:col-span-5 bg-mohoPanel p-4 flex flex-col justify-between relative space-y-4">
-                    <div class="space-y-4">
-                        <!-- Layer Panel Header with "+" Button -->
-                        <div class="bg-mohoHeader p-2.5 rounded-xl border border-mohoBorder flex items-center justify-between">
-                            <span class="text-xs font-heading font-bold text-white flex items-center gap-2">
-                                <i class="fa-solid fa-layer-group text-mohoAccent"></i> Simulated Layers
-                            </span>
-
-                            <!-- THE "+" NEW LAYER BUTTON -->
-                            <div class="relative">
-                                <button id="addLayerBtn" onclick="toggleLayerMenu()" class="bg-mohoAccent text-slate-950 font-bold px-3 py-1.5 rounded-lg text-xs font-heading shadow hover:bg-cyan-300 transition flex items-center gap-1.5 pulse-target">
-                                    <i class="fa-solid fa-plus"></i> New Layer
-                                </button>
-
-                                <!-- POPUP DROPDOWN MENU (Simulating Moho Layer Menu) -->
-                                <div id="layerDropdown" class="hidden absolute right-0 top-9 w-48 bg-slate-900 border-2 border-mohoAccent rounded-xl shadow-2xl z-30 py-2 text-xs text-purple-200">
-                                    <div class="px-3 py-1 text-[10px] text-purple-400 font-bold uppercase tracking-wider border-b border-slate-800">Choose Layer Type:</div>
-                                    <button class="w-full text-left px-3 py-1.5 hover:bg-purple-900/50 flex items-center gap-2 text-slate-400 cursor-not-allowed" disabled>
-                                        <i class="fa-solid fa-pen-nib text-brandYellow"></i> Vector Layer
-                                    </button>
-                                    <button class="w-full text-left px-3 py-1.5 hover:bg-purple-900/50 flex items-center gap-2 text-slate-400 cursor-not-allowed" disabled>
-                                        <i class="fa-solid fa-bone text-brandPink"></i> Bone Layer
-                                    </button>
-                                    <!-- THE SWITCH LAYER SELECTOR -->
-                                    <button id="selectSwitchOption" onclick="createSwitchLayer()" class="w-full text-left px-3 py-2 bg-mohoAccent/20 hover:bg-mohoAccent/40 text-mohoAccent font-bold flex items-center gap-2 border-y border-mohoAccent/40">
-                                        <i class="fa-solid fa-arrows-repeat text-mohoAccent"></i> Switch Layer 🌟
-                                    </button>
-                                    <button class="w-full text-left px-3 py-1.5 hover:bg-purple-900/50 flex items-center gap-2 text-slate-400 cursor-not-allowed" disabled>
-                                        <i class="fa-solid fa-folder text-purple-400"></i> Group Folder
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Layer Name Setter Input Area (Appears after creating switch) -->
-                        <div id="layerNameBox" class="hidden bg-slate-900 p-3 rounded-xl border border-mohoAccent/60 space-y-2">
-                            <label class="text-[11px] font-bold text-brandYellow block">Step 3: Name Your Switch Folder:</label>
-                            <div class="flex gap-2">
-                                <input id="layerNameInput" type="text" value="Mouth Shapes" class="bg-slate-950 text-white text-xs px-2.5 py-1.5 rounded-lg border border-purple-800 focus:outline-none focus:border-mohoAccent w-full font-mono">
-                                <button onclick="confirmLayerName()" class="bg-brandGreen text-slate-950 font-bold px-3 py-1.5 rounded-lg text-xs hover:bg-emerald-400 transition whitespace-nowrap">
-                                    Save Name
-                                </button>
-                            </div>
-                        </div>
-
-                        <!-- Simulated Layers List Tree -->
-                        <div class="space-y-2 text-xs font-mono">
-                            <!-- Base Character Layer -->
-                            <div class="bg-slate-900/80 p-2.5 rounded-xl border border-purple-900/40 flex items-center justify-between text-purple-300">
-                                <span class="flex items-center gap-2"><i class="fa-solid fa-face-smile text-pink-400"></i> Character Head</span>
-                                <i class="fa-solid fa-eye text-purple-500 text-[10px]"></i>
-                            </div>
-
-                            <!-- Switch Layer Container (Populates dynamically) -->
-                            <div id="switchLayerTree" class="hidden space-y-1.5">
-                                <!-- Folder Header -->
-                                <div class="bg-purple-950/90 p-2.5 rounded-xl border border-mohoAccent text-mohoAccent font-bold flex items-center justify-between shadow">
-                                    <span id="displayFolderName" class="flex items-center gap-2">
-                                        <i class="fa-solid fa-folder-open text-brandYellow"></i> 📁 Switch: Mouth Shapes
-                                    </span>
-                                    <span class="text-[10px] bg-mohoAccent text-slate-950 px-1.5 py-0.5 rounded font-bold">Switch</span>
-                                </div>
-
-                                <!-- Sub-Mouth Layers List -->
-                                <div id="subLayersContainer" class="pl-4 space-y-1 hidden">
-                                    <!-- Sub items populated by JavaScript -->
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Action Helper Button to Populate Drawings (Step 4) -->
-                    <div id="addDrawingsAction" class="hidden pt-2 border-t border-mohoBorder">
-                        <button onclick="populateSampleMouths()" class="w-full bg-gradient-to-r from-brandPurple to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-heading text-xs py-2.5 px-3 rounded-xl shadow bouncy-hover flex items-center justify-center gap-2">
-                            <i class="fa-solid fa-palette text-brandYellow"></i> Step 4: Add Sample Mouth Drawings
-                        </button>
-                    </div>
-
-                    <div id="statusInstruction" class="text-[11px] text-purple-300 bg-slate-900/60 p-2.5 rounded-xl border border-purple-900/50 flex items-center gap-2">
-                        <i class="fa-solid fa-circle-info text-mohoAccent shrink-0"></i>
-                        <span id="statusText">Click the glowing <b>"+ New Layer"</b> button above to begin!</span>
-                    </div>
-                </div>
-
-            </div>
-        </section>
+            </section>
+        </div>
 
     </main>
 
-    <footer class="max-w-6xl mx-auto px-4 text-center text-purple-400 text-xs border-t border-mohoBorder/60 pt-6 mt-8 space-y-2">
+    <footer class="max-w-6xl mx-auto px-4 text-center text-purple-400 text-xs border-t border-mohoBorder/60 pt-6 mt-12 space-y-2">
         <p>© 2026 SCG Anime Pro. Designed for future master animators!</p>
         <p class="text-base font-heading font-bold text-brandYellow flex items-center justify-center gap-2">
             <i class="fa-solid fa-heart text-brandPink"></i> Made by Damiru Minthula
@@ -424,11 +647,25 @@
     </footer>
 
     <script>
-        // State tracking
+        function switchTopic(topicId) {
+            const topic1 = document.getElementById('topic1View');
+            const topic2 = document.getElementById('topic2View');
+            
+            if (topicId === 'topic1') {
+                if (topic1) topic1.classList.remove('hidden');
+                if (topic2) topic2.classList.add('hidden');
+            } else if (topicId === 'topic2') {
+                if (topic1) topic1.classList.add('hidden');
+                if (topic2) topic2.classList.remove('hidden');
+            }
+        }
+
+        // =====================================================================
+        // TOPIC 1 JavaScript Logic (Switch Layers)
+        // =====================================================================
         let isSwitchCreated = false;
         let isNameConfirmed = false;
         let areDrawingsAdded = false;
-        let activeMouthId = null;
 
         const mouthsData = [
             { id: 'mouthSmile', name: '😊 Big Smile', icon: 'fa-smile' },
@@ -437,11 +674,6 @@
             { id: 'mouthSurprise', name: '😲 Surprised', icon: 'fa-face-surprise' }
         ];
 
-        document.addEventListener('DOMContentLoaded', () => {
-            // Safe initial setup
-            updateStatusText('Click the glowing <b>"+ New Layer"</b> button in the simulator to begin!');
-        });
-
         function updateStatusText(htmlMessage) {
             const el = document.getElementById('statusText');
             if (el) el.innerHTML = htmlMessage;
@@ -449,21 +681,14 @@
 
         function toggleLayerMenu() {
             const menu = document.getElementById('layerDropdown');
-            if (menu) {
-                menu.classList.toggle('hidden');
-            }
+            if (menu) menu.classList.toggle('hidden');
         }
 
         function createSwitchLayer() {
             isSwitchCreated = true;
             document.getElementById('layerDropdown').classList.add('hidden');
             document.getElementById('addLayerBtn').classList.remove('pulse-target');
-
-            // Show Switch Tree
-            const tree = document.getElementById('switchLayerTree');
-            if (tree) tree.classList.remove('hidden');
-
-            // Show Name Input
+            document.getElementById('switchLayerTree').classList.remove('hidden');
             document.getElementById('layerNameBox').classList.remove('hidden');
             updateStatusText('Great job! Now type a name for your Switch Folder and click <b>Save Name</b>.');
         }
@@ -481,7 +706,7 @@
             document.getElementById('layerNameBox').classList.add('hidden');
             document.getElementById('addDrawingsAction').classList.remove('hidden');
 
-            updateStatusText('Folder created! Now click <b>Step 4: Add Sample Mouth Drawings</b> to add drawings inside.');
+            updateStatusText('Folder created! Now click <b>Add Sample Mouth Drawings</b> to add drawings inside.');
         }
 
         function populateSampleMouths() {
@@ -506,28 +731,23 @@
                 });
             }
 
-            updateStatusText('✨ Switch Layer Complete! Click any mouth shape in the folder to swap it live on canvas, or click <b>Play Animated Lip Sync Routine</b>!');
+            updateStatusText('✨ Switch Layer Complete! Click any mouth shape in the folder to swap it live on canvas!');
             selectMouthShape('mouthSmile', '😊 Big Smile');
         }
 
         function selectMouthShape(mouthId, mouthName) {
-            // Hide default mouth line
             const defMouth = document.getElementById('mouthDefault');
             if (defMouth) defMouth.classList.add('hidden');
 
-            // Hide all sub-mouth shapes
             const allMouths = document.querySelectorAll('.mouth-layer-item');
             allMouths.forEach(el => el.classList.add('hidden'));
 
-            // Show selected shape
             const target = document.getElementById(mouthId);
             if (target) target.classList.remove('hidden');
 
-            // Update Label
             const label = document.getElementById('activeMouthLabel');
             if (label) label.textContent = `Active Shape: ${mouthName || mouthId}`;
 
-            // Highlight sub-layer item in layer tree
             mouthsData.forEach(m => {
                 const itemBtn = document.getElementById(`btn-${m.id}`);
                 if (itemBtn) {
@@ -542,8 +762,6 @@
                     }
                 }
             });
-
-            activeMouthId = mouthId;
         }
 
         let isRoutined = false;
@@ -567,11 +785,7 @@
             }, 450);
         }
 
-        function resetWorkshop() {
-            isSwitchCreated = false;
-            isNameConfirmed = false;
-            areDrawingsAdded = false;
-
+        function resetWorkshop1() {
             document.getElementById('layerDropdown').classList.add('hidden');
             document.getElementById('addLayerBtn').classList.add('pulse-target');
             document.getElementById('switchLayerTree').classList.add('hidden');
@@ -579,7 +793,6 @@
             document.getElementById('addDrawingsAction').classList.add('hidden');
             document.getElementById('subLayersContainer').classList.add('hidden');
 
-            // Reset Mouth on Canvas
             const allMouths = document.querySelectorAll('.mouth-layer-item');
             allMouths.forEach(el => el.classList.add('hidden'));
 
@@ -591,6 +804,310 @@
 
             updateStatusText('Click the glowing <b>"+ New Layer"</b> button in the simulator to begin!');
         }
+
+
+        let currentBoneStrength = 40;
+        let isSkeletonVisible = true;
+        let activeDraggedJoint = null;
+
+        // Coordinates for Stickman joints
+        const jointsPos = {
+            head: { x: 160, y: 35 },
+            rightHand: { x: 220, y: 70 },
+            leftHand: { x: 100, y: 115 },
+            rightFoot: { x: 195, y: 220 },
+            leftFoot: { x: 125, y: 220 }
+        };
+
+        function updateStickmanCanvas() {
+            // Update Layer Drawings
+            const stickHead = document.getElementById('stickHead');
+            const stickEyeL = document.getElementById('stickEyeL');
+            const stickEyeR = document.getElementById('stickEyeR');
+            const stickSmile = document.getElementById('stickSmile');
+            const stickRightArm = document.getElementById('stickRightArm');
+            const stickLeftArm = document.getElementById('stickLeftArm');
+            const stickRightLeg = document.getElementById('stickRightLeg');
+            const stickLeftLeg = document.getElementById('stickLeftLeg');
+
+            // Update Bone Polygons & Lines
+            const polyHead = document.getElementById('polyHead');
+            const polyRightArm = document.getElementById('polyRightArm');
+            const polyLeftArm = document.getElementById('polyLeftArm');
+            const polyRightLeg = document.getElementById('polyRightLeg');
+            const polyLeftLeg = document.getElementById('polyLeftLeg');
+
+            // Update Aura lines
+            const auraHead = document.getElementById('auraHead');
+            const auraRightArm = document.getElementById('auraRightArm');
+            const auraLeftArm = document.getElementById('auraLeftArm');
+            const auraRightLeg = document.getElementById('auraRightLeg');
+            const auraLeftLeg = document.getElementById('auraLeftLeg');
+
+            // Update Handles
+            const jointHead = document.getElementById('jointHead');
+            const jointRightHand = document.getElementById('jointRightHand');
+            const jointLeftHand = document.getElementById('jointLeftHand');
+            const jointRightFoot = document.getElementById('jointRightFoot');
+            const jointLeftFoot = document.getElementById('jointLeftFoot');
+
+            // 1. Head
+            const headY = jointsPos.head.y;
+            const headX = jointsPos.head.x;
+            const headCenterY = headY + 20;
+            if (stickHead) { stickHead.setAttribute('cx', headX); stickHead.setAttribute('cy', headCenterY); }
+            if (stickEyeL) stickEyeL.setAttribute('cx', headX - 8);
+            if (stickEyeR) stickEyeR.setAttribute('cx', headX + 8);
+            if (stickEyeL) stickEyeL.setAttribute('cy', headCenterY - 5);
+            if (stickEyeR) stickEyeR.setAttribute('cy', headCenterY - 5);
+            if (stickSmile) stickSmile.setAttribute('d', `M ${headX - 8} ${headCenterY + 5} Q ${headX} ${headCenterY + 13} ${headX + 8} ${headCenterY + 5}`);
+            if (polyHead) polyHead.setAttribute('points', `160,77 ${headX - 3},${headCenterY} ${headX},${headY} ${headX + 3},${headCenterY}`);
+            if (auraHead) { auraHead.setAttribute('cx', headX); auraHead.setAttribute('cy', headCenterY); }
+            if (jointHead) { jointHead.setAttribute('cx', headX); jointHead.setAttribute('cy', headY); }
+
+            // 2. Right Arm (from shoulder 160,95)
+            const rx = jointsPos.rightHand.x, ry = jointsPos.rightHand.y;
+            if (stickRightArm) stickRightArm.setAttribute('d', `M 160 95 L ${rx} ${ry}`);
+            if (polyRightArm) polyRightArm.setAttribute('points', `160,95 ${160 + (rx - 160)*0.5 + 5},${95 + (ry - 95)*0.5 - 5} ${rx},${ry} ${160 + (rx - 160)*0.5 - 5},${95 + (ry - 95)*0.5 + 5}`);
+            if (auraRightArm) { auraRightArm.setAttribute('x2', rx); auraRightArm.setAttribute('y2', ry); }
+            if (jointRightHand) { jointRightHand.setAttribute('cx', rx); jointRightHand.setAttribute('cy', ry); }
+
+            // 3. Left Arm (from shoulder 160,95)
+            const lx = jointsPos.leftHand.x, ly = jointsPos.leftHand.y;
+            if (stickLeftArm) stickLeftArm.setAttribute('d', `M 160 95 L ${lx} ${ly}`);
+            if (polyLeftArm) polyLeftArm.setAttribute('points', `160,95 ${160 + (lx - 160)*0.5 - 5},${95 + (ly - 95)*0.5 - 5} ${lx},${ly} ${160 + (lx - 160)*0.5 + 5},${95 + (ly - 95)*0.5 + 5}`);
+            if (auraLeftArm) { auraLeftArm.setAttribute('x2', lx); auraLeftArm.setAttribute('y2', ly); }
+            if (jointLeftHand) { jointLeftHand.setAttribute('cx', lx); jointLeftHand.setAttribute('cy', ly); }
+
+            // 4. Right Leg (from hips 160,150)
+            const rfx = jointsPos.rightFoot.x, rfy = jointsPos.rightFoot.y;
+            if (stickRightLeg) stickRightLeg.setAttribute('d', `M 160 150 L ${rfx} ${rfy}`);
+            if (polyRightLeg) polyRightLeg.setAttribute('points', `160,150 ${160 + (rfx - 160)*0.5 + 5},${150 + (rfy - 150)*0.5 - 5} ${rfx},${rfy} ${160 + (rfx - 160)*0.5 - 5},${150 + (rfy - 150)*0.5 + 5}`);
+            if (auraRightLeg) { auraRightLeg.setAttribute('x2', rfx); auraRightLeg.setAttribute('y2', rfy); }
+            if (jointRightFoot) { jointRightFoot.setAttribute('cx', rfx); jointRightFoot.setAttribute('cy', rfy); }
+
+            // 5. Left Leg (from hips 160,150)
+            const lfx = jointsPos.leftFoot.x, lfy = jointsPos.leftFoot.y;
+            if (stickLeftLeg) stickLeftLeg.setAttribute('d', `M 160 150 L ${lfx} ${lfy}`);
+            if (polyLeftLeg) polyLeftLeg.setAttribute('points', `160,150 ${160 + (lfx - 160)*0.5 - 5},${150 + (lfy - 150)*0.5 - 5} ${lfx},${lfy} ${160 + (lfx - 160)*0.5 + 5},${150 + (lfy - 150)*0.5 + 5}`);
+            if (auraLeftLeg) { auraLeftLeg.setAttribute('x2', lfx); auraLeftLeg.setAttribute('y2', lfy); }
+            if (jointLeftFoot) { jointLeftFoot.setAttribute('cx', lfx); jointLeftFoot.setAttribute('cy', lfy); }
+        }
+
+        // Initialize Drag Handlers for Stickman Joints
+        function setupJointDragging() {
+            const svg = document.getElementById('stickmanSvg');
+            const handles = document.querySelectorAll('.joint-handle');
+
+            handles.forEach(handle => {
+                handle.addEventListener('mousedown', startDrag);
+                handle.addEventListener('touchstart', startDrag, { passive: false });
+            });
+
+            function startDrag(e) {
+                e.preventDefault();
+                activeDraggedJoint = e.target.id;
+                window.addEventListener('mousemove', dragMove);
+                window.addEventListener('touchmove', dragMove, { passive: false });
+                window.addEventListener('mouseup', stopDrag);
+                window.addEventListener('touchend', stopDrag);
+            }
+
+            function dragMove(e) {
+                if (!activeDraggedJoint || !svg) return;
+                
+                const rect = svg.getBoundingClientRect();
+                const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+                const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+
+                // Scale canvas mouse coordinates to SVG 320x290 box
+                const svgX = Math.round(((clientX - rect.left) / rect.width) * 320);
+                const svgY = Math.round(((clientY - rect.top) / rect.height) * 290);
+
+                // Update corresponding joint coordinate
+                if (activeDraggedJoint === 'jointHead') {
+                    jointsPos.head.x = Math.max(120, Math.min(200, svgX));
+                    jointsPos.head.y = Math.max(15, Math.min(50, svgY));
+                } else if (activeDraggedJoint === 'jointRightHand') {
+                    jointsPos.rightHand.x = Math.max(160, Math.min(280, svgX));
+                    jointsPos.rightHand.y = Math.max(20, Math.min(180, svgY));
+                } else if (activeDraggedJoint === 'jointLeftHand') {
+                    jointsPos.leftHand.x = Math.max(40, Math.min(160, svgX));
+                    jointsPos.leftHand.y = Math.max(20, Math.min(180, svgY));
+                } else if (activeDraggedJoint === 'jointRightFoot') {
+                    jointsPos.rightFoot.x = Math.max(150, Math.min(260, svgX));
+                    jointsPos.rightFoot.y = Math.max(170, Math.min(270, svgY));
+                } else if (activeDraggedJoint === 'jointLeftFoot') {
+                    jointsPos.leftFoot.x = Math.max(60, Math.min(170, svgX));
+                    jointsPos.leftFoot.y = Math.max(170, Math.min(270, svgY));
+                }
+
+                updateStickmanCanvas();
+            }
+
+            function stopDrag() {
+                activeDraggedJoint = null;
+                window.removeEventListener('mousemove', dragMove);
+                window.removeEventListener('touchmove', dragMove);
+                window.removeEventListener('mouseup', stopDrag);
+                window.removeEventListener('touchend', stopDrag);
+            }
+        }
+
+        function updateBoneStrength(value) {
+            currentBoneStrength = parseInt(value);
+            const valLabel = document.getElementById('strengthValueText');
+            const feedbackBox = document.getElementById('strengthFeedbackBox');
+            const feedbackText = document.getElementById('strengthFeedbackText');
+            const statusText = document.getElementById('stickmanStatusText');
+
+            const auraGroup = document.getElementById('boneAuraGroup');
+            if (auraGroup) {
+                const scaleFactor = currentBoneStrength / 40;
+                auraGroup.style.transformOrigin = '160px 115px';
+                auraGroup.style.transform = `scale(${scaleFactor})`;
+            }
+
+            if (currentBoneStrength > 70) {
+                if (valLabel) {
+                    valLabel.textContent = `${currentBoneStrength}% (Too High!)`;
+                    valLabel.className = "text-rose-400 font-mono font-bold bg-rose-950 px-2 py-0.5 rounded border border-rose-800";
+                }
+                if (feedbackBox) {
+                    feedbackBox.className = "text-[11px] text-rose-300 bg-rose-950/60 p-2.5 rounded-xl border border-rose-800/60 flex items-start gap-2";
+                }
+                if (feedbackText) {
+                    feedbackText.innerHTML = "<b>⚠️ Warning (Too High):</b> Bone cloud is huge! Moving the arm bone will accidentally distort the head layer!";
+                }
+                if (statusText) {
+                    statusText.innerHTML = "<b>Notice the red overlap:</b> Shrink slider down to 40% so each bone only controls its own layer!";
+                }
+
+            } else if (currentBoneStrength < 15) {
+                if (valLabel) {
+                    valLabel.textContent = `${currentBoneStrength}% (Too Low!)`;
+                    valLabel.className = "text-amber-300 font-mono font-bold bg-amber-950 px-2 py-0.5 rounded border border-amber-800";
+                }
+                if (feedbackBox) {
+                    feedbackBox.className = "text-[11px] text-amber-200 bg-amber-950/60 p-2.5 rounded-xl border border-amber-800/60 flex items-start gap-2";
+                }
+                if (feedbackText) {
+                    feedbackText.innerHTML = "<b>⚠️ Low Strength:</b> Bones don't reach the drawing layers! Moving bones won't bend the stickman properly.";
+                }
+
+            } else {
+                if (valLabel) {
+                    valLabel.textContent = `${currentBoneStrength}% (Ideal)`;
+                    valLabel.className = "text-brandYellow font-mono font-bold bg-purple-950 px-2 py-0.5 rounded border border-purple-800";
+                }
+                if (feedbackBox) {
+                    feedbackBox.className = "text-[11px] text-brandGreen bg-emerald-950/40 p-2.5 rounded-xl border border-brandGreen/40 flex items-start gap-2";
+                }
+                if (feedbackText) {
+                    feedbackText.innerHTML = "<b>Perfect Strength (30%-50%):</b> Each bone cleanly controls its own separate drawing layer without pulling other limbs!";
+                }
+            }
+        }
+
+        function selectMohoTool(toolName) {
+            const label = document.getElementById('activeToolLabel');
+            const btnManipulate = document.getElementById('toolBtnManipulate');
+            const btnStrength = document.getElementById('toolBtnStrength');
+            const btnAdd = document.getElementById('toolBtnAdd');
+            const auraGroup = document.getElementById('boneAuraGroup');
+
+            [btnManipulate, btnStrength, btnAdd].forEach(btn => {
+                if (btn) {
+                    btn.className = "w-full text-left p-2.5 rounded-xl border bg-slate-900 border-purple-900/60 text-purple-200 hover:border-mohoAccent font-bold text-xs font-mono flex items-center justify-between";
+                }
+            });
+
+            if (toolName === 'manipulate') {
+                if (label) label.textContent = "Mode: Interactive Dragging (Z)";
+                if (btnManipulate) btnManipulate.className = "w-full text-left p-2.5 rounded-xl border bg-purple-950 border-mohoAccent text-mohoAccent font-bold text-xs font-mono flex items-center justify-between shadow";
+                if (auraGroup) auraGroup.classList.add('opacity-0');
+                document.getElementById('stickmanStatusText').innerHTML = "<b>Manipulate Tool Active (Z):</b> Click and drag any glowing handle on the canvas stickman to move his limbs!";
+            } else if (toolName === 'strength') {
+                if (label) label.textContent = "Mode: Bone Strength Radius (S)";
+                if (btnStrength) btnStrength.className = "w-full text-left p-2.5 rounded-xl border bg-purple-950 border-brandPink text-brandPink font-bold text-xs font-mono flex items-center justify-between shadow";
+                if (auraGroup) auraGroup.classList.remove('opacity-0');
+                document.getElementById('stickmanStatusText').innerHTML = "<b>Bone Strength Tool Active (S):</b> Drag the strength slider below to see glowing influence bubbles!";
+            } else if (toolName === 'add') {
+                if (label) label.textContent = "Mode: Add Bone Tool (A)";
+                if (btnAdd) btnAdd.className = "w-full text-left p-2.5 rounded-xl border bg-purple-950 border-brandGreen text-brandGreen font-bold text-xs font-mono flex items-center justify-between shadow";
+                if (auraGroup) auraGroup.classList.add('opacity-0');
+                document.getElementById('stickmanStatusText').innerHTML = "<b>Add Bone Tool Active (A):</b> Click and drag from waist to neck to build the skeleton structure!";
+            }
+        }
+
+        function setStickmanPose(pose) {
+            selectMohoTool('manipulate');
+
+            if (pose === 'wave') {
+                jointsPos.head = { x: 160, y: 35 };
+                jointsPos.rightHand = { x: 220, y: 45 };
+                jointsPos.leftHand = { x: 100, y: 115 };
+                jointsPos.rightFoot = { x: 195, y: 220 };
+                jointsPos.leftFoot = { x: 125, y: 220 };
+            } else if (pose === 'star') {
+                jointsPos.head = { x: 160, y: 30 };
+                jointsPos.rightHand = { x: 235, y: 45 };
+                jointsPos.leftHand = { x: 85, y: 45 };
+                jointsPos.rightFoot = { x: 220, y: 220 };
+                jointsPos.leftFoot = { x: 100, y: 220 };
+            } else if (pose === 'kick') {
+                jointsPos.head = { x: 155, y: 40 };
+                jointsPos.rightHand = { x: 210, y: 115 };
+                jointsPos.leftHand = { x: 90, y: 75 };
+                jointsPos.rightFoot = { x: 230, y: 135 };
+                jointsPos.leftFoot = { x: 135, y: 225 };
+            } else if (pose === 'dance') {
+                jointsPos.head = { x: 165, y: 32 };
+                jointsPos.rightHand = { x: 195, y: 35 };
+                jointsPos.leftHand = { x: 115, y: 145 };
+                jointsPos.rightFoot = { x: 180, y: 220 };
+                jointsPos.leftFoot = { x: 130, y: 205 };
+            }
+
+            updateStickmanCanvas();
+        }
+
+        function toggleSkeletonVisibility() {
+            isSkeletonVisible = !isSkeletonVisible;
+            const skeletonGroup = document.getElementById('skeletonBonesGroup');
+            const toggleBtn = document.getElementById('toggleBonesBtn');
+
+            if (skeletonGroup) {
+                if (isSkeletonVisible) {
+                    skeletonGroup.classList.remove('hidden');
+                    if (toggleBtn) {
+                        toggleBtn.textContent = 'Visible ON';
+                        toggleBtn.className = 'bg-brandGreen text-slate-950 font-bold px-3 py-1 rounded-lg text-xs hover:bg-emerald-400 transition';
+                    }
+                } else {
+                    skeletonGroup.classList.add('hidden');
+                    if (toggleBtn) {
+                        toggleBtn.textContent = 'Hidden OFF';
+                        toggleBtn.className = 'bg-slate-800 text-purple-300 font-bold px-3 py-1 rounded-lg text-xs hover:bg-slate-700 transition border border-mohoBorder';
+                    }
+                }
+            }
+        }
+
+        function resetStickmanStudio() {
+            setStickmanPose('wave');
+            updateBoneStrength(40);
+            const slider = document.getElementById('boneStrengthSlider');
+            if (slider) slider.value = 40;
+            if (!isSkeletonVisible) toggleSkeletonVisibility();
+        }
+
+        // Initialize topic views on DOM load
+        document.addEventListener('DOMContentLoaded', () => {
+            switchTopic('topic2');
+            setupJointDragging();
+            updateStickmanCanvas();
+        });
     </script>
 </body>
 </html>
