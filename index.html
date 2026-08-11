@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SCG Anime Pro | Moho Animation Masterclass for Kids</title>
-
-    <!-- Tailwind CSS CDN -->
+    <title>SCG Anime Pro - Animation Showcase</title>
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -13,1101 +12,1642 @@
             theme: {
                 extend: {
                     colors: {
-                        mohoDark: '#0e0c1a',
-                        mohoPanel: '#1a162b',
-                        mohoHeader: '#251f3d',
-                        mohoBorder: '#3b325c',
-                        mohoAccent: '#00f0ff',
-                        brandPink: '#ff2a85',
-                        brandYellow: '#ffc837',
-                        brandGreen: '#10b981',
-                        brandPurple: '#8b5cf6',
+                        brand: {
+                            50: '#f0f5ff',
+                            500: '#6366f1',
+                            600: '#4f46e5',
+                            700: '#4338ca',
+                            900: '#1e1b4b',
+                            accent: '#ec4899',
+                            cyan: '#06b6d4',
+                            dark: '#0b0f19',
+                            card: '#131b2e'
+                        }
                     },
                     fontFamily: {
-                        heading: ['Fredoka', 'sans-serif'],
-                        body: ['Outfit', 'sans-serif'],
+                        sans: ['Inter', 'sans-serif']
                     }
                 }
             }
         }
     </script>
-
-    <!-- Google Fonts & Font Awesome Icons -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: 'Outfit', sans-serif;
-            background-color: #0e0c1a;
-            color: #f1f5f9;
-            background-image: 
-                radial-gradient(circle at 15% 20%, rgba(139, 92, 246, 0.15) 0%, transparent 40%),
-                radial-gradient(circle at 85% 80%, rgba(255, 42, 133, 0.12) 0%, transparent 40%),
-                radial-gradient(circle at 50% 50%, rgba(0, 240, 255, 0.08) 0%, transparent 60%);
-            background-attachment: fixed;
+            font-family: 'Inter', sans-serif;
+            background-color: #080c14;
+            color: #e2e8f0;
+        }
+        .glow-effect {
+            box-shadow: 0 0 25px -5px rgba(99, 102, 241, 0.3);
+        }
+        .glow-effect-accent {
+            box-shadow: 0 0 25px -5px rgba(236, 72, 153, 0.4);
+        }
+        .glass-panel {
+            background: rgba(19, 27, 46, 0.75);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .glass-nav {
+            background: rgba(8, 12, 20, 0.85);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #0b0f19;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #6366f1;
         }
 
-        .font-heading {
-            font-family: 'Fredoka', cursive, sans-serif;
+        /* Uiverse.io Like / Dislike Rating Component Styles */
+        .like-dislike-container {
+            background: rgba(15, 23, 42, 0.85);
+            border: 1px solid rgba(99, 102, 241, 0.25);
+            border-radius: 1.25rem;
+            padding: 1rem 1.25rem;
+            display: inline-flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            position: relative;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+            max-width: 280px;
+            width: 100%;
         }
-
-        .glow-cyan { box-shadow: 0 0 25px -5px rgba(0, 240, 255, 0.35); }
-        .glow-pink { box-shadow: 0 0 25px -5px rgba(255, 42, 133, 0.35); }
-        .glow-yellow { box-shadow: 0 0 25px -5px rgba(255, 200, 55, 0.35); }
-
-        .pulse-target {
-            animation: pulseGlow 1.4s infinite alternate ease-in-out;
+        .like-dislike-container .tool-box {
+            display: flex;
+            justify-content: flex-end;
+            position: absolute;
+            top: 0.5rem;
+            right: 0.75rem;
         }
-
-        @keyframes pulseGlow {
-            0% { box-shadow: 0 0 0 0 rgba(0, 240, 255, 0.8); transform: scale(1); }
-            100% { box-shadow: 0 0 0 10px rgba(0, 240, 255, 0); transform: scale(1.04); }
+        .like-dislike-container .btn-close {
+            background: transparent;
+            border: none;
+            color: #64748b;
+            font-size: 1.25rem;
+            cursor: pointer;
+            line-height: 1;
+            transition: color 0.2s;
         }
-
-        .bouncy-hover {
-            transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        .like-dislike-container .btn-close:hover {
+            color: #f43f5e;
         }
-        .bouncy-hover:hover {
-            transform: translateY(-2px) scale(1.02);
+        .like-dislike-container .text-content {
+            font-size: 0.8125rem;
+            font-weight: 700;
+            color: #e2e8f0;
+            line-height: 1.25;
+            margin: 0;
         }
-
-        /* Bone strength field animation */
-        @keyframes auraPulse {
-            0% { opacity: 0.3; }
-            50% { opacity: 0.6; }
-            100% { opacity: 0.3; }
+        .like-dislike-container .icons-box {
+            display: flex;
+            align-items: center;
+            gap: 1.25rem;
+            background: rgba(8, 12, 20, 0.6);
+            padding: 0.5rem 0.75rem;
+            border-radius: 0.85rem;
+            border: 1px solid rgba(255, 255, 255, 0.05);
         }
-        .bone-aura {
-            animation: auraPulse 2s infinite ease-in-out;
+        .like-dislike-container .icons {
+            display: flex;
+            align-items: center;
         }
-
-        .joint-handle {
-            cursor: grab;
-            transition: r 0.15s ease, fill 0.15s ease;
+        .like-dislike-container .btn-label {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            cursor: pointer;
+            user-select: none;
+            position: relative;
         }
-        .joint-handle:hover {
-            r: 9;
-            cursor: grabbing;
+        .like-dislike-container .input-box {
+            display: none;
         }
-
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #0e0c1a; }
-        ::-webkit-scrollbar-thumb { background: #3b325c; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: #8b5cf6; }
+        .like-dislike-container .svgs {
+            width: 1.25rem;
+            height: 1.25rem;
+            fill: #64748b;
+            transition: fill 0.2s, transform 0.2s;
+        }
+        .like-dislike-container .svgs#icon-dislike-solid,
+        .like-dislike-container .svgs#icon-dislike-regular {
+            transform: rotate(180deg);
+        }
+        .like-dislike-container .btn-label:hover .svgs {
+            fill: #818cf8;
+            transform: scale(1.15);
+        }
+        .like-dislike-container .btn-label:hover .svgs#icon-dislike-solid,
+        .like-dislike-container .btn-label:hover .svgs#icon-dislike-regular {
+            transform: rotate(180deg) scale(1.15);
+        }
+        .like-dislike-container #icon-like-solid,
+        .like-dislike-container #icon-dislike-solid {
+            display: none;
+        }
+        .like-dislike-container .input-box:checked ~ #icon-like-solid {
+            display: block;
+            fill: #38bdf8;
+        }
+        .like-dislike-container .input-box:checked ~ #icon-like-regular {
+            display: none;
+        }
+        .like-dislike-container .input-box:checked ~ #icon-dislike-solid {
+            display: block;
+            fill: #f43f5e;
+        }
+        .like-dislike-container .input-box:checked ~ #icon-dislike-regular {
+            display: none;
+        }
+        .like-dislike-container .like-text-content,
+        .like-dislike-container .dislike-text-content {
+            font-size: 0.75rem;
+            font-weight: 800;
+            color: #cbd5e1;
+            font-mono: monospace;
+        }
     </style>
 </head>
-<body class="min-h-screen flex flex-col justify-between antialiased selection:bg-brandPink selection:text-white pb-8">
+<body class="min-h-screen flex flex-col antialiased custom-scrollbar selection:bg-brand-500 selection:text-white">
 
-    <header class="bg-[#151128]/95 border-b border-mohoBorder sticky top-0 z-50 backdrop-blur-md shadow-xl">
-        <div class="max-w-6xl mx-auto px-4 py-3 flex flex-wrap justify-between items-center gap-4">
-            <div class="flex items-center gap-3">
-                <div class="bg-gradient-to-tr from-brandPink to-brandYellow p-2.5 rounded-2xl shadow-lg transform -rotate-3 text-slate-950">
-                    <i class="fa-solid fa-wand-magic-sparkles text-xl"></i>
+    <!-- Navigation Bar -->
+    <header class="sticky top-0 z-40 glass-nav transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-4">
+            <!-- Brand Logo -->
+            <div class="flex items-center gap-3 cursor-pointer" onclick="showSection('home')">
+                <div class="w-11 h-11 rounded-xl bg-gradient-to-tr from-brand-600 via-indigo-500 to-brand-accent p-0.5 flex items-center justify-center shadow-lg shadow-indigo-500/20">
+                    <div class="w-full h-full bg-brand-dark rounded-[10px] flex items-center justify-center">
+                        <i class="fa-solid font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-pink-500 fa-play text-lg translate-x-0.5"></i>
+                    </div>
                 </div>
                 <div>
-                    <h1 class="text-2xl font-bold font-heading bg-gradient-to-r from-brandYellow via-brandPink to-mohoAccent bg-clip-text text-transparent">
-                        SCG Anime Pro
-                    </h1>
-                    <p class="text-xs text-purple-300 font-medium">Moho Animation Masterclass for Young Animators</p>
+                    <span class="text-xl font-extrabold tracking-wider bg-clip-text text-transparent bg-gradient-to-r from-white via-slate-200 to-indigo-300">SCG ANIME</span>
+                    <span class="text-xs font-bold text-brand-accent tracking-widest block uppercase -mt-1">PRO STUDIO</span>
                 </div>
             </div>
 
-            <!-- TOPIC SELECTION DROPDOWN -->
-            <div class="flex items-center gap-2 bg-mohoPanel p-1.5 rounded-2xl border border-mohoAccent/50 shadow-inner w-full sm:w-auto">
-                <label for="topicSelect" class="text-xs font-heading font-bold text-brandYellow pl-2 flex items-center gap-1.5 shrink-0">
-                    <i class="fa-solid fa-graduation-cap text-mohoAccent"></i> Select Lesson Topic:
-                </label>
-                <select id="topicSelect" onchange="switchTopic(this.value)" class="bg-slate-950 text-mohoAccent text-xs font-heading font-bold py-2 px-3 rounded-xl border border-mohoBorder focus:outline-none focus:border-mohoAccent w-full cursor-pointer hover:bg-slate-900 transition">
-                    <option value="topic2" selected>🦴 Topic 1: Multi-Layer Stickman & Bone Rigging (Interactive)</option>
-                    <option value="topic1">✨ Topic 2: Switch Layers (Mouth Lip-Sync Studio)</option>
-                </select>
+            <!-- Central Nav Links -->
+            <nav class="hidden md:flex items-center gap-1 bg-slate-900/60 p-1.5 rounded-full border border-slate-800">
+                <button onclick="showSection('home')" id="nav-home" class="nav-btn px-5 py-2 rounded-full text-sm font-medium transition-all text-white bg-brand-600 shadow-md">
+                    <i class="fa-solid fa-film mr-2"></i> Showcase
+                </button>
+                <button onclick="showSection('animators')" id="nav-animators" class="nav-btn px-5 py-2 rounded-full text-sm font-medium text-slate-400 hover:text-white transition-all">
+                    <i class="fa-solid fa-user-ninja mr-2"></i> Animators
+                </button>
+            </nav>
+
+            <!-- Search & Actions -->
+            <div class="flex items-center gap-3">
+                <div class="relative hidden sm:block w-48 lg:w-64">
+                    <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 text-xs"></i>
+                    <input type="text" id="global-search" oninput="handleSearch(this.value)" placeholder="Search animations, creators..." 
+                           class="w-full bg-slate-900/90 border border-slate-800 text-slate-200 text-xs rounded-full pl-9 pr-4 py-2 focus:outline-none focus:border-brand-500 transition-colors">
+                </div>
+                <button onclick="openAdminAuth()" class="bg-slate-800 hover:bg-slate-700 text-slate-300 p-2.5 rounded-full border border-slate-700 transition-colors" title="Admin Portal">
+                    <i class="fa-solid fa-lock text-xs"></i>
+                </button>
             </div>
         </div>
     </header>
 
-    <main class="max-w-6xl mx-auto px-4 py-6 space-y-8 flex-grow w-full">
+    <!-- Main Content Area -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
 
-        <!-- =================================================================== -->
-        <!-- TOPIC 2: STICKMAN & BONES WORKSHOP (MULTI-LAYER SETUP & DRAGGABLE BONES) -->
-        <!-- =================================================================== -->
-        <div id="topic2View" class="space-y-10">
+        <!-- HERO SECTION WITH LATEST ANIMATION SHOWCASE -->
+        <section id="hero-banner" class="mb-12 relative rounded-3xl overflow-hidden glass-panel border border-slate-800 p-6 sm:p-10">
+            <div class="absolute -right-20 -top-20 w-96 h-96 bg-brand-600/20 rounded-full blur-3xl pointer-events-none"></div>
+            <div class="absolute -left-20 -bottom-20 w-96 h-96 bg-brand-accent/20 rounded-full blur-3xl pointer-events-none"></div>
             
-            <section class="bg-gradient-to-r from-mohoPanel via-[#1e1738] to-purple-950 p-6 md:p-8 rounded-3xl border border-mohoBorder space-y-4 relative overflow-hidden shadow-2xl">
-                <div class="absolute -top-12 -right-12 w-48 h-48 bg-brandYellow/10 rounded-full blur-3xl pointer-events-none"></div>
-                <div class="flex items-center gap-2 flex-wrap">
-                    <span class="bg-brandYellow/20 border border-brandYellow/40 text-brandYellow font-heading font-bold text-xs uppercase tracking-widest px-3.5 py-1 rounded-full flex items-center gap-1.5">
-                        <i class="fa-solid fa-bone"></i> Master Animation Lesson
-                    </span>
-                    <span class="bg-mohoAccent/20 border border-mohoAccent/40 text-mohoAccent font-heading font-bold text-xs px-3 py-1 rounded-full">
-                        Easy Multi-Layer Rigging
-                    </span>
-                </div>
-                <h2 class="text-3xl md:text-4xl font-heading font-bold text-white">
-                    How to Draw & Rig a <span class="text-brandYellow">Multi-Layer Stickman</span> with Bones
-                </h2>
-                <p class="text-purple-200 text-sm md:text-base leading-relaxed max-w-4xl">
-                    Think of your stickman like a <b>paper cutout doll</b>! If you draw the head, body, arms, and legs all on separate drawing layers inside one magic <b>Bone Folder</b>, you can move each part cleanly without stretching the rest of the character!
-                </p>
-                <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2 text-xs font-mono">
-                    <div class="bg-slate-900/80 p-2.5 rounded-xl border border-mohoAccent/50 flex items-center gap-2">
-                        <span class="w-6 h-6 rounded-full bg-mohoAccent text-slate-950 font-bold flex items-center justify-center text-xs">1</span>
-                        <span>👤 Head Layer</span>
+            <div class="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                <!-- Left Text Content -->
+                <div class="lg:col-span-7 space-y-4">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-600/10 border border-brand-500/30 text-brand-cyan text-xs font-semibold uppercase tracking-wider">
+                        <span class="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></span> SCG Creative Hub
                     </div>
-                    <div class="bg-slate-900/80 p-2.5 rounded-xl border border-brandPink/50 flex items-center gap-2">
-                        <span class="w-6 h-6 rounded-full bg-brandPink text-white font-bold flex items-center justify-center text-xs">2</span>
-                        <span>👕 Spine/Torso Layer</span>
-                    </div>
-                    <div class="bg-slate-900/80 p-2.5 rounded-xl border border-brandYellow/50 flex items-center gap-2">
-                        <span class="w-6 h-6 rounded-full bg-brandYellow text-slate-950 font-bold flex items-center justify-center text-xs">3</span>
-                        <span>💪 Arm Layers (L/R)</span>
-                    </div>
-                    <div class="bg-slate-900/80 p-2.5 rounded-xl border border-brandGreen/50 flex items-center gap-2">
-                        <span class="w-6 h-6 rounded-full bg-brandGreen text-slate-950 font-bold flex items-center justify-center text-xs">4</span>
-                        <span>🦵 Leg Layers (L/R)</span>
-                    </div>
-                </div>
-            </section>
-
-            <section id="simulatorSection2" class="bg-mohoDark rounded-3xl border-2 border-brandYellow shadow-2xl overflow-hidden glow-yellow space-y-0">
-                <div class="bg-mohoHeader px-5 py-3 border-b border-mohoBorder flex flex-wrap items-center justify-between gap-2">
-                    <span class="text-xs font-mono text-purple-300 font-semibold flex items-center gap-2">
-                        <i class="fa-solid fa-gamepad text-brandYellow"></i> 🕹️ Interactive Drag & Play Bone Studio
-                    </span>
-                    <div class="flex items-center gap-2">
-                        <span class="text-[11px] bg-brandYellow/20 text-brandYellow px-2.5 py-0.5 rounded-full font-bold border border-brandYellow/40">
-                            🎮 Interactive Puppet
-                        </span>
-                        <button onclick="resetStickmanStudio()" class="bg-slate-800 hover:bg-slate-700 text-purple-200 text-xs font-heading font-bold px-3 py-1 rounded-lg border border-mohoBorder transition flex items-center gap-1">
-                            <i class="fa-solid fa-rotate-left text-mohoAccent"></i> Reset Pose
+                    <h1 class="text-3xl sm:text-5xl font-black text-white tracking-tight leading-tight">
+                        Next-Gen Animation <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-indigo-400 to-pink-500">Masterpieces</span>
+                    </h1>
+                    <p class="text-slate-400 text-sm sm:text-base leading-relaxed">
+                        Welcome to <strong class="text-slate-200">SCG Anime Pro</strong>. Explore original anime shorts, 2D/3D visual sequences, and concept work crafted by our elite team of animators.
+                    </p>
+                    <div class="flex flex-wrap gap-3 pt-2">
+                        <button onclick="scrollToGrid()" class="px-6 py-3 rounded-xl bg-gradient-to-r from-brand-600 to-indigo-600 text-white font-semibold text-sm hover:from-brand-500 hover:to-indigo-500 transition-all shadow-lg shadow-indigo-600/30 flex items-center gap-2">
+                            <i class="fa-solid fa-play"></i> Watch Works
+                        </button>
+                        <button onclick="showSection('animators')" class="px-6 py-3 rounded-xl bg-slate-900 border border-slate-700 hover:bg-slate-800 text-slate-200 font-semibold text-sm transition-all flex items-center gap-2">
+                            <i class="fa-solid fa-users"></i> Meet Our Animators
                         </button>
                     </div>
                 </div>
 
-                <div class="grid grid-cols-1 lg:grid-cols-12 min-h-[480px]">
-                    <!-- Left Canvas Stickman Viewport -->
-                    <div class="lg:col-span-7 bg-[#070510] p-5 flex flex-col justify-between border-b lg:border-b-0 lg:border-r border-mohoBorder relative min-h-[380px] select-none">
-                        <div class="w-full flex justify-between items-center text-xs font-mono border-b border-purple-950 pb-2">
-                            <span class="text-purple-300 flex items-center gap-1.5"><i class="fa-solid fa-bone text-brandYellow"></i> Stickman Multi-Layer Canvas</span>
-                            <span id="activeToolLabel" class="text-mohoAccent font-bold bg-purple-950 px-2.5 py-1 rounded border border-purple-800">
-                                Mode: Interactive Dragging (Z)
-                            </span>
-                        </div>
-
-                        <!-- Instruction helper banner on top of canvas -->
-                        <div class="absolute top-12 left-1/2 -translate-x-1/2 bg-purple-950/90 border border-mohoAccent/60 text-mohoAccent text-[11px] px-3.5 py-1 rounded-full shadow-lg font-heading font-bold flex items-center gap-2 pointer-events-none z-10">
-                            <i class="fa-solid fa-hand-pointer animate-bounce"></i> Click & Drag any glowing joint dot to animate live!
-                        </div>
-
-                        <!-- SVG Interactive Stickman Drawing & Skeleton Overlay -->
-                        <div class="my-auto py-6 flex justify-center items-center relative cursor-crosshair">
-                            <svg id="stickmanSvg" width="320" height="290" viewBox="0 0 320 290" class="drop-shadow-2xl overflow-visible">
-                                
-                                <!-- BONE STRENGTH GLOWING AURA FIELD -->
-                                <g id="boneAuraGroup" class="bone-aura transition-opacity duration-300">
-                                    <circle id="auraHead" cx="160" cy="55" r="45" fill="#f43f5e" opacity="0.25" stroke="#f43f5e" stroke-dasharray="3,3" />
-                                    <ellipse id="auraSpine" cx="160" cy="115" rx="30" ry="40" fill="#f43f5e" opacity="0.25" stroke="#f43f5e" stroke-dasharray="3,3" />
-                                    <line id="auraLeftArm" x1="160" y1="95" x2="100" y2="105" stroke="#f43f5e" stroke-width="40" stroke-linecap="round" opacity="0.25" />
-                                    <line id="auraRightArm" x1="160" y1="95" x2="220" y2="80" stroke="#f43f5e" stroke-width="40" stroke-linecap="round" opacity="0.25" />
-                                    <line id="auraLeftLeg" x1="160" y1="150" x2="120" y2="220" stroke="#f43f5e" stroke-width="35" stroke-linecap="round" opacity="0.25" />
-                                    <line id="auraRightLeg" x1="160" y1="150" x2="200" y2="220" stroke="#f43f5e" stroke-width="35" stroke-linecap="round" opacity="0.25" />
-                                </g>
-
-                                <!-- MULTI-LAYER STICKMAN DRAWINGS (SEPARATE GROUP PER BODY PART) -->
-                                <g id="stickmanBodyGroup">
-                                    <!-- LAYER 1: TORSO / SPINE -->
-                                    <g id="layerTorso">
-                                        <line id="stickSpine" x1="160" y1="77" x2="160" y2="150" stroke="#ff2a85" stroke-width="7" stroke-linecap="round" />
-                                    </g>
-
-                                    <!-- LAYER 2: HEAD -->
-                                    <g id="layerHead">
-                                        <circle id="stickHead" cx="160" cy="55" r="22" fill="#00f0ff" stroke="#ffffff" stroke-width="3" />
-                                        <circle id="stickEyeL" cx="152" cy="50" r="2.5" fill="#0e0c1a" />
-                                        <circle id="stickEyeR" cx="168" cy="50" r="2.5" fill="#0e0c1a" />
-                                        <path id="stickSmile" d="M 152 60 Q 160 68 168 60" fill="none" stroke="#0e0c1a" stroke-width="2.5" stroke-linecap="round" />
-                                    </g>
-
-                                    <!-- LAYER 3: LEFT ARM -->
-                                    <g id="layerLeftArm">
-                                        <line id="stickLeftArm" x1="160" y1="95" x2="100" y2="115" stroke="#ffc837" stroke-width="5" stroke-linecap="round" />
-                                    </g>
-
-                                    <!-- LAYER 4: RIGHT ARM -->
-                                    <g id="layerRightArm">
-                                        <line id="stickRightArm" x1="160" y1="95" x2="220" y2="70" stroke="#ffc837" stroke-width="5" stroke-linecap="round" />
-                                    </g>
-
-                                    <!-- LAYER 5: LEFT LEG -->
-                                    <g id="layerLeftLeg">
-                                        <line id="stickLeftLeg" x1="160" y1="150" x2="125" y2="220" stroke="#10b981" stroke-width="5" stroke-linecap="round" />
-                                    </g>
-
-                                    <!-- LAYER 6: RIGHT LEG -->
-                                    <g id="layerRightLeg">
-                                        <line id="stickRightLeg" x1="160" y1="150" x2="195" y2="220" stroke="#10b981" stroke-width="5" stroke-linecap="round" />
-                                    </g>
-                                </g>
-
-                                <!-- SKELETON BONES OVERLAY (BONE POLYGONS & PINS) -->
-                                <g id="skeletonBonesGroup">
-                                    <!-- Spine Bone -->
-                                    <polygon id="polySpine" points="160,150 156,110 160,80 164,110" fill="#ff2a85" opacity="0.8" stroke="#ffffff" stroke-width="1.5" />
-                                    <!-- Head Bone -->
-                                    <polygon id="polyHead" points="160,77 157,55 160,35 163,55" fill="#00f0ff" opacity="0.8" stroke="#ffffff" stroke-width="1.5" />
-
-                                    <!-- Left Arm Bone -->
-                                    <polygon id="polyLeftArm" points="160,95 130,103 100,115 130,107" fill="#ffc837" opacity="0.8" stroke="#ffffff" stroke-width="1.5" />
-                                    <!-- Right Arm Bone -->
-                                    <polygon id="polyRightArm" points="160,95 190,80 220,70 190,88" fill="#ffc837" opacity="0.8" stroke="#ffffff" stroke-width="1.5" />
-
-                                    <!-- Left Leg Bone -->
-                                    <polygon id="polyLeftLeg" points="160,150 140,185 125,220 145,185" fill="#10b981" opacity="0.8" stroke="#ffffff" stroke-width="1.5" />
-                                    <!-- Right Leg Bone -->
-                                    <polygon id="polyRightLeg" points="160,150 180,185 195,220 175,185" fill="#10b981" opacity="0.8" stroke="#ffffff" stroke-width="1.5" />
-
-                                    <!-- Root Hips Pin -->
-                                    <circle cx="160" cy="150" r="5" fill="#ffffff" stroke="#0e0c1a" stroke-width="2" />
-                                    <circle cx="160" cy="95" r="5" fill="#ffffff" stroke="#0e0c1a" stroke-width="2" />
-
-                                    <!-- INTERACTIVE DRAGGABLE BONE JOINT HANDLES -->
-                                    <g id="draggableJoints">
-                                        <!-- Head Handle -->
-                                        <circle id="jointHead" class="joint-handle pulse-target" cx="160" cy="35" r="7.5" fill="#00f0ff" stroke="#ffffff" stroke-width="2.5" />
-                                        <!-- Right Hand Handle -->
-                                        <circle id="jointRightHand" class="joint-handle pulse-target" cx="220" cy="70" r="7.5" fill="#ffc837" stroke="#ffffff" stroke-width="2.5" />
-                                        <!-- Left Hand Handle -->
-                                        <circle id="jointLeftHand" class="joint-handle pulse-target" cx="100" cy="115" r="7.5" fill="#ffc837" stroke="#ffffff" stroke-width="2.5" />
-                                        <!-- Right Foot Handle -->
-                                        <circle id="jointRightFoot" class="joint-handle pulse-target" cx="195" cy="220" r="7.5" fill="#10b981" stroke="#ffffff" stroke-width="2.5" />
-                                        <!-- Left Foot Handle -->
-                                        <circle id="jointLeftFoot" class="joint-handle pulse-target" cx="125" cy="220" r="7.5" fill="#10b981" stroke="#ffffff" stroke-width="2.5" />
-                                    </g>
-                                </g>
-
-                            </svg>
-                        </div>
-
-                        <!-- Pose Preset Quick Buttons -->
-                        <div class="space-y-2 pt-2 border-t border-purple-950">
-                            <span class="text-xs text-purple-300 block">Quick Action Poses:</span>
-                            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
-                                <button onclick="setStickmanPose('wave')" class="bg-slate-800 hover:bg-slate-700 border border-mohoBorder hover:border-brandYellow text-white text-xs py-1.5 px-2 rounded-xl transition font-heading flex items-center justify-center gap-1">
-                                    👋 Wave Arm
-                                </button>
-                                <button onclick="setStickmanPose('star')" class="bg-slate-800 hover:bg-slate-700 border border-mohoBorder hover:border-mohoAccent text-white text-xs py-1.5 px-2 rounded-xl transition font-heading flex items-center justify-center gap-1">
-                                    ⭐ Star Jump
-                                </button>
-                                <button onclick="setStickmanPose('kick')" class="bg-slate-800 hover:bg-slate-700 border border-mohoBorder hover:border-brandPink text-white text-xs py-1.5 px-2 rounded-xl transition font-heading flex items-center justify-center gap-1">
-                                    ⚽ High Kick
-                                </button>
-                                <button onclick="setStickmanPose('dance')" class="bg-slate-800 hover:bg-slate-700 border border-mohoBorder hover:border-brandGreen text-white text-xs py-1.5 px-2 rounded-xl transition font-heading flex items-center justify-center gap-1">
-                                    🕺 Disco Dance
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="lg:col-span-5 bg-mohoPanel p-5 flex flex-col justify-between space-y-5">
-                        
-                        <!-- Tool Selector Radio Buttons -->
-                        <div class="space-y-3">
-                            <span class="text-xs font-heading font-bold text-brandYellow flex items-center gap-1.5">
-                                <i class="fa-solid fa-toolbox text-mohoAccent"></i> Choose Active Moho Bone Tool:
-                            </span>
-
-                            <div class="space-y-2">
-                                <button onclick="selectMohoTool('manipulate')" id="toolBtnManipulate" class="w-full text-left p-2.5 rounded-xl border bg-purple-950 border-mohoAccent text-mohoAccent font-bold text-xs font-mono flex items-center justify-between shadow">
-                                    <span class="flex items-center gap-2"><i class="fa-solid fa-hand-pointer text-brandYellow"></i> Drag Bones Directly (Key: Z)</span>
-                                    <span class="text-[10px] bg-mohoAccent text-slate-950 px-2 py-0.5 rounded font-bold">Active</span>
-                                </button>
-
-                                <button onclick="selectMohoTool('strength')" id="toolBtnStrength" class="w-full text-left p-2.5 rounded-xl border bg-slate-900 border-purple-900/60 text-purple-200 hover:border-mohoAccent font-bold text-xs font-mono flex items-center justify-between">
-                                    <span class="flex items-center gap-2"><i class="fa-solid fa-burst text-brandPink"></i> Bone Strength Radius (Key: S)</span>
-                                    <span class="text-[10px] bg-slate-800 text-purple-400 px-2 py-0.5 rounded">Select</span>
-                                </button>
-
-                                <button onclick="selectMohoTool('add')" id="toolBtnAdd" class="w-full text-left p-2.5 rounded-xl border bg-slate-900 border-purple-900/60 text-purple-200 hover:border-mohoAccent font-bold text-xs font-mono flex items-center justify-between">
-                                    <span class="flex items-center gap-2"><i class="fa-solid fa-plus-circle text-brandGreen"></i> Add Bone (Key: A)</span>
-                                    <span class="text-[10px] bg-slate-800 text-purple-400 px-2 py-0.5 rounded">Select</span>
-                                </button>
-                            </div>
-                        </div>
-
-                        <!-- Bone Strength Interactive Slider -->
-                        <div class="bg-slate-900 p-4 rounded-2xl border border-mohoBorder space-y-3">
-                            <div class="flex justify-between items-center text-xs font-heading">
-                                <span class="text-white flex items-center gap-1.5">
-                                    <i class="fa-solid fa-sliders text-brandPink"></i> Bone Strength Radius:
-                                </span>
-                                <span id="strengthValueText" class="text-brandYellow font-mono font-bold bg-purple-950 px-2 py-0.5 rounded border border-purple-800">
-                                    40% (Ideal)
-                                </span>
-                            </div>
-
-                            <input id="boneStrengthSlider" type="range" min="0" max="100" value="40" oninput="updateBoneStrength(this.value)" class="w-full accent-brandPink bg-slate-950 h-2 rounded-lg cursor-pointer">
-
-                            <div id="strengthFeedbackBox" class="text-[11px] text-brandGreen bg-emerald-950/40 p-2.5 rounded-xl border border-brandGreen/40 flex items-start gap-2">
-                                <i class="fa-solid fa-circle-check text-sm shrink-0 mt-0.5"></i>
-                                <span id="strengthFeedbackText"><b>Perfect Strength (40%):</b> Each bone cleanly controls its own separate drawing layer without pulling other limbs!</span>
-                            </div>
-                        </div>
-
-                        <!-- Toggle Options -->
-                        <div class="flex items-center justify-between bg-slate-900 p-3 rounded-xl border border-purple-900/50 text-xs">
-                            <span class="text-purple-200 font-heading">Show Skeleton Bones & Handles:</span>
-                            <button onclick="toggleSkeletonVisibility()" id="toggleBonesBtn" class="bg-brandGreen text-slate-950 font-bold px-3 py-1 rounded-lg text-xs hover:bg-emerald-400 transition">
-                                Visible ON
-                            </button>
-                        </div>
-
-                        <!-- Dynamic Tool Guidance Message -->
-                        <div id="stickmanStatusBox" class="text-[11px] text-purple-200 bg-slate-900/80 p-3 rounded-xl border border-mohoAccent/40 flex items-center gap-2">
-                            <i class="fa-solid fa-lightbulb text-brandYellow text-base shrink-0"></i>
-                            <span id="stickmanStatusText">Click and drag any glowing handle on the canvas stickman to test live bone movement!</span>
-                        </div>
-
-                    </div>
+                <!-- Right Feature: Latest Animation Thumbnail & Info -->
+                <div class="lg:col-span-5" id="hero-latest-container">
+                    <!-- Populated via JavaScript dynamically with Latest Animation -->
                 </div>
-            </section>
+            </div>
+        </section>
 
-            <section id="stickmanGuideSection" class="bg-mohoPanel p-6 md:p-8 rounded-3xl border border-mohoBorder space-y-6 shadow-xl">
-                <div class="border-b border-mohoBorder pb-4 flex flex-col md:flex-row md:items-center justify-between gap-2">
-                    <div>
-                        <h3 class="font-heading font-bold text-2xl text-white flex items-center gap-2">
-                            <i class="fa-solid fa-book-open-reader text-brandPink"></i> 🦴 Multi-Layer Stickman & Bones Guide (10 Simple Steps)
-                        </h3>
-                        <p class="text-xs text-purple-300 mt-1">Follow these simple steps to draw each body part on its own layer and attach bones easily!</p>
-                    </div>
-                    <span class="bg-brandGreen/20 text-brandGreen font-heading text-xs font-bold px-3 py-1.5 rounded-full border border-brandGreen/40 w-fit">
-                        <i class="fa-solid fa-check-double mr-1"></i> Easy 10-Step Method
-                    </span>
+        <!-- PUBLIC SHOWCASE VIEW -->
+        <section id="section-home" class="space-y-8">
+            <!-- Filter Bar -->
+            <div class="flex flex-col md:flex-row gap-4 items-start md:items-center justify-between border-b border-slate-800/80 pb-6">
+                <!-- Tag Filter Buttons -->
+                <div class="flex flex-wrap items-center gap-2" id="category-filters">
+                    <button onclick="filterCategory('All')" class="cat-btn px-4 py-1.5 rounded-full text-xs font-semibold bg-brand-600 text-white shadow-md">All Works</button>
+                    <button onclick="filterCategory('2D')" class="cat-btn px-4 py-1.5 rounded-full text-xs font-semibold bg-slate-900 text-slate-400 hover:text-white border border-slate-800">2D Animation</button>
+                    <button onclick="filterCategory('3D')" class="cat-btn px-4 py-1.5 rounded-full text-xs font-semibold bg-slate-900 text-slate-400 hover:text-white border border-slate-800">3D Graphics</button>
+                    <button onclick="filterCategory('VFX')" class="cat-btn px-4 py-1.5 rounded-full text-xs font-semibold bg-slate-900 text-slate-400 hover:text-white border border-slate-800">VFX & Trailer</button>
+                    <button onclick="filterCategory('Short Film')" class="cat-btn px-4 py-1.5 rounded-full text-xs font-semibold bg-slate-900 text-slate-400 hover:text-white border border-slate-800">Short Films</button>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 text-xs">
-
-                    <!-- STEP 1 -->
-                    <div class="p-4 rounded-2xl bg-slate-900/90 border border-mohoAccent/50 hover:border-mohoAccent transition space-y-2 shadow-md">
-                        <div class="flex items-center justify-between">
-                            <span class="bg-mohoAccent text-slate-950 font-bold px-2.5 py-0.5 rounded-full font-heading">Step 1</span>
-                            <span class="text-[10px] bg-slate-800 text-purple-300 px-2 py-0.5 rounded border border-purple-800 font-mono">Bone Folder</span>
-                        </div>
-                        <h4 class="font-heading font-bold text-sm text-white">1. Create Master Bone Folder</h4>
-                        <p class="text-purple-200 leading-relaxed">
-                            Click <b>+ New Layer</b> and select <b>Bone Layer</b>. Name it <b>"Stickman Character"</b>. This folder will hold all drawing layers inside!
-                        </p>
-                    </div>
-
-                    <!-- STEP 2 -->
-                    <div class="p-4 rounded-2xl bg-slate-900/90 border border-mohoAccent/50 hover:border-mohoAccent transition space-y-2 shadow-md">
-                        <div class="flex items-center justify-between">
-                            <span class="bg-brandPink text-white font-bold px-2.5 py-0.5 rounded-full font-heading">Step 2</span>
-                            <span class="text-[10px] bg-slate-800 text-purple-300 px-2 py-0.5 rounded border border-purple-800 font-mono">Layer 1: Head</span>
-                        </div>
-                        <h4 class="font-heading font-bold text-sm text-white">2. Draw Head on "Head Layer"</h4>
-                        <p class="text-purple-200 leading-relaxed">
-                            Create a Vector layer named <b>"Head"</b> inside the bone folder. Draw the face circle, eyes, and smile here!
-                        </p>
-                    </div>
-
-                    <!-- STEP 3 -->
-                    <div class="p-4 rounded-2xl bg-slate-900/90 border border-mohoAccent/50 hover:border-mohoAccent transition space-y-2 shadow-md">
-                        <div class="flex items-center justify-between">
-                            <span class="bg-brandYellow text-slate-950 font-bold px-2.5 py-0.5 rounded-full font-heading">Step 3</span>
-                            <span class="text-[10px] bg-slate-800 text-purple-300 px-2 py-0.5 rounded border border-purple-800 font-mono">Layer 2: Torso</span>
-                        </div>
-                        <h4 class="font-heading font-bold text-sm text-white">3. Draw Body Spine on "Torso Layer"</h4>
-                        <p class="text-purple-200 leading-relaxed">
-                            Create a new Vector layer named <b>"Torso"</b>. Draw the vertical line for the body chest and spine line.
-                        </p>
-                    </div>
-
-                    <!-- STEP 4 -->
-                    <div class="p-4 rounded-2xl bg-slate-900/90 border border-mohoAccent/50 hover:border-mohoAccent transition space-y-2 shadow-md">
-                        <div class="flex items-center justify-between">
-                            <span class="bg-brandPurple text-white font-bold px-2.5 py-0.5 rounded-full font-heading">Step 4</span>
-                            <span class="text-[10px] bg-slate-800 text-purple-300 px-2 py-0.5 rounded border border-purple-800 font-mono">Layer 3 & 4: Arms</span>
-                        </div>
-                        <h4 class="font-heading font-bold text-sm text-white">4. Draw Arms on Separate Arm Layers</h4>
-                        <p class="text-purple-200 leading-relaxed">
-                            Create two separate layers: <b>"Left Arm"</b> and <b>"Right Arm"</b>. Draw straight arm lines on each layer starting from the shoulder!
-                        </p>
-                    </div>
-
-                    <!-- STEP 5 -->
-                    <div class="p-4 rounded-2xl bg-slate-900/90 border border-mohoAccent/50 hover:border-mohoAccent transition space-y-2 shadow-md">
-                        <div class="flex items-center justify-between">
-                            <span class="bg-brandGreen text-slate-950 font-bold px-2.5 py-0.5 rounded-full font-heading">Step 5</span>
-                            <span class="text-[10px] bg-slate-800 text-purple-300 px-2 py-0.5 rounded border border-purple-800 font-mono">Layer 5 & 6: Legs</span>
-                        </div>
-                        <h4 class="font-heading font-bold text-sm text-white">5. Draw Legs on Separate Leg Layers</h4>
-                        <p class="text-purple-200 leading-relaxed">
-                            Create layers named <b>"Left Leg"</b> and <b>"Right Leg"</b>. Draw leg lines down from the waist hip area!
-                        </p>
-                    </div>
-
-                    <!-- STEP 6 -->
-                    <div class="p-4 rounded-2xl bg-slate-900/90 border border-mohoAccent/50 hover:border-mohoAccent transition space-y-2 shadow-md">
-                        <div class="flex items-center justify-between">
-                            <span class="bg-mohoAccent text-slate-950 font-bold px-2.5 py-0.5 rounded-full font-heading">Step 6</span>
-                            <span class="text-[10px] bg-slate-800 text-purple-300 px-2 py-0.5 rounded border border-purple-800 font-mono">Add Bone Tool: A</span>
-                        </div>
-                        <h4 class="font-heading font-bold text-sm text-white">6. Add Spine & Head Bones</h4>
-                        <p class="text-purple-200 leading-relaxed">
-                            Select the Bone Folder, press <b>Key "A"</b> (Add Bone). Click at the waist and drag up to neck (Spine Bone). Drag again from neck to top of head (Head Bone)!
-                        </p>
-                    </div>
-
-                    <!-- STEP 7 -->
-                    <div class="p-4 rounded-2xl bg-slate-900/90 border border-mohoAccent/50 hover:border-mohoAccent transition space-y-2 shadow-md">
-                        <div class="flex items-center justify-between">
-                            <span class="bg-brandPink text-white font-bold px-2.5 py-0.5 rounded-full font-heading">Step 7</span>
-                            <span class="text-[10px] bg-slate-800 text-purple-300 px-2 py-0.5 rounded border border-purple-800 font-mono">Arm & Leg Bones</span>
-                        </div>
-                        <h4 class="font-heading font-bold text-sm text-white">7. Add Limb Bones</h4>
-                        <p class="text-purple-200 leading-relaxed">
-                            Drag bones from shoulder to hand for arms, and hip to foot for legs. Link each arm and leg bone back to the spine bone!
-                        </p>
-                    </div>
-
-                    <!-- STEP 8 -->
-                    <div class="p-4 rounded-2xl bg-slate-900/90 border border-mohoAccent/50 hover:border-mohoAccent transition space-y-2 shadow-md">
-                        <div class="flex items-center justify-between">
-                            <span class="bg-brandYellow text-slate-950 font-bold px-2.5 py-0.5 rounded-full font-heading">Step 8</span>
-                            <span class="text-[10px] bg-slate-800 text-purple-300 px-2 py-0.5 rounded border border-purple-800 font-mono">Bone Strength: S</span>
-                        </div>
-                        <h4 class="font-heading font-bold text-sm text-white">8. Adjust Bone Strength Radius</h4>
-                        <p class="text-purple-200 leading-relaxed">
-                            Press <b>Key "S"</b> and drag left to shrink the glowing red strength bubbles so each bone only influences its own layer!
-                        </p>
-                    </div>
-
-                    <!-- STEP 9 -->
-                    <div class="p-4 rounded-2xl bg-slate-900/90 border border-mohoAccent/50 hover:border-mohoAccent transition space-y-2 shadow-md">
-                        <div class="flex items-center justify-between">
-                            <span class="bg-brandPurple text-white font-bold px-2.5 py-0.5 rounded-full font-heading">Step 9</span>
-                            <span class="text-[10px] bg-slate-800 text-purple-300 px-2 py-0.5 rounded border border-purple-800 font-mono">Flexi-Bind</span>
-                        </div>
-                        <h4 class="font-heading font-bold text-sm text-white">9. Bind Layers to Bones</h4>
-                        <p class="text-purple-200 leading-relaxed">
-                            Select all bones (`Ctrl + A`) and click <b>Bone &gt; Flexi-Bind Layer</b> in the top menu. This glues your drawing lines to the skeleton!
-                        </p>
-                    </div>
-
-                    <!-- STEP 10 -->
-                    <div class="md:col-span-2 lg:col-span-1 p-4 rounded-2xl bg-gradient-to-r from-purple-900 to-slate-900 border border-brandGreen hover:border-emerald-400 transition space-y-2 shadow-md">
-                        <div class="flex items-center justify-between">
-                            <span class="bg-brandGreen text-slate-950 font-bold px-2.5 py-0.5 rounded-full font-heading">Step 10</span>
-                            <span class="text-[10px] bg-slate-900 text-brandGreen px-2 py-0.5 rounded border border-brandGreen/40 font-mono">Manipulate: Z</span>
-                        </div>
-                        <h4 class="font-heading font-bold text-sm text-white">10. Animate Live!</h4>
-                        <p class="text-purple-200 leading-relaxed">
-                            Press <b>Key "Z"</b> (Manipulate Tool) and drag any bone! Your stickman puppet will wave, jump, run, and dance!
-                        </p>
-                    </div>
-
+                <!-- Creator Filter Select -->
+                <div class="flex items-center gap-2 w-full md:w-auto">
+                    <label class="text-xs font-semibold text-slate-400 shrink-0">Filter Creator:</label>
+                    <select id="creator-filter" onchange="applyFilters()" class="w-full md:w-48 bg-slate-900 border border-slate-800 text-slate-200 text-xs rounded-xl px-3 py-2 focus:outline-none focus:border-brand-500">
+                        <option value="All">All Animators</option>
+                    </select>
                 </div>
-            </section>
+            </div>
 
-        </div>
+            <!-- Videos Grid -->
+            <div id="video-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Video cards rendered via JS -->
+            </div>
 
+            <!-- Empty State -->
+            <div id="no-videos-msg" class="hidden text-center py-16 bg-slate-900/50 rounded-3xl border border-slate-800/80">
+                <i class="fa-solid fa-clapperboard text-4xl text-slate-600 mb-3 block"></i>
+                <h3 class="text-lg font-bold text-slate-300">No animations found</h3>
+                <p class="text-xs text-slate-500 mt-1">Try adjusting your filters or search criteria.</p>
+            </div>
+        </section>
 
-        <!-- =================================================================== -->
-        <!-- TOPIC 1: SWITCH LAYERS WORKSHOP -->
-        <!-- =================================================================== -->
-        <div id="topic1View" class="hidden space-y-10">
-            
-            <section class="bg-gradient-to-r from-mohoPanel to-[#201a38] p-6 md:p-8 rounded-3xl border border-mohoBorder/80 space-y-4 relative overflow-hidden shadow-xl">
-                <div class="absolute -top-12 -right-12 w-44 h-44 bg-mohoAccent/10 rounded-full blur-3xl pointer-events-none"></div>
-                <div class="flex items-center gap-2">
-                    <span class="bg-mohoAccent/20 border border-mohoAccent/40 text-mohoAccent font-heading font-bold text-xs uppercase tracking-widest px-3.5 py-1 rounded-full">
-                        ✨ Animation Lesson #2
-                    </span>
-                    <span class="bg-brandPink/20 border border-brandPink/40 text-brandPink font-heading font-bold text-xs px-3 py-1 rounded-full">
-                        Switch Layers
-                    </span>
+        <!-- ANIMATORS DIRECTORY VIEW -->
+        <section id="section-animators" class="hidden space-y-8">
+            <div class="border-b border-slate-800/80 pb-6">
+                <h2 class="text-2xl font-black text-white tracking-tight">Our Animation Artists</h2>
+                <p class="text-xs text-slate-400 mt-1">Select an animator to explore their full profile and individual project gallery.</p>
+            </div>
+
+            <div id="animators-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Animator Cards rendered via JS -->
+            </div>
+        </section>
+
+        <!-- SINGLE ANIMATOR PROFILE DETAIL VIEW -->
+        <section id="section-profile" class="hidden space-y-8">
+            <!-- Back Button -->
+            <button onclick="showSection('animators')" class="inline-flex items-center gap-2 text-xs font-bold text-slate-400 hover:text-white bg-slate-900 px-4 py-2 rounded-xl border border-slate-800 transition-colors">
+                <i class="fa-solid fa-arrow-left"></i> Back to All Animators
+            </button>
+
+            <!-- Animator Header Banner -->
+            <div id="profile-header-card" class="glass-panel rounded-3xl p-6 sm:p-8 border border-slate-800 relative overflow-hidden">
+                <!-- Injected via JS -->
+            </div>
+
+            <div>
+                <h3 class="text-xl font-extrabold text-white mb-6 flex items-center gap-2">
+                    <i class="fa-solid fa-film text-brand-accent"></i> Portfolio Works
+                </h3>
+                <div id="animator-videos-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Animator specific videos -->
                 </div>
-                <h2 class="text-3xl md:text-4xl font-heading font-bold text-white">
-                    Mastering <span class="text-brandYellow">Switch Layers</span> for Mouth Lip-Sync
-                </h2>
-                <p class="text-purple-200 text-sm md:text-base leading-relaxed max-w-4xl">
-                    Imagine having a magic deck of picture cards stored in a single folder. One card shows a <b>Smile 😊</b>, one shows an <b>"O" mouth 😮</b>, and another shows an <b>Open Mouth 🗣️</b>. A <b>Switch Layer</b> lets you pick which card is visible with <b>1 click</b>!
-                </p>
-            </section>
-
-            <section id="simulatorSection1" class="bg-mohoDark rounded-3xl border-2 border-mohoAccent shadow-2xl overflow-hidden glow-cyan space-y-0">
-                <div class="bg-mohoHeader px-5 py-3 border-b border-mohoBorder flex flex-wrap items-center justify-between gap-2">
-                    <span class="text-xs font-mono text-purple-300 font-semibold flex items-center gap-2">
-                        <i class="fa-solid fa-desktop text-mohoAccent"></i> 🕹️ Switch Layer Interactive Studio
-                    </span>
-                    <button onclick="resetWorkshop1()" class="bg-slate-800 hover:bg-slate-700 text-purple-200 text-xs font-heading font-bold px-3 py-1 rounded-lg border border-mohoBorder transition flex items-center gap-1">
-                        <i class="fa-solid fa-rotate-left text-brandYellow"></i> Reset
-                    </button>
-                </div>
-
-                <div class="grid grid-cols-1 lg:grid-cols-12 min-h-[420px]">
-                    <!-- Left Canvas -->
-                    <div class="lg:col-span-7 bg-[#090712] p-5 flex flex-col justify-between border-b lg:border-b-0 lg:border-r border-mohoBorder relative min-h-[300px]">
-                        <div class="w-full flex justify-between items-center text-xs font-mono border-b border-purple-950 pb-2">
-                            <span class="text-purple-300 flex items-center gap-1.5"><i class="fa-solid fa-eye text-mohoAccent"></i> Character Preview</span>
-                            <span id="activeMouthLabel" class="text-brandYellow font-bold bg-purple-950 px-2.5 py-1 rounded border border-purple-800">Active Shape: Default Line</span>
-                        </div>
-
-                        <div class="my-auto py-4 flex justify-center items-center">
-                            <svg width="220" height="180" viewBox="0 0 210 190" class="drop-shadow-2xl">
-                                <path d="M 60 70 C 50 10, 160 10, 150 70 Z" fill="#8b5cf6" />
-                                <circle cx="105" cy="95" r="50" fill="#fbcfe8" />
-                                <circle cx="85" cy="85" r="7" fill="#1e1b4b" />
-                                <circle cx="125" cy="85" r="7" fill="#1e1b4b" />
-                                <circle cx="87" cy="83" r="2.5" fill="#ffffff" />
-                                <circle cx="127" cy="83" r="2.5" fill="#ffffff" />
-                                <circle cx="72" cy="98" r="8" fill="#f43f5e" opacity="0.3" />
-                                <circle cx="138" cy="98" r="8" fill="#f43f5e" opacity="0.3" />
-
-                                <g id="canvasMouthGroup">
-                                    <path id="mouthDefault" class="mouth-layer-item" d="M 92 118 Q 105 122 118 118" fill="transparent" stroke="#1e1b4b" stroke-width="3" stroke-linecap="round" />
-                                    <path id="mouthSmile" class="mouth-layer-item hidden" d="M 88 112 Q 105 132 122 112 Z" fill="#f43f5e" stroke="#1e1b4b" stroke-width="3" stroke-linejoin="round" />
-                                    <circle id="mouthO" class="mouth-layer-item hidden" cx="105" cy="118" r="11" fill="#1e1b4b" />
-                                    <path id="mouthTalk" class="mouth-layer-item hidden" d="M 90 112 Q 105 128 120 112 Q 105 106 90 112" fill="#1e1b4b" stroke="#f43f5e" stroke-width="2" />
-                                    <rect id="mouthSurprise" class="mouth-layer-item hidden" x="95" y="108" width="20" height="24" rx="10" fill="#1e1b4b" stroke="#ffffff" stroke-width="2" />
-                                </g>
-                            </svg>
-                        </div>
-
-                        <div id="canvasControls" class="w-full space-y-2 pt-2 border-t border-purple-950">
-                            <button onclick="triggerDialogueRoutine()" class="w-full bg-gradient-to-r from-brandPink to-brandYellow text-slate-950 font-heading font-bold text-xs py-2.5 px-3 rounded-xl shadow bouncy-hover flex items-center justify-center gap-2">
-                                <i class="fa-solid fa-play text-sm"></i> Play Animated Lip Sync Routine!
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- Right Controls -->
-                    <div class="lg:col-span-5 bg-mohoPanel p-4 flex flex-col justify-between space-y-4">
-                        <div class="space-y-4">
-                            <div class="bg-mohoHeader p-2.5 rounded-xl border border-mohoBorder flex items-center justify-between">
-                                <span class="text-xs font-heading font-bold text-white flex items-center gap-2">
-                                    <i class="fa-solid fa-layer-group text-mohoAccent"></i> Simulated Layers
-                                </span>
-                                <div class="relative">
-                                    <button id="addLayerBtn" onclick="toggleLayerMenu()" class="bg-mohoAccent text-slate-950 font-bold px-3 py-1.5 rounded-lg text-xs font-heading shadow hover:bg-cyan-300 transition flex items-center gap-1.5 pulse-target">
-                                        <i class="fa-solid fa-plus"></i> New Layer
-                                    </button>
-                                    <div id="layerDropdown" class="hidden absolute right-0 top-9 w-48 bg-slate-900 border-2 border-mohoAccent rounded-xl shadow-2xl z-30 py-2 text-xs text-purple-200">
-                                        <button id="selectSwitchOption" onclick="createSwitchLayer()" class="w-full text-left px-3 py-2 bg-mohoAccent/20 hover:bg-mohoAccent/40 text-mohoAccent font-bold flex items-center gap-2">
-                                            <i class="fa-solid fa-arrows-repeat text-mohoAccent"></i> Switch Layer 🌟
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div id="layerNameBox" class="hidden bg-slate-900 p-3 rounded-xl border border-mohoAccent/60 space-y-2">
-                                <label class="text-[11px] font-bold text-brandYellow block">Name Your Switch Folder:</label>
-                                <div class="flex gap-2">
-                                    <input id="layerNameInput" type="text" value="Mouth Shapes" class="bg-slate-950 text-white text-xs px-2.5 py-1.5 rounded-lg border border-purple-800 focus:outline-none focus:border-mohoAccent w-full font-mono">
-                                    <button onclick="confirmLayerName()" class="bg-brandGreen text-slate-950 font-bold px-3 py-1.5 rounded-lg text-xs hover:bg-emerald-400 transition whitespace-nowrap">Save Name</button>
-                                </div>
-                            </div>
-
-                            <div class="space-y-2 text-xs font-mono">
-                                <div id="switchLayerTree" class="hidden space-y-1.5">
-                                    <div class="bg-purple-950/90 p-2.5 rounded-xl border border-mohoAccent text-mohoAccent font-bold flex items-center justify-between shadow">
-                                        <span id="displayFolderName" class="flex items-center gap-2"><i class="fa-solid fa-folder-open text-brandYellow"></i> 📁 Switch: Mouth Shapes</span>
-                                        <span class="text-[10px] bg-mohoAccent text-slate-950 px-1.5 py-0.5 rounded font-bold">Switch</span>
-                                    </div>
-                                    <div id="subLayersContainer" class="pl-4 space-y-1 hidden"></div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div id="addDrawingsAction" class="hidden pt-2 border-t border-mohoBorder">
-                            <button onclick="populateSampleMouths()" class="w-full bg-gradient-to-r from-brandPurple to-indigo-600 hover:from-purple-500 text-white font-heading text-xs py-2.5 px-3 rounded-xl shadow bouncy-hover flex items-center justify-center gap-2">
-                                <i class="fa-solid fa-palette text-brandYellow"></i> Add Sample Mouth Drawings
-                            </button>
-                        </div>
-
-                        <div id="statusInstruction" class="text-[11px] text-purple-300 bg-slate-900/60 p-2.5 rounded-xl border border-purple-900/50 flex items-center gap-2">
-                            <i class="fa-solid fa-circle-info text-mohoAccent shrink-0"></i>
-                            <span id="statusText">Click the glowing <b>"+ New Layer"</b> button above to begin!</span>
-                        </div>
-                    </div>
-                </div>
-            </section>
-        </div>
+            </div>
+        </section>
 
     </main>
 
-    <footer class="max-w-6xl mx-auto px-4 text-center text-purple-400 text-xs border-t border-mohoBorder/60 pt-6 mt-12 space-y-2">
-        <p>© 2026 SCG Anime Pro. Designed for future master animators!</p>
-        <p class="text-base font-heading font-bold text-brandYellow flex items-center justify-center gap-2">
-            <i class="fa-solid fa-heart text-brandPink"></i> Made by Damiru Minthula
-        </p>
+    <!-- Footer -->
+    <footer class="mt-20 border-t border-slate-800/80 bg-slate-950 py-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-4">
+            <div class="flex items-center justify-center gap-2">
+                <div class="w-7 h-7 rounded-lg bg-gradient-to-tr from-brand-600 to-brand-accent p-0.5">
+                    <div class="w-full h-full bg-brand-dark rounded-[6px] flex items-center justify-center">
+                        <i class="fa-solid fa-play text-xs text-cyan-400"></i>
+                    </div>
+                </div>
+                <span class="text-sm font-extrabold text-white tracking-wider">SCG ANIME PRO</span>
+            </div>
+            
+            <!-- Created by Credit -->
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-slate-900 border border-slate-800 text-xs font-semibold text-slate-300">
+                <span>Made by <strong class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-indigo-300 to-pink-500 font-extrabold">Damiru Minthula</strong></span>
+            </div>
+
+            <p class="text-xs text-slate-500 max-w-md mx-auto leading-relaxed">
+                Empowering visual storytellers and digital animators. All animation media rights belong to their respective creators.
+            </p>
+
+            <!-- Small discreet Admin Portal Link -->
+            <div class="pt-4 border-t border-slate-900/60 flex items-center justify-between text-xs text-slate-600 px-2">
+                <span>&copy; <span id="year-span">2026</span> SCG Anime Pro. All rights reserved.</span>
+                <button onclick="openAdminAuth()" class="hover:text-slate-400 underline transition-colors cursor-pointer text-[11px] tracking-wide">
+                    Admin Portal
+                </button>
+            </div>
+        </div>
     </footer>
 
+
+    <!-- 1. ADMIN PIN AUTH MODAL -->
+    <div id="modal-pin-auth" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md hidden items-center justify-center p-4">
+        <div class="glass-panel w-full max-w-sm rounded-3xl p-6 border border-slate-800 shadow-2xl relative">
+            <button onclick="closeModal('modal-pin-auth')" class="absolute top-4 right-4 text-slate-500 hover:text-white text-sm w-8 h-8 rounded-full bg-slate-900 flex items-center justify-center">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div class="text-center mb-6">
+                <div class="w-12 h-12 rounded-2xl bg-brand-600/20 border border-brand-500/30 flex items-center justify-center mx-auto mb-3 text-brand-cyan">
+                    <i class="fa-solid fa-shield-halved text-xl"></i>
+                </div>
+                <h3 class="text-xl font-bold text-white">Admin Authentication</h3>
+                <p class="text-xs text-slate-400 mt-1">Enter your authorization PIN to access management portal.</p>
+            </div>
+
+            <form onsubmit="handlePinSubmit(event)" class="space-y-4">
+                <div>
+                    <input type="password" id="admin-pin-input" placeholder="Enter Security PIN" maxlength="6" autofocus
+                           class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-3 text-center text-xl font-mono tracking-widest text-white focus:outline-none focus:border-brand-500 transition-colors">
+                    <p id="pin-error" class="text-rose-500 text-xs text-center mt-2 font-medium hidden">
+                        <i class="fa-solid fa-triangle-exclamation mr-1"></i> Invalid PIN code. Access denied.
+                    </p>
+                </div>
+
+                <button type="submit" class="w-full py-3 rounded-xl bg-gradient-to-r from-brand-600 to-indigo-600 text-white font-bold text-sm hover:from-brand-500 hover:to-indigo-500 transition-all shadow-lg shadow-indigo-600/30">
+                    Unlock Portal
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- 2. ADMIN DASHBOARD OVERLAY MODAL -->
+    <div id="modal-admin-dashboard" class="fixed inset-0 z-50 bg-slate-950/90 backdrop-blur-lg hidden overflow-y-auto custom-scrollbar">
+        <div class="max-w-6xl mx-auto px-4 py-8">
+            <!-- Header Bar -->
+            <div class="flex items-center justify-between pb-6 border-b border-slate-800 mb-8">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-brand-accent/20 border border-brand-accent/30 text-brand-accent flex items-center justify-center">
+                        <i class="fa-solid fa-sliders text-lg"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-2xl font-black text-white">SCG Admin Control Center</h2>
+                        <p class="text-xs text-slate-400">Manage animations, creator profiles, and export GitHub-sync direct code</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-2">
+                    <button onclick="resetDataToDefault()" class="px-3 py-2 rounded-xl text-xs font-semibold text-rose-400 bg-rose-500/10 hover:bg-rose-500/20 border border-rose-500/20 transition-colors">
+                        <i class="fa-solid fa-rotate-left mr-1"></i> Reset Defaults
+                    </button>
+                    <button onclick="closeModal('modal-admin-dashboard')" class="px-4 py-2 rounded-xl text-xs font-bold text-slate-300 bg-slate-900 hover:bg-slate-800 border border-slate-800 transition-colors">
+                        <i class="fa-solid fa-xmark mr-1"></i> Exit Admin
+                    </button>
+                </div>
+            </div>
+
+            <!-- Admin Tabs including Raw Code -->
+            <div class="flex flex-wrap items-center gap-2 mb-6 border-b border-slate-800/60 pb-3">
+                <button id="admin-tab-videos" onclick="switchAdminTab('videos')" class="px-5 py-2.5 rounded-xl text-xs font-bold bg-brand-600 text-white shadow-md transition-all">
+                    <i class="fa-solid fa-video mr-2"></i> Manage Animations (<span id="admin-video-count">0</span>)
+                </button>
+                <button id="admin-tab-animators" onclick="switchAdminTab('animators')" class="px-5 py-2.5 rounded-xl text-xs font-bold bg-slate-900 text-slate-400 hover:text-white border border-slate-800 transition-all">
+                    <i class="fa-solid fa-user-gear mr-2"></i> Manage Animators (<span id="admin-animator-count">0</span>)
+                </button>
+                <button id="admin-tab-code" onclick="switchAdminTab('code')" class="px-5 py-2.5 rounded-xl text-xs font-bold bg-slate-900 text-emerald-400 hover:text-emerald-300 border border-slate-800 transition-all">
+                    <i class="fa-solid fa-code mr-2"></i> Raw Code (GitHub Sync)
+                </button>
+            </div>
+
+            <!-- TAB 1: MANAGE VIDEOS -->
+            <div id="admin-view-videos" class="space-y-6">
+                <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 glass-panel p-4 rounded-2xl">
+                    <div class="relative w-full sm:w-72">
+                        <i class="fa-solid fa-search absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 text-xs"></i>
+                        <input type="text" id="admin-video-search" oninput="renderAdminVideos()" placeholder="Search manage list..." 
+                               class="w-full bg-slate-900 border border-slate-800 text-xs rounded-xl pl-9 pr-3 py-2 text-slate-200 focus:outline-none focus:border-brand-500">
+                    </div>
+                    <button onclick="openVideoFormModal()" class="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 text-white text-xs font-bold hover:opacity-90 transition-opacity flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-plus"></i> Add New Animation Work
+                    </button>
+                </div>
+
+                <div class="overflow-x-auto rounded-2xl border border-slate-800 bg-slate-900/60">
+                    <table class="w-full text-left text-xs text-slate-300">
+                        <thead class="bg-slate-900 text-slate-400 font-bold uppercase tracking-wider border-b border-slate-800">
+                            <tr>
+                                <th class="p-4">Media</th>
+                                <th class="p-4">Title</th>
+                                <th class="p-4">Creator / Animator</th>
+                                <th class="p-4">Category</th>
+                                <th class="p-4 text-right">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="admin-videos-tbody" class="divide-y divide-slate-800/60">
+                            <!-- Injected JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- TAB 2: MANAGE ANIMATORS -->
+            <div id="admin-view-animators" class="space-y-6 hidden">
+                <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 glass-panel p-4 rounded-2xl">
+                    <p class="text-xs text-slate-400">Add, edit, or delete artist profiles to organize showcase uploads.</p>
+                    <button onclick="openAnimatorFormModal()" class="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-gradient-to-r from-brand-600 to-indigo-600 text-white text-xs font-bold hover:opacity-90 transition-opacity flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-user-plus"></i> Add New Animator Profile
+                    </button>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="admin-animators-list">
+                    <!-- Injected JS -->
+                </div>
+            </div>
+
+            <!-- TAB 3: RAW CODE / GITHUB SYNC (NEW TAB) -->
+            <div id="admin-view-code" class="space-y-6 hidden">
+                <div class="p-5 rounded-2xl bg-emerald-950/30 border border-emerald-500/30 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+                    <div class="space-y-1">
+                        <div class="flex items-center gap-2">
+                            <i class="fa-brands fa-github text-emerald-400 text-lg"></i>
+                            <h4 class="text-sm font-bold text-white">Direct Code & GitHub Sync Engine</h4>
+                        </div>
+                        <p class="text-xs text-slate-300 leading-relaxed max-w-2xl">
+                            All changes made in Admin (adding/editing animations or profiles) are automatically compiled into this full source code string with hardcoded defaults. Copy or download this updated file to replace your website's <code class="bg-slate-900 px-1.5 py-0.5 rounded text-emerald-400">index.html</code> on GitHub!
+                        </p>
+                    </div>
+
+                    <div class="flex flex-wrap items-center gap-2 shrink-0">
+                        <button onclick="copyRawCodeToClipboard()" class="px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold shadow-lg shadow-emerald-600/30 transition-all flex items-center gap-2">
+                            <i class="fa-regular fa-copy"></i> Copy Full Code
+                        </button>
+                        <button onclick="downloadUpdatedCodeFile()" class="px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 text-xs font-bold transition-all flex items-center gap-2">
+                            <i class="fa-solid fa-download"></i> Download index.html
+                        </button>
+                        <button onclick="updateRawCodeView()" class="px-3 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-400 text-xs font-bold transition-all" title="Refresh Live Code">
+                            <i class="fa-solid fa-rotate"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Toast notification for copy action -->
+                <div id="copy-toast" class="hidden p-3 rounded-xl bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 text-xs font-semibold items-center justify-between">
+                    <span><i class="fa-solid fa-circle-check mr-2"></i> Source code copied to clipboard! Ready to paste into GitHub repository.</span>
+                    <button onclick="document.getElementById('copy-toast').classList.add('hidden')" class="text-emerald-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
+                </div>
+
+                <!-- Raw Code Codearea container -->
+                <div class="relative rounded-2xl overflow-hidden border border-slate-800 bg-slate-950 font-mono">
+                    <div class="px-4 py-3 bg-slate-900/90 border-b border-slate-800 flex items-center justify-between text-xs text-slate-400">
+                        <span class="flex items-center gap-2">
+                            <i class="fa-solid fa-file-code text-brand-cyan"></i>
+                            <strong class="text-slate-200">index.html</strong> (Live Dynamic Build)
+                        </span>
+                        <span id="raw-code-char-count" class="text-[11px] text-slate-500">0 chars</span>
+                    </div>
+                    <textarea id="raw-code-textarea" readonly rows="18" 
+                              class="w-full p-4 bg-slate-950 text-emerald-400/90 text-xs font-mono focus:outline-none custom-scrollbar resize-y selection:bg-brand-600 selection:text-white"
+                              placeholder="Generating direct source code..."></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3. ADD / EDIT VIDEO FORM MODAL -->
+    <div id="modal-video-form" class="fixed inset-0 z-[60] bg-black/80 backdrop-blur-md hidden items-center justify-center p-4">
+        <div class="glass-panel w-full max-w-lg rounded-3xl p-6 border border-slate-800 shadow-2xl relative max-h-[90vh] overflow-y-auto custom-scrollbar">
+            <button onclick="closeModal('modal-video-form')" class="absolute top-4 right-4 text-slate-500 hover:text-white text-sm w-8 h-8 rounded-full bg-slate-900 flex items-center justify-center">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <h3 class="text-lg font-bold text-white mb-4" id="video-form-title">Add New Animation</h3>
+
+            <form onsubmit="saveVideo(event)" class="space-y-4">
+                <input type="hidden" id="video-form-id">
+
+                <div>
+                    <label class="block text-xs font-semibold text-slate-300 mb-1">YouTube URL <span class="text-rose-500">*</span></label>
+                    <input type="url" id="vf-youtube-url" required placeholder="e.g. https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+                           class="w-full bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-brand-500">
+                    <span class="text-[10px] text-slate-500 mt-1 block">Full YouTube link or share URL. Direct thumbnail & embed will be derived automatically.</span>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-slate-300 mb-1">Animation Title <span class="text-rose-500">*</span></label>
+                    <input type="text" id="vf-title" required placeholder="e.g. Cyber Blade 2099 - Prologue"
+                           class="w-full bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-brand-500">
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-300 mb-1">Creator / Animator <span class="text-rose-500">*</span></label>
+                        <select id="vf-creator" required class="w-full bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-brand-500">
+                            <!-- Populated via JS -->
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-300 mb-1">Category Tag</label>
+                        <select id="vf-category" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-brand-500">
+                            <option value="2D">2D Animation</option>
+                            <option value="3D">3D Graphics</option>
+                            <option value="VFX">VFX & Trailer</option>
+                            <option value="Short Film">Short Film</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-slate-300 mb-1">Description</label>
+                    <textarea id="vf-description" rows="3" placeholder="Brief summary of story, tools used, or studio credits..."
+                              class="w-full bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-brand-500 custom-scrollbar"></textarea>
+                </div>
+
+                <div class="flex items-center justify-end gap-3 pt-2">
+                    <button type="button" onclick="closeModal('modal-video-form')" class="px-4 py-2 rounded-xl text-xs font-semibold text-slate-400 hover:text-white bg-slate-900 border border-slate-800">
+                        Cancel
+                    </button>
+                    <button type="submit" class="px-5 py-2 rounded-xl text-xs font-bold text-white bg-brand-600 hover:bg-brand-500 shadow-md">
+                        Save Project
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- 4. ADD / EDIT ANIMATOR FORM MODAL -->
+    <div id="modal-animator-form" class="fixed inset-0 z-[60] bg-black/80 backdrop-blur-md hidden items-center justify-center p-4">
+        <div class="glass-panel w-full max-w-md rounded-3xl p-6 border border-slate-800 shadow-2xl relative">
+            <button onclick="closeModal('modal-animator-form')" class="absolute top-4 right-4 text-slate-500 hover:text-white text-sm w-8 h-8 rounded-full bg-slate-900 flex items-center justify-center">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <h3 class="text-lg font-bold text-white mb-4" id="animator-form-title">Add Animator Profile</h3>
+
+            <form onsubmit="saveAnimator(event)" class="space-y-4">
+                <input type="hidden" id="af-form-id">
+
+                <div>
+                    <label class="block text-xs font-semibold text-slate-300 mb-1">Animator Name <span class="text-rose-500">*</span></label>
+                    <input type="text" id="af-name" required placeholder="e.g. Damiru Minthula"
+                           class="w-full bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-brand-500">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-slate-300 mb-1">Title / Specialization</label>
+                    <input type="text" id="af-role" placeholder="e.g. Lead 2D Animator & Keyframer"
+                           class="w-full bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-brand-500">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-slate-300 mb-1">Avatar Image URL (Optional)</label>
+                    <input type="url" id="af-avatar" placeholder="https://..."
+                           class="w-full bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-brand-500">
+                    <span class="text-[10px] text-slate-500 mt-1 block">Leave empty to use high-quality stylized default avatar.</span>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-slate-300 mb-1">Bio / About</label>
+                    <textarea id="af-bio" rows="3" placeholder="Tell the audience about background, anime style, software used..."
+                              class="w-full bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-brand-500 custom-scrollbar"></textarea>
+                </div>
+
+                <div class="flex items-center justify-end gap-3 pt-2">
+                    <button type="button" onclick="closeModal('modal-animator-form')" class="px-4 py-2 rounded-xl text-xs font-semibold text-slate-400 hover:text-white bg-slate-900 border border-slate-800">
+                        Cancel
+                    </button>
+                    <button type="submit" class="px-5 py-2 rounded-xl text-xs font-bold text-white bg-brand-accent hover:opacity-90 shadow-md">
+                        Save Profile
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- 5. WATCH VIDEO PREVIEW / MODAL -->
+    <div id="modal-video-player" class="fixed inset-0 z-50 bg-black/90 backdrop-blur-md hidden items-center justify-center p-4">
+        <div class="glass-panel w-full max-w-4xl rounded-3xl p-4 sm:p-6 border border-slate-800 shadow-2xl relative">
+            <button onclick="closeModal('modal-video-player')" class="absolute top-4 right-4 text-slate-400 hover:text-white text-base w-9 h-9 rounded-full bg-slate-900 flex items-center justify-center z-10 border border-slate-800">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <!-- Embedded Frame -->
+            <div class="aspect-video w-full rounded-2xl overflow-hidden bg-black mb-4 border border-slate-800 relative shadow-inner">
+                <iframe id="player-iframe" class="w-full h-full" src="" title="YouTube Video Player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+
+            <!-- Video Info & Direct YouTube Action -->
+            <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+                <div>
+                    <div class="flex items-center gap-2 mb-1">
+                        <span id="player-category" class="px-2.5 py-0.5 rounded-full bg-brand-600/20 text-brand-cyan border border-brand-500/30 text-[10px] font-bold uppercase"></span>
+                        <span class="text-xs text-slate-400">Created by <strong id="player-creator" class="text-white cursor-pointer hover:underline" onclick="navigateToCreatorFromPlayer()"></strong></span>
+                    </div>
+                    <h3 id="player-title" class="text-lg font-bold text-white"></h3>
+                    <p id="player-desc" class="text-xs text-slate-400 mt-1 max-w-2xl"></p>
+                </div>
+
+                <!-- DIRECT YOUTUBE LINK BUTTON -->
+                <a id="player-yt-external-link" href="#" target="_blank" rel="noopener noreferrer" 
+                   class="shrink-0 px-5 py-3 rounded-xl bg-red-600 hover:bg-red-500 text-white font-bold text-xs shadow-lg shadow-red-600/30 flex items-center gap-2.5 transition-all">
+                    <i class="fa-brands fa-youtube text-lg"></i>
+                    <span>Open in YouTube Tab</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
     <script>
-        function switchTopic(topicId) {
-            const topic1 = document.getElementById('topic1View');
-            const topic2 = document.getElementById('topic2View');
-            
-            if (topicId === 'topic1') {
-                if (topic1) topic1.classList.remove('hidden');
-                if (topic2) topic2.classList.add('hidden');
-            } else if (topicId === 'topic2') {
-                if (topic1) topic1.classList.add('hidden');
-                if (topic2) topic2.classList.remove('hidden');
+        const STORAGE_KEY_VIDEOS = 'scg_anime_videos_v3';
+        const STORAGE_KEY_ANIMATORS = 'scg_anime_animators_v3';
+        const STORAGE_KEY_RATINGS = 'scg_anime_ratings_v3';
+        const ADMIN_PIN = '2013';
+
+        // Initial Seed Animators (Updated automatically when exporting full source)
+        const DEFAULT_ANIMATORS = [
+            {
+                "id": "animator-damiru",
+                "name": "Damiru Minthula",
+                "role": "Lead 2D Action & FX Specialist",
+                "bio": "Passionate 2D anime artist specializing in intense combat choreography, sakuga frame timing, and dynamic particle VFX.",
+                "avatar": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80",
+                "likes": 128,
+                "dislikes": 2
+            },
+            {
+                "id": "animator-ren",
+                "name": "Ren Takahashi",
+                "role": "3D Environmental & Lighting Artist",
+                "bio": "Crafting immersive sci-fi cyberpunk cities and atmospheric anime background art using Blender and Unreal Engine.",
+                "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80",
+                "likes": 85,
+                "dislikes": 1
+            },
+            {
+                "id": "animator-aisha",
+                "name": "Aisha Vance",
+                "role": "Character Designer & Key Animator",
+                "bio": "Creating expressive character dynamics, fluid motion graphics, and sleek modern aesthetic shorts.",
+                "avatar": "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=400&q=80",
+                "likes": 94,
+                "dislikes": 3
             }
-        }
-
-        // =====================================================================
-        // TOPIC 1 JavaScript Logic (Switch Layers)
-        // =====================================================================
-        let isSwitchCreated = false;
-        let isNameConfirmed = false;
-        let areDrawingsAdded = false;
-
-        const mouthsData = [
-            { id: 'mouthSmile', name: '😊 Big Smile', icon: 'fa-smile' },
-            { id: 'mouthO', name: '😮 "O" Shape', icon: 'fa-circle' },
-            { id: 'mouthTalk', name: '😀 Open Talking', icon: 'fa-comment' },
-            { id: 'mouthSurprise', name: '😲 Surprised', icon: 'fa-face-surprise' }
         ];
 
-        function updateStatusText(htmlMessage) {
-            const el = document.getElementById('statusText');
-            if (el) el.innerHTML = htmlMessage;
-        }
-
-        function toggleLayerMenu() {
-            const menu = document.getElementById('layerDropdown');
-            if (menu) menu.classList.toggle('hidden');
-        }
-
-        function createSwitchLayer() {
-            isSwitchCreated = true;
-            document.getElementById('layerDropdown').classList.add('hidden');
-            document.getElementById('addLayerBtn').classList.remove('pulse-target');
-            document.getElementById('switchLayerTree').classList.remove('hidden');
-            document.getElementById('layerNameBox').classList.remove('hidden');
-            updateStatusText('Great job! Now type a name for your Switch Folder and click <b>Save Name</b>.');
-        }
-
-        function confirmLayerName() {
-            const input = document.getElementById('layerNameInput');
-            const folderLabel = document.getElementById('displayFolderName');
-            const name = input ? input.value.trim() : 'Mouth Shapes';
-
-            if (folderLabel) {
-                folderLabel.innerHTML = `<i class="fa-solid fa-folder-open text-brandYellow"></i> 📁 Switch: ${name}`;
+        // Initial Seed Videos (Updated automatically when exporting full source)
+        const DEFAULT_VIDEOS = [
+            {
+                "id": "vid-1",
+                "title": "Cyber Samurai: Overdrive Sakuga Sequence",
+                "youtubeUrl": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+                "creator": "Damiru Minthula",
+                "category": "2D",
+                "description": "Original 2D action choreography created frame-by-frame featuring high speed katana combat.",
+                "timestamp": 1773000000000
+            },
+            {
+                "id": "vid-2",
+                "title": "Neon Drift - Cyberpunk Concept Teaser",
+                "youtubeUrl": "https://www.youtube.com/watch?v=L_LUpnjgPso",
+                "creator": "Damiru Minthula",
+                "category": "VFX",
+                "description": "Full trailer showcasing lighting, atmospheric shaders, and camera tracking.",
+                "timestamp": 1772900000000
+            },
+            {
+                "id": "vid-3",
+                "title": "Chrono Rift - 3D Anime Boss Showcase",
+                "youtubeUrl": "https://www.youtube.com/watch?v=fJ9rUzIMcZQ",
+                "creator": "Ren Takahashi",
+                "category": "3D",
+                "description": "Cell-shaded 3D character animation with custom toon shaders rendered in Blender.",
+                "timestamp": 1772800000000
+            },
+            {
+                "id": "vid-4",
+                "title": "Spirit Blossom - Short Film Intro",
+                "youtubeUrl": "https://www.youtube.com/watch?v=3JZ_D3ELwOQ",
+                "creator": "Aisha Vance",
+                "category": "Short Film",
+                "description": "Emotive storytelling short featuring custom character designs and watercolor backgrounds.",
+                "timestamp": 1772700000000
             }
+        ];
 
-            isNameConfirmed = true;
-            document.getElementById('layerNameBox').classList.add('hidden');
-            document.getElementById('addDrawingsAction').classList.remove('hidden');
+        // Global State Variables
+        let animators = [];
+        let videos = [];
+        let ratings = {}; // { [animatorId]: 'like' | 'dislike' }
+        let currentFilterCategory = 'All';
+        let currentFilterCreator = 'All';
+        let searchQuery = '';
+        let activeProfileCreatorName = null;
 
-            updateStatusText('Folder created! Now click <b>Add Sample Mouth Drawings</b> to add drawings inside.');
+        function extractYouTubeId(url) {
+            if (!url) return '';
+            const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+            const match = url.match(regExp);
+            return (match && match[2].length === 11) ? match[2] : '';
         }
 
-        function populateSampleMouths() {
-            areDrawingsAdded = true;
-            document.getElementById('addDrawingsAction').classList.add('hidden');
-
-            const subContainer = document.getElementById('subLayersContainer');
-            if (subContainer) {
-                subContainer.classList.remove('hidden');
-                subContainer.innerHTML = '';
-
-                mouthsData.forEach((m) => {
-                    const btn = document.createElement('button');
-                    btn.className = `w-full text-left p-2 px-3 rounded-lg border transition flex items-center justify-between bg-slate-900 border-purple-900/60 text-purple-200 hover:border-mohoAccent text-xs font-mono`;
-                    btn.id = `btn-${m.id}`;
-                    btn.onclick = () => selectMouthShape(m.id, m.name);
-                    btn.innerHTML = `
-                        <span class="flex items-center gap-2"><i class="fa-solid ${m.icon} text-brandPink"></i> ${m.name}</span>
-                        <i class="fa-solid fa-check-circle opacity-0 text-brandGreen check-icon"></i>
-                    `;
-                    subContainer.appendChild(btn);
-                });
+        function getYouTubeThumbnail(url) {
+            const videoId = extractYouTubeId(url);
+            if (videoId) {
+                return `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
             }
-
-            updateStatusText('✨ Switch Layer Complete! Click any mouth shape in the folder to swap it live on canvas!');
-            selectMouthShape('mouthSmile', '😊 Big Smile');
+            return 'https://placehold.co/640x360/1e1b4b/6366f1?text=SCG+Anime+Pro';
         }
 
-        function selectMouthShape(mouthId, mouthName) {
-            const defMouth = document.getElementById('mouthDefault');
-            if (defMouth) defMouth.classList.add('hidden');
-
-            const allMouths = document.querySelectorAll('.mouth-layer-item');
-            allMouths.forEach(el => el.classList.add('hidden'));
-
-            const target = document.getElementById(mouthId);
-            if (target) target.classList.remove('hidden');
-
-            const label = document.getElementById('activeMouthLabel');
-            if (label) label.textContent = `Active Shape: ${mouthName || mouthId}`;
-
-            mouthsData.forEach(m => {
-                const itemBtn = document.getElementById(`btn-${m.id}`);
-                if (itemBtn) {
-                    if (m.id === mouthId) {
-                        itemBtn.classList.add('border-mohoAccent', 'bg-purple-950', 'text-mohoAccent');
-                        const chk = itemBtn.querySelector('.check-icon');
-                        if (chk) chk.classList.remove('opacity-0');
-                    } else {
-                        itemBtn.classList.remove('border-mohoAccent', 'bg-purple-950', 'text-mohoAccent');
-                        const chk = itemBtn.querySelector('.check-icon');
-                        if (chk) chk.classList.add('opacity-0');
-                    }
-                }
-            });
+        function getYouTubeEmbedUrl(url) {
+            const videoId = extractYouTubeId(url);
+            return videoId ? `https://www.youtube.com/embed/${videoId}?autoplay=1` : '';
         }
 
-        let isRoutined = false;
-        function triggerDialogueRoutine() {
-            if (isRoutined) return;
-            isRoutined = true;
-
-            const sequence = ['mouthSmile', 'mouthTalk', 'mouthO', 'mouthSurprise', 'mouthTalk', 'mouthSmile'];
-            let index = 0;
-
-            const interval = setInterval(() => {
-                const id = sequence[index];
-                const found = mouthsData.find(m => m.id === id);
-                selectMouthShape(id, found ? found.name : id);
-                index++;
-
-                if (index >= sequence.length) {
-                    clearInterval(interval);
-                    isRoutined = false;
-                }
-            }, 450);
-        }
-
-        function resetWorkshop1() {
-            document.getElementById('layerDropdown').classList.add('hidden');
-            document.getElementById('addLayerBtn').classList.add('pulse-target');
-            document.getElementById('switchLayerTree').classList.add('hidden');
-            document.getElementById('layerNameBox').classList.add('hidden');
-            document.getElementById('addDrawingsAction').classList.add('hidden');
-            document.getElementById('subLayersContainer').classList.add('hidden');
-
-            const allMouths = document.querySelectorAll('.mouth-layer-item');
-            allMouths.forEach(el => el.classList.add('hidden'));
-
-            const defMouth = document.getElementById('mouthDefault');
-            if (defMouth) defMouth.classList.remove('hidden');
-
-            const label = document.getElementById('activeMouthLabel');
-            if (label) label.textContent = 'Active Shape: Default Line';
-
-            updateStatusText('Click the glowing <b>"+ New Layer"</b> button in the simulator to begin!');
-        }
-
-
-        let currentBoneStrength = 40;
-        let isSkeletonVisible = true;
-        let activeDraggedJoint = null;
-
-        // Coordinates for Stickman joints
-        const jointsPos = {
-            head: { x: 160, y: 35 },
-            rightHand: { x: 220, y: 70 },
-            leftHand: { x: 100, y: 115 },
-            rightFoot: { x: 195, y: 220 },
-            leftFoot: { x: 125, y: 220 }
+        window.onload = function() {
+            loadData();
+            populateCreatorDropdowns();
+            renderHeroLatestVideo();
+            renderShowcaseGrid();
+            renderAnimatorsGrid();
+            document.getElementById('year-span').innerText = new Date().getFullYear();
         };
 
-        function updateStickmanCanvas() {
-            // Update Layer Drawings
-            const stickHead = document.getElementById('stickHead');
-            const stickEyeL = document.getElementById('stickEyeL');
-            const stickEyeR = document.getElementById('stickEyeR');
-            const stickSmile = document.getElementById('stickSmile');
-            const stickRightArm = document.getElementById('stickRightArm');
-            const stickLeftArm = document.getElementById('stickLeftArm');
-            const stickRightLeg = document.getElementById('stickRightLeg');
-            const stickLeftLeg = document.getElementById('stickLeftLeg');
+        function loadData() {
+            const localVid = localStorage.getItem(STORAGE_KEY_VIDEOS);
+            const localAni = localStorage.getItem(STORAGE_KEY_ANIMATORS);
+            const localRat = localStorage.getItem(STORAGE_KEY_RATINGS);
 
-            // Update Bone Polygons & Lines
-            const polyHead = document.getElementById('polyHead');
-            const polyRightArm = document.getElementById('polyRightArm');
-            const polyLeftArm = document.getElementById('polyLeftArm');
-            const polyRightLeg = document.getElementById('polyRightLeg');
-            const polyLeftLeg = document.getElementById('polyLeftLeg');
-
-            // Update Aura lines
-            const auraHead = document.getElementById('auraHead');
-            const auraRightArm = document.getElementById('auraRightArm');
-            const auraLeftArm = document.getElementById('auraLeftArm');
-            const auraRightLeg = document.getElementById('auraRightLeg');
-            const auraLeftLeg = document.getElementById('auraLeftLeg');
-
-            // Update Handles
-            const jointHead = document.getElementById('jointHead');
-            const jointRightHand = document.getElementById('jointRightHand');
-            const jointLeftHand = document.getElementById('jointLeftHand');
-            const jointRightFoot = document.getElementById('jointRightFoot');
-            const jointLeftFoot = document.getElementById('jointLeftFoot');
-
-            // 1. Head
-            const headY = jointsPos.head.y;
-            const headX = jointsPos.head.x;
-            const headCenterY = headY + 20;
-            if (stickHead) { stickHead.setAttribute('cx', headX); stickHead.setAttribute('cy', headCenterY); }
-            if (stickEyeL) stickEyeL.setAttribute('cx', headX - 8);
-            if (stickEyeR) stickEyeR.setAttribute('cx', headX + 8);
-            if (stickEyeL) stickEyeL.setAttribute('cy', headCenterY - 5);
-            if (stickEyeR) stickEyeR.setAttribute('cy', headCenterY - 5);
-            if (stickSmile) stickSmile.setAttribute('d', `M ${headX - 8} ${headCenterY + 5} Q ${headX} ${headCenterY + 13} ${headX + 8} ${headCenterY + 5}`);
-            if (polyHead) polyHead.setAttribute('points', `160,77 ${headX - 3},${headCenterY} ${headX},${headY} ${headX + 3},${headCenterY}`);
-            if (auraHead) { auraHead.setAttribute('cx', headX); auraHead.setAttribute('cy', headCenterY); }
-            if (jointHead) { jointHead.setAttribute('cx', headX); jointHead.setAttribute('cy', headY); }
-
-            // 2. Right Arm (from shoulder 160,95)
-            const rx = jointsPos.rightHand.x, ry = jointsPos.rightHand.y;
-            if (stickRightArm) stickRightArm.setAttribute('d', `M 160 95 L ${rx} ${ry}`);
-            if (polyRightArm) polyRightArm.setAttribute('points', `160,95 ${160 + (rx - 160)*0.5 + 5},${95 + (ry - 95)*0.5 - 5} ${rx},${ry} ${160 + (rx - 160)*0.5 - 5},${95 + (ry - 95)*0.5 + 5}`);
-            if (auraRightArm) { auraRightArm.setAttribute('x2', rx); auraRightArm.setAttribute('y2', ry); }
-            if (jointRightHand) { jointRightHand.setAttribute('cx', rx); jointRightHand.setAttribute('cy', ry); }
-
-            // 3. Left Arm (from shoulder 160,95)
-            const lx = jointsPos.leftHand.x, ly = jointsPos.leftHand.y;
-            if (stickLeftArm) stickLeftArm.setAttribute('d', `M 160 95 L ${lx} ${ly}`);
-            if (polyLeftArm) polyLeftArm.setAttribute('points', `160,95 ${160 + (lx - 160)*0.5 - 5},${95 + (ly - 95)*0.5 - 5} ${lx},${ly} ${160 + (lx - 160)*0.5 + 5},${95 + (ly - 95)*0.5 + 5}`);
-            if (auraLeftArm) { auraLeftArm.setAttribute('x2', lx); auraLeftArm.setAttribute('y2', ly); }
-            if (jointLeftHand) { jointLeftHand.setAttribute('cx', lx); jointLeftHand.setAttribute('cy', ly); }
-
-            // 4. Right Leg (from hips 160,150)
-            const rfx = jointsPos.rightFoot.x, rfy = jointsPos.rightFoot.y;
-            if (stickRightLeg) stickRightLeg.setAttribute('d', `M 160 150 L ${rfx} ${rfy}`);
-            if (polyRightLeg) polyRightLeg.setAttribute('points', `160,150 ${160 + (rfx - 160)*0.5 + 5},${150 + (rfy - 150)*0.5 - 5} ${rfx},${rfy} ${160 + (rfx - 160)*0.5 - 5},${150 + (rfy - 150)*0.5 + 5}`);
-            if (auraRightLeg) { auraRightLeg.setAttribute('x2', rfx); auraRightLeg.setAttribute('y2', rfy); }
-            if (jointRightFoot) { jointRightFoot.setAttribute('cx', rfx); jointRightFoot.setAttribute('cy', rfy); }
-
-            // 5. Left Leg (from hips 160,150)
-            const lfx = jointsPos.leftFoot.x, lfy = jointsPos.leftFoot.y;
-            if (stickLeftLeg) stickLeftLeg.setAttribute('d', `M 160 150 L ${lfx} ${lfy}`);
-            if (polyLeftLeg) polyLeftLeg.setAttribute('points', `160,150 ${160 + (lfx - 160)*0.5 - 5},${150 + (lfy - 150)*0.5 - 5} ${lfx},${lfy} ${160 + (lfx - 160)*0.5 + 5},${150 + (lfy - 150)*0.5 + 5}`);
-            if (auraLeftLeg) { auraLeftLeg.setAttribute('x2', lfx); auraLeftLeg.setAttribute('y2', lfy); }
-            if (jointLeftFoot) { jointLeftFoot.setAttribute('cx', lfx); jointLeftFoot.setAttribute('cy', lfy); }
-        }
-
-        // Initialize Drag Handlers for Stickman Joints
-        function setupJointDragging() {
-            const svg = document.getElementById('stickmanSvg');
-            const handles = document.querySelectorAll('.joint-handle');
-
-            handles.forEach(handle => {
-                handle.addEventListener('mousedown', startDrag);
-                handle.addEventListener('touchstart', startDrag, { passive: false });
-            });
-
-            function startDrag(e) {
-                e.preventDefault();
-                activeDraggedJoint = e.target.id;
-                window.addEventListener('mousemove', dragMove);
-                window.addEventListener('touchmove', dragMove, { passive: false });
-                window.addEventListener('mouseup', stopDrag);
-                window.addEventListener('touchend', stopDrag);
-            }
-
-            function dragMove(e) {
-                if (!activeDraggedJoint || !svg) return;
-                
-                const rect = svg.getBoundingClientRect();
-                const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-                const clientY = e.touches ? e.touches[0].clientY : e.clientY;
-
-                // Scale canvas mouse coordinates to SVG 320x290 box
-                const svgX = Math.round(((clientX - rect.left) / rect.width) * 320);
-                const svgY = Math.round(((clientY - rect.top) / rect.height) * 290);
-
-                // Update corresponding joint coordinate
-                if (activeDraggedJoint === 'jointHead') {
-                    jointsPos.head.x = Math.max(120, Math.min(200, svgX));
-                    jointsPos.head.y = Math.max(15, Math.min(50, svgY));
-                } else if (activeDraggedJoint === 'jointRightHand') {
-                    jointsPos.rightHand.x = Math.max(160, Math.min(280, svgX));
-                    jointsPos.rightHand.y = Math.max(20, Math.min(180, svgY));
-                } else if (activeDraggedJoint === 'jointLeftHand') {
-                    jointsPos.leftHand.x = Math.max(40, Math.min(160, svgX));
-                    jointsPos.leftHand.y = Math.max(20, Math.min(180, svgY));
-                } else if (activeDraggedJoint === 'jointRightFoot') {
-                    jointsPos.rightFoot.x = Math.max(150, Math.min(260, svgX));
-                    jointsPos.rightFoot.y = Math.max(170, Math.min(270, svgY));
-                } else if (activeDraggedJoint === 'jointLeftFoot') {
-                    jointsPos.leftFoot.x = Math.max(60, Math.min(170, svgX));
-                    jointsPos.leftFoot.y = Math.max(170, Math.min(270, svgY));
-                }
-
-                updateStickmanCanvas();
-            }
-
-            function stopDrag() {
-                activeDraggedJoint = null;
-                window.removeEventListener('mousemove', dragMove);
-                window.removeEventListener('touchmove', dragMove);
-                window.removeEventListener('mouseup', stopDrag);
-                window.removeEventListener('touchend', stopDrag);
-            }
-        }
-
-        function updateBoneStrength(value) {
-            currentBoneStrength = parseInt(value);
-            const valLabel = document.getElementById('strengthValueText');
-            const feedbackBox = document.getElementById('strengthFeedbackBox');
-            const feedbackText = document.getElementById('strengthFeedbackText');
-            const statusText = document.getElementById('stickmanStatusText');
-
-            const auraGroup = document.getElementById('boneAuraGroup');
-            if (auraGroup) {
-                const scaleFactor = currentBoneStrength / 40;
-                auraGroup.style.transformOrigin = '160px 115px';
-                auraGroup.style.transform = `scale(${scaleFactor})`;
-            }
-
-            if (currentBoneStrength > 70) {
-                if (valLabel) {
-                    valLabel.textContent = `${currentBoneStrength}% (Too High!)`;
-                    valLabel.className = "text-rose-400 font-mono font-bold bg-rose-950 px-2 py-0.5 rounded border border-rose-800";
-                }
-                if (feedbackBox) {
-                    feedbackBox.className = "text-[11px] text-rose-300 bg-rose-950/60 p-2.5 rounded-xl border border-rose-800/60 flex items-start gap-2";
-                }
-                if (feedbackText) {
-                    feedbackText.innerHTML = "<b>⚠️ Warning (Too High):</b> Bone cloud is huge! Moving the arm bone will accidentally distort the head layer!";
-                }
-                if (statusText) {
-                    statusText.innerHTML = "<b>Notice the red overlap:</b> Shrink slider down to 40% so each bone only controls its own layer!";
-                }
-
-            } else if (currentBoneStrength < 15) {
-                if (valLabel) {
-                    valLabel.textContent = `${currentBoneStrength}% (Too Low!)`;
-                    valLabel.className = "text-amber-300 font-mono font-bold bg-amber-950 px-2 py-0.5 rounded border border-amber-800";
-                }
-                if (feedbackBox) {
-                    feedbackBox.className = "text-[11px] text-amber-200 bg-amber-950/60 p-2.5 rounded-xl border border-amber-800/60 flex items-start gap-2";
-                }
-                if (feedbackText) {
-                    feedbackText.innerHTML = "<b>⚠️ Low Strength:</b> Bones don't reach the drawing layers! Moving bones won't bend the stickman properly.";
-                }
-
+            if (localVid) {
+                videos = JSON.parse(localVid);
             } else {
-                if (valLabel) {
-                    valLabel.textContent = `${currentBoneStrength}% (Ideal)`;
-                    valLabel.className = "text-brandYellow font-mono font-bold bg-purple-950 px-2 py-0.5 rounded border border-purple-800";
-                }
-                if (feedbackBox) {
-                    feedbackBox.className = "text-[11px] text-brandGreen bg-emerald-950/40 p-2.5 rounded-xl border border-brandGreen/40 flex items-start gap-2";
-                }
-                if (feedbackText) {
-                    feedbackText.innerHTML = "<b>Perfect Strength (30%-50%):</b> Each bone cleanly controls its own separate drawing layer without pulling other limbs!";
-                }
+                videos = [...DEFAULT_VIDEOS];
+                localStorage.setItem(STORAGE_KEY_VIDEOS, JSON.stringify(videos));
+            }
+
+            if (localAni) {
+                animators = JSON.parse(localAni);
+            } else {
+                animators = [...DEFAULT_ANIMATORS];
+                localStorage.setItem(STORAGE_KEY_ANIMATORS, JSON.stringify(animators));
+            }
+
+            if (localRat) {
+                ratings = JSON.parse(localRat);
+            } else {
+                ratings = {};
             }
         }
 
-        function selectMohoTool(toolName) {
-            const label = document.getElementById('activeToolLabel');
-            const btnManipulate = document.getElementById('toolBtnManipulate');
-            const btnStrength = document.getElementById('toolBtnStrength');
-            const btnAdd = document.getElementById('toolBtnAdd');
-            const auraGroup = document.getElementById('boneAuraGroup');
+        function saveData() {
+            localStorage.setItem(STORAGE_KEY_VIDEOS, JSON.stringify(videos));
+            localStorage.setItem(STORAGE_KEY_ANIMATORS, JSON.stringify(animators));
+            localStorage.setItem(STORAGE_KEY_RATINGS, JSON.stringify(ratings));
+            updateRawCodeView();
+        }
 
-            [btnManipulate, btnStrength, btnAdd].forEach(btn => {
-                if (btn) {
-                    btn.className = "w-full text-left p-2.5 rounded-xl border bg-slate-900 border-purple-900/60 text-purple-200 hover:border-mohoAccent font-bold text-xs font-mono flex items-center justify-between";
+        function resetDataToDefault() {
+            if (confirm('Are you sure you want to reset all animations and animators back to default sample data?')) {
+                videos = [...DEFAULT_VIDEOS];
+                animators = [...DEFAULT_ANIMATORS];
+                ratings = {};
+                saveData();
+                populateCreatorDropdowns();
+                renderHeroLatestVideo();
+                renderShowcaseGrid();
+                renderAnimatorsGrid();
+                renderAdminVideos();
+                renderAdminAnimators();
+            }
+        }
+
+        function renderHeroLatestVideo() {
+            const container = document.getElementById('hero-latest-container');
+            if (!container) return;
+
+            if (videos.length === 0) {
+                container.innerHTML = `
+                    <div class="glass-panel p-6 rounded-2xl border border-slate-800 text-center text-slate-400 text-xs">
+                        <i class="fa-solid fa-film text-2xl mb-2 text-slate-600 block"></i>
+                        <span>No animations published yet. Use Admin Portal to upload work.</span>
+                    </div>
+                `;
+                return;
+            }
+
+            // Latest video is the first in array
+            const latest = videos[0];
+            const thumbUrl = getYouTubeThumbnail(latest.youtubeUrl);
+
+            container.innerHTML = `
+                <div class="glass-panel rounded-2xl p-4 border border-brand-500/30 hover:border-brand-accent/50 transition-all shadow-xl relative group">
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="px-2.5 py-0.5 rounded-full bg-pink-500/20 text-pink-400 border border-pink-500/30 text-[10px] font-extrabold uppercase tracking-wider flex items-center gap-1.5">
+                            <span class="w-1.5 h-1.5 rounded-full bg-pink-400 animate-ping"></span> Latest Release
+                        </span>
+                        <span class="text-[10px] text-slate-400 font-medium">${latest.category || 'Anime'}</span>
+                    </div>
+
+                    <!-- Thumbnail Container -->
+                    <div class="relative aspect-video rounded-xl overflow-hidden bg-slate-900 cursor-pointer mb-3" onclick="openPlayerModal('${latest.id}')">
+                        <img src="${thumbUrl}" alt="${latest.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-slate-950/40 group-hover:bg-slate-950/20 transition-colors flex items-center justify-center">
+                            <div class="w-12 h-12 rounded-full bg-brand-accent text-white flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
+                                <i class="fa-solid fa-play text-sm translate-x-0.5"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Info -->
+                    <div>
+                        <h3 class="text-sm font-bold text-white group-hover:text-cyan-300 transition-colors line-clamp-1 cursor-pointer" onclick="openPlayerModal('${latest.id}')">
+                            ${latest.title}
+                        </h3>
+                        <p class="text-xs text-slate-400 mt-1 flex items-center justify-between">
+                            <span>By <strong class="text-white hover:underline cursor-pointer" onclick="openAnimatorProfileByName('${latest.creator}')">${latest.creator}</strong></span>
+                            <a href="${latest.youtubeUrl}" target="_blank" rel="noopener noreferrer" class="text-rose-400 hover:text-rose-300 text-[11px] font-semibold flex items-center gap-1">
+                                <span>YouTube</span>
+                                <i class="fa-solid fa-arrow-up-right-from-square text-[9px]"></i>
+                            </a>
+                        </p>
+                    </div>
+                </div>
+            `;
+        }
+
+        function showSection(sectionId) {
+            // Hide all sections
+            document.getElementById('section-home').classList.add('hidden');
+            document.getElementById('section-animators').classList.add('hidden');
+            document.getElementById('section-profile').classList.add('hidden');
+            document.getElementById('hero-banner').classList.add('hidden');
+
+            // Reset Nav Styles
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('bg-brand-600', 'text-white', 'shadow-md');
+                btn.classList.add('text-slate-400');
+            });
+
+            if (sectionId === 'home') {
+                document.getElementById('section-home').classList.remove('hidden');
+                document.getElementById('hero-banner').classList.remove('hidden');
+                document.getElementById('nav-home').classList.add('bg-brand-600', 'text-white', 'shadow-md');
+                document.getElementById('nav-home').classList.remove('text-slate-400');
+            } else if (sectionId === 'animators') {
+                document.getElementById('section-animators').classList.remove('hidden');
+                document.getElementById('nav-animators').classList.add('bg-brand-600', 'text-white', 'shadow-md');
+                document.getElementById('nav-animators').classList.remove('text-slate-400');
+            } else if (sectionId === 'profile') {
+                document.getElementById('section-profile').classList.remove('hidden');
+            }
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function scrollToGrid() {
+            const grid = document.getElementById('section-home');
+            grid.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function filterCategory(cat) {
+            currentFilterCategory = cat;
+            
+            // Update active button state
+            const buttons = document.querySelectorAll('#category-filters button');
+            buttons.forEach(btn => {
+                if (btn.innerText.includes(cat) || (cat === 'All' && btn.innerText.includes('All'))) {
+                    btn.className = 'cat-btn px-4 py-1.5 rounded-full text-xs font-semibold bg-brand-600 text-white shadow-md';
+                } else {
+                    btn.className = 'cat-btn px-4 py-1.5 rounded-full text-xs font-semibold bg-slate-900 text-slate-400 hover:text-white border border-slate-800';
                 }
             });
 
-            if (toolName === 'manipulate') {
-                if (label) label.textContent = "Mode: Interactive Dragging (Z)";
-                if (btnManipulate) btnManipulate.className = "w-full text-left p-2.5 rounded-xl border bg-purple-950 border-mohoAccent text-mohoAccent font-bold text-xs font-mono flex items-center justify-between shadow";
-                if (auraGroup) auraGroup.classList.add('opacity-0');
-                document.getElementById('stickmanStatusText').innerHTML = "<b>Manipulate Tool Active (Z):</b> Click and drag any glowing handle on the canvas stickman to move his limbs!";
-            } else if (toolName === 'strength') {
-                if (label) label.textContent = "Mode: Bone Strength Radius (S)";
-                if (btnStrength) btnStrength.className = "w-full text-left p-2.5 rounded-xl border bg-purple-950 border-brandPink text-brandPink font-bold text-xs font-mono flex items-center justify-between shadow";
-                if (auraGroup) auraGroup.classList.remove('opacity-0');
-                document.getElementById('stickmanStatusText').innerHTML = "<b>Bone Strength Tool Active (S):</b> Drag the strength slider below to see glowing influence bubbles!";
-            } else if (toolName === 'add') {
-                if (label) label.textContent = "Mode: Add Bone Tool (A)";
-                if (btnAdd) btnAdd.className = "w-full text-left p-2.5 rounded-xl border bg-purple-950 border-brandGreen text-brandGreen font-bold text-xs font-mono flex items-center justify-between shadow";
-                if (auraGroup) auraGroup.classList.add('opacity-0');
-                document.getElementById('stickmanStatusText').innerHTML = "<b>Add Bone Tool Active (A):</b> Click and drag from waist to neck to build the skeleton structure!";
-            }
+            applyFilters();
         }
 
-        function setStickmanPose(pose) {
-            selectMohoTool('manipulate');
-
-            if (pose === 'wave') {
-                jointsPos.head = { x: 160, y: 35 };
-                jointsPos.rightHand = { x: 220, y: 45 };
-                jointsPos.leftHand = { x: 100, y: 115 };
-                jointsPos.rightFoot = { x: 195, y: 220 };
-                jointsPos.leftFoot = { x: 125, y: 220 };
-            } else if (pose === 'star') {
-                jointsPos.head = { x: 160, y: 30 };
-                jointsPos.rightHand = { x: 235, y: 45 };
-                jointsPos.leftHand = { x: 85, y: 45 };
-                jointsPos.rightFoot = { x: 220, y: 220 };
-                jointsPos.leftFoot = { x: 100, y: 220 };
-            } else if (pose === 'kick') {
-                jointsPos.head = { x: 155, y: 40 };
-                jointsPos.rightHand = { x: 210, y: 115 };
-                jointsPos.leftHand = { x: 90, y: 75 };
-                jointsPos.rightFoot = { x: 230, y: 135 };
-                jointsPos.leftFoot = { x: 135, y: 225 };
-            } else if (pose === 'dance') {
-                jointsPos.head = { x: 165, y: 32 };
-                jointsPos.rightHand = { x: 195, y: 35 };
-                jointsPos.leftHand = { x: 115, y: 145 };
-                jointsPos.rightFoot = { x: 180, y: 220 };
-                jointsPos.leftFoot = { x: 130, y: 205 };
-            }
-
-            updateStickmanCanvas();
+        function handleSearch(query) {
+            searchQuery = query.toLowerCase().trim();
+            applyFilters();
         }
 
-        function toggleSkeletonVisibility() {
-            isSkeletonVisible = !isSkeletonVisible;
-            const skeletonGroup = document.getElementById('skeletonBonesGroup');
-            const toggleBtn = document.getElementById('toggleBonesBtn');
+        function applyFilters() {
+            const creatorSelect = document.getElementById('creator-filter');
+            currentFilterCreator = creatorSelect ? creatorSelect.value : 'All';
+            renderShowcaseGrid();
+        }
 
-            if (skeletonGroup) {
-                if (isSkeletonVisible) {
-                    skeletonGroup.classList.remove('hidden');
-                    if (toggleBtn) {
-                        toggleBtn.textContent = 'Visible ON';
-                        toggleBtn.className = 'bg-brandGreen text-slate-950 font-bold px-3 py-1 rounded-lg text-xs hover:bg-emerald-400 transition';
-                    }
+        function populateCreatorDropdowns() {
+            const creatorFilter = document.getElementById('creator-filter');
+            const videoFormCreator = document.getElementById('vf-creator');
+
+            if (!creatorFilter || !videoFormCreator) return;
+
+            let filterOpts = '<option value="All">All Animators</option>';
+            let formOpts = '';
+
+            animators.forEach(ani => {
+                filterOpts += `<option value="${ani.name}">${ani.name}</option>`;
+                formOpts += `<option value="${ani.name}">${ani.name}</option>`;
+            });
+
+            creatorFilter.innerHTML = filterOpts;
+            videoFormCreator.innerHTML = formOpts;
+        }
+
+        function renderShowcaseGrid() {
+            const container = document.getElementById('video-grid');
+            const noMsg = document.getElementById('no-videos-msg');
+
+            const filtered = videos.filter(v => {
+                const matchesCat = (currentFilterCategory === 'All' || v.category === currentFilterCategory);
+                const matchesCreator = (currentFilterCreator === 'All' || v.creator === currentFilterCreator);
+                const matchesSearch = !searchQuery || 
+                    v.title.toLowerCase().includes(searchQuery) || 
+                    v.creator.toLowerCase().includes(searchQuery) ||
+                    v.category.toLowerCase().includes(searchQuery) ||
+                    (v.description && v.description.toLowerCase().includes(searchQuery));
+
+                return matchesCat && matchesCreator && matchesSearch;
+            });
+
+            if (filtered.length === 0) {
+                container.innerHTML = '';
+                noMsg.classList.remove('hidden');
+                return;
+            }
+
+            noMsg.classList.add('hidden');
+            container.innerHTML = filtered.map(v => createVideoCardHTML(v)).join('');
+        }
+
+        function createVideoCardHTML(v) {
+            const thumbUrl = getYouTubeThumbnail(v.youtubeUrl);
+            return `
+                <div class="glass-panel rounded-2xl overflow-hidden border border-slate-800/80 hover:border-brand-500/50 transition-all duration-300 hover:-translate-y-1 group flex flex-col justify-between">
+                    <div>
+                        <!-- Thumbnail Container -->
+                        <div class="relative aspect-video bg-slate-900 overflow-hidden cursor-pointer" onclick="openPlayerModal('${v.id}')">
+                            <img src="${thumbUrl}" alt="${v.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            <div class="absolute inset-0 bg-slate-950/40 group-hover:bg-slate-950/10 transition-colors flex items-center justify-center">
+                                <div class="w-12 h-12 rounded-full bg-brand-600/90 text-white flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
+                                    <i class="fa-solid fa-play text-sm translate-x-0.5"></i>
+                                </div>
+                            </div>
+                            <!-- Category Badge -->
+                            <span class="absolute top-3 left-3 px-2.5 py-1 rounded-md bg-slate-950/80 backdrop-blur-md text-brand-cyan text-[10px] font-bold uppercase border border-slate-700">
+                                ${v.category || 'Anime'}
+                            </span>
+                        </div>
+
+                        <!-- Card Info -->
+                        <div class="p-4 space-y-2">
+                            <h3 class="text-sm font-bold text-white group-hover:text-brand-cyan transition-colors line-clamp-1 cursor-pointer" onclick="openPlayerModal('${v.id}')">
+                                ${v.title}
+                            </h3>
+                            <p class="text-xs text-slate-400 line-clamp-2 leading-relaxed">
+                                ${v.description || 'No description provided for this work.'}
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Card Footer Actions -->
+                    <div class="px-4 pb-4 pt-2 border-t border-slate-800/60 flex items-center justify-between text-xs">
+                        <button onclick="openAnimatorProfileByName('${v.creator}')" class="inline-flex items-center gap-1.5 text-slate-300 hover:text-brand-accent transition-colors font-medium">
+                            <i class="fa-solid fa-user-ninja text-brand-500"></i>
+                            <span>${v.creator}</span>
+                        </button>
+
+                        <!-- Direct YouTube New Tab Link -->
+                        <a href="${v.youtubeUrl}" target="_blank" rel="noopener noreferrer" 
+                           class="inline-flex items-center gap-1 text-slate-400 hover:text-rose-400 font-semibold bg-slate-900 px-2.5 py-1 rounded-lg border border-slate-800 transition-colors"
+                           title="Open directly on YouTube in new tab">
+                            <span>YouTube</span>
+                            <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+                        </a>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderAnimatorsGrid() {
+            const container = document.getElementById('animators-grid');
+            if (!container) return;
+
+            container.innerHTML = animators.map(ani => {
+                const count = videos.filter(v => v.creator === ani.name).length;
+                const avatar = ani.avatar || `https://placehold.co/150x150/1e1b4b/ec4899?text=${encodeURIComponent(ani.name)}`;
+
+                return `
+                    <div class="glass-panel rounded-3xl p-6 border border-slate-800 hover:border-brand-accent/50 transition-all group flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center gap-4 mb-4">
+                                <img src="${avatar}" alt="${ani.name}" class="w-16 h-16 rounded-2xl object-cover border-2 border-brand-500/30 group-hover:border-brand-accent transition-colors">
+                                <div>
+                                    <h3 class="text-base font-bold text-white group-hover:text-brand-accent transition-colors">${ani.name}</h3>
+                                    <p class="text-xs text-brand-cyan font-medium">${ani.role || 'Animator'}</p>
+                                    <span class="inline-block mt-1 px-2 py-0.5 rounded-full bg-slate-900 text-[10px] font-semibold text-slate-400 border border-slate-800">
+                                        ${count} Animation${count === 1 ? '' : 's'}
+                                    </span>
+                                </div>
+                            </div>
+                            <p class="text-xs text-slate-400 leading-relaxed line-clamp-3 mb-4">
+                                ${ani.bio || 'Professional digital artist contributing to SCG Anime Pro works.'}
+                            </p>
+                        </div>
+
+                        <button onclick="openAnimatorProfileByName('${ani.name}')" class="w-full py-2.5 rounded-xl bg-slate-900 hover:bg-brand-600 text-slate-200 hover:text-white text-xs font-bold border border-slate-800 hover:border-transparent transition-all flex items-center justify-center gap-2">
+                            <span>View Animator Profile</span>
+                            <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                        </button>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function openAnimatorProfileByName(creatorName) {
+            let animator = animators.find(a => a.name === creatorName);
+            if (!animator) {
+                animator = {
+                    id: 'animator-' + Date.now(),
+                    name: creatorName,
+                    role: 'Featured Animator',
+                    bio: 'Creator of high quality animated works featured on SCG Anime Pro.',
+                    avatar: `https://placehold.co/150x150/1e1b4b/6366f1?text=${encodeURIComponent(creatorName)}`,
+                    likes: 10,
+                    dislikes: 0
+                };
+            }
+
+            activeProfileCreatorName = creatorName;
+            
+            // Build Profile Header & Integrated Like/Dislike Rating Widget
+            const profileHeader = document.getElementById('profile-header-card');
+            const creatorVideos = videos.filter(v => v.creator === creatorName);
+
+            const userVote = ratings[animator.id] || null;
+            const isLiked = userVote === 'like';
+            const isDisliked = userVote === 'dislike';
+
+            profileHeader.innerHTML = `
+                <div class="flex flex-col md:flex-row items-center md:items-start justify-between gap-6 relative z-10">
+                    <div class="flex flex-col sm:flex-row items-center sm:items-start gap-6">
+                        <img src="${animator.avatar || 'https://placehold.co/150x150/1e1b4b/6366f1?text=' + encodeURIComponent(animator.name)}" 
+                             alt="${animator.name}" class="w-24 h-24 sm:w-28 sm:h-28 rounded-2xl object-cover border-2 border-brand-accent shadow-xl">
+                        <div class="text-center sm:text-left space-y-2">
+                            <div class="flex flex-wrap items-center justify-center sm:justify-start gap-3">
+                                <h2 class="text-2xl sm:text-3xl font-black text-white">${animator.name}</h2>
+                                <span class="px-3 py-1 rounded-full bg-brand-accent/20 border border-brand-accent/40 text-brand-accent text-xs font-extrabold uppercase">
+                                    Verified Animator
+                                </span>
+                            </div>
+                            <p class="text-xs sm:text-sm font-semibold text-brand-cyan">${animator.role || 'Anime Creator'}</p>
+                            <p class="text-xs text-slate-300 max-w-2xl leading-relaxed">${animator.bio || 'No personal bio added yet.'}</p>
+                            <div class="pt-1 flex items-center justify-center sm:justify-start gap-4 text-xs text-slate-400">
+                                <span><i class="fa-solid fa-clapperboard text-brand-500 mr-1.5"></i> <strong>${creatorVideos.length}</strong> Works Published</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Uiverse.io Rating Widget -->
+                    <div class="shrink-0 flex justify-center">
+                        <div class="like-dislike-container">
+                            <div class="tool-box">
+                                <button class="btn-close" onclick="this.parentElement.parentElement.style.display='none'">×</button>
+                            </div>
+                            <p class="text-content">What did you think<br />of this animator?</p>
+                            <div class="icons-box">
+                                <div class="icons">
+                                    <label class="btn-label" for="like-checkbox-${animator.id}">
+                                        <span class="like-text-content" id="like-count-${animator.id}">${animator.likes || 0}</span>
+                                        <input class="input-box" id="like-checkbox-${animator.id}" type="checkbox" ${isLiked ? 'checked' : ''} onchange="handleRatingToggle('${animator.id}', 'like')"/>
+                                        <svg class="svgs" id="icon-like-solid" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                                            <path d="M313.4 32.9c26 5.2 42.9 30.5 37.7 56.5l-2.3 11.4c-5.3 26.7-15.1 52.1-28.8 75.2H464c26.5 0 48 21.5 48 48c0 18.5-10.5 34.6-25.9 42.6C497 275.4 504 288.9 504 304c0 23.4-16.8 42.9-38.9 47.1c4.4 7.3 6.9 15.8 6.9 24.9c0 21.3-13.9 39.4-33.1 45.6c.7 3.3 1.1 6.8 1.1 10.4c0 26.5-21.5 48-48 48H294.5c-19 0-37.5-5.6-53.3-16.1l-38.5-25.7C176 420.4 160 390.4 160 358.3V320 272 247.1c0-29.2 13.3-56.7 36-75l7.4-5.9c26.5-21.2 44.6-51 51.2-84.2l2.3-11.4c5.2-26 30.5-42.9 56.5-37.7zM32 192H96c17.7 0 32 14.3 32 32V448c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32V224c0-17.7 14.3-32 32-32z"></path>
+                                        </svg>
+                                        <svg class="svgs" id="icon-like-regular" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                                            <path d="M323.8 34.8c-38.2-10.9-78.1 11.2-89 49.4l-5.7 20c-3.7 13-10.4 25-19.5 35l-51.3 56.4c-8.9 9.8-8.2 25 1.6 33.9s25 8.2 33.9-1.6l51.3-56.4c14.1-15.5 24.4-34 30.1-54.1l5.7-20c3.6-12.7 16.9-20.1 29.7-16.5s20.1 16.9 16.5 29.7l-5.7 20c-5.7 19.9-14.7 38.7-26.6 55.5c-5.2 7.3-5.8 16.9-1.7 24.9s12.3 13 21.3 13L448 224c8.8 0 16 7.2 16 16c0 6.8-4.3 12.7-10.4 15c-7.4 2.8-13 9-14.9 16.7s.1 15.8 5.3 21.7c2.5 2.8 4 6.5 4 10.6c0 7.8-5.6 14.3-13 15.7c-8.2 1.6-15.1 7.3-18 15.1s-1.6 16.7 3.6 23.3c2.1 2.7 3.4 6.1 3.4 9.9c0 6.7-4.2 12.6-10.2 14.9c-11.5 4.5-17.7 16.9-14.4 28.8c.4 1.3 .6 2.8 .6 4.3c0 8.8-7.2 16-16 16H286.5c-12.6 0-25-3.7-35.5-10.7l-61.7-41.1c-11-7.4-25.9-4.4-33.3 6.7s-4.4 25.9 6.7 33.3l61.7 41.1c18.4 12.3 40 18.8 62.1 18.8H384c34.7 0 62.9-27.6 64-62c14.6-11.7 24-29.7 24-50c0-4.5-.5-8.8-1.3-13c15.4-11.7 25.3-30.2 25.3-51c0-6.5-1-12.8-2.8-18.7C504.8 273.7 512 257.7 512 240c0-35.3-28.6-64-64-64l-92.3 0c4.7-10.4 8.7-21.2 11.8-32.2l5.7-20c10.9-38.2-11.2-78.1-49.4-89zM32 192c-17.7 0-32 14.3-32 32V448c0 17.7 14.3 32 32 32H96c17.7 0 32-14.3 32-32V224c0-17.7-14.3-32-32-32H32z"></path>
+                                        </svg>
+                                    </label>
+                                </div>
+                                <div class="icons">
+                                    <label class="btn-label" for="dislike-checkbox-${animator.id}">
+                                        <input class="input-box" id="dislike-checkbox-${animator.id}" type="checkbox" ${isDisliked ? 'checked' : ''} onchange="handleRatingToggle('${animator.id}', 'dislike')"/>
+                                        <svg class="svgs" id="icon-dislike-solid" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                                            <path d="M313.4 32.9c26 5.2 42.9 30.5 37.7 56.5l-2.3 11.4c-5.3 26.7-15.1 52.1-28.8 75.2H464c26.5 0 48 21.5 48 48c0 18.5-10.5 34.6-25.9 42.6C497 275.4 504 288.9 504 304c0 23.4-16.8 42.9-38.9 47.1c4.4 7.3 6.9 15.8 6.9 24.9c0 21.3-13.9 39.4-33.1 45.6c.7 3.3 1.1 6.8 1.1 10.4c0 26.5-21.5 48-48 48H294.5c-19 0-37.5-5.6-53.3-16.1l-38.5-25.7C176 420.4 160 390.4 160 358.3V320 272 247.1c0-29.2 13.3-56.7 36-75l7.4-5.9c26.5-21.2 44.6-51 51.2-84.2l2.3-11.4c5.2-26 30.5-42.9 56.5-37.7zM32 192H96c17.7 0 32 14.3 32 32V448c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32V224c0-17.7 14.3-32 32-32z"></path>
+                                        </svg>
+                                        <svg class="svgs" id="icon-dislike-regular" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                                            <path d="M323.8 34.8c-38.2-10.9-78.1 11.2-89 49.4l-5.7 20c-3.7 13-10.4 25-19.5 35l-51.3 56.4c-8.9 9.8-8.2 25 1.6 33.9s25 8.2 33.9-1.6l51.3-56.4c14.1-15.5 24.4-34 30.1-54.1l5.7-20c3.6-12.7 16.9-20.1 29.7-16.5s20.1 16.9 16.5 29.7l-5.7 20c-5.7 19.9-14.7 38.7-26.6 55.5c-5.2 7.3-5.8 16.9-1.7 24.9s12.3 13 21.3 13L448 224c8.8 0 16 7.2 16 16c0 6.8-4.3 12.7-10.4 15c-7.4 2.8-13 9-14.9 16.7s.1 15.8 5.3 21.7c2.5 2.8 4 6.5 4 10.6c0 7.8-5.6 14.3-13 15.7c-8.2 1.6-15.1 7.3-18 15.1s-1.6 16.7 3.6 23.3c2.1 2.7 3.4 6.1 3.4 9.9c0 6.7-4.2 12.6-10.2 14.9c-11.5 4.5-17.7 16.9-14.4 28.8c.4 1.3 .6 2.8 .6 4.3c0 8.8-7.2 16-16 16H286.5c-12.6 0-25-3.7-35.5-10.7l-61.7-41.1c-11-7.4-25.9-4.4-33.3 6.7s-4.4 25.9 6.7 33.3l61.7 41.1c18.4 12.3 40 18.8 62.1 18.8H384c34.7 0 62.9-27.6 64-62c14.6-11.7 24-29.7 24-50c0-4.5-.5-8.8-1.3-13c15.4-11.7 25.3-30.2 25.3-51c0-6.5-1-12.8-2.8-18.7C504.8 273.7 512 257.7 512 240c0-35.3-28.6-64-64-64l-92.3 0c4.7-10.4 8.7-21.2 11.8-32.2l5.7-20c10.9-38.2-11.2-78.1-49.4-89zM32 192c-17.7 0-32 14.3-32 32V448c0 17.7 14.3 32 32 32H96c17.7 0 32-14.3 32-32V224c0-17.7-14.3-32-32-32H32z"></path>
+                                        </svg>
+                                        <span class="dislike-text-content" id="dislike-count-${animator.id}">${animator.dislikes || 0}</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            // Render Animator Videos
+            const videosContainer = document.getElementById('animator-videos-grid');
+            if (creatorVideos.length === 0) {
+                videosContainer.innerHTML = `
+                    <div class="col-span-full text-center py-12 bg-slate-900/40 rounded-2xl border border-slate-800">
+                        <p class="text-xs text-slate-400">No animation works published under ${creatorName} yet.</p>
+                    </div>
+                `;
+            } else {
+                videosContainer.innerHTML = creatorVideos.map(v => createVideoCardHTML(v)).join('');
+            }
+
+            showSection('profile');
+        }
+
+        function handleRatingToggle(animatorId, type) {
+            const ani = animators.find(a => a.id === animatorId);
+            if (!ani) return;
+
+            if (!ani.likes) ani.likes = 0;
+            if (!ani.dislikes) ani.dislikes = 0;
+
+            const likeCheckbox = document.getElementById(`like-checkbox-${animatorId}`);
+            const dislikeCheckbox = document.getElementById(`dislike-checkbox-${animatorId}`);
+
+            const currentRating = ratings[animatorId] || null;
+
+            if (type === 'like') {
+                if (currentRating === 'like') {
+                    ani.likes = Math.max(0, ani.likes - 1);
+                    ratings[animatorId] = null;
                 } else {
-                    skeletonGroup.classList.add('hidden');
-                    if (toggleBtn) {
-                        toggleBtn.textContent = 'Hidden OFF';
-                        toggleBtn.className = 'bg-slate-800 text-purple-300 font-bold px-3 py-1 rounded-lg text-xs hover:bg-slate-700 transition border border-mohoBorder';
+                    if (currentRating === 'dislike') {
+                        ani.dislikes = Math.max(0, ani.dislikes - 1);
+                        if (dislikeCheckbox) dislikeCheckbox.checked = false;
                     }
+                    ani.likes += 1;
+                    ratings[animatorId] = 'like';
+                }
+            } else if (type === 'dislike') {
+                if (currentRating === 'dislike') {
+                    ani.dislikes = Math.max(0, ani.dislikes - 1);
+                    ratings[animatorId] = null;
+                } else {
+                    if (currentRating === 'like') {
+                        ani.likes = Math.max(0, ani.likes - 1);
+                        if (likeCheckbox) likeCheckbox.checked = false;
+                    }
+                    ani.dislikes += 1;
+                    ratings[animatorId] = 'dislike';
+                }
+            }
+
+            const likeCountEl = document.getElementById(`like-count-${animatorId}`);
+            const dislikeCountEl = document.getElementById(`dislike-count-${animatorId}`);
+            if (likeCountEl) likeCountEl.innerText = ani.likes;
+            if (dislikeCountEl) dislikeCountEl.innerText = ani.dislikes;
+
+            saveData();
+        }
+
+        let currentModalVideo = null;
+
+        function openPlayerModal(videoId) {
+            const video = videos.find(v => v.id === videoId);
+            if (!video) return;
+
+            currentModalVideo = video;
+
+            document.getElementById('player-iframe').src = getYouTubeEmbedUrl(video.youtubeUrl);
+            document.getElementById('player-title').innerText = video.title;
+            document.getElementById('player-creator').innerText = video.creator;
+            document.getElementById('player-category').innerText = video.category || 'Animation';
+            document.getElementById('player-desc').innerText = video.description || 'SCG Anime Pro original work.';
+
+            const externalLink = document.getElementById('player-yt-external-link');
+            externalLink.href = video.youtubeUrl;
+
+            document.getElementById('modal-video-player').classList.remove('hidden');
+            document.getElementById('modal-video-player').classList.add('flex');
+        }
+
+        function navigateToCreatorFromPlayer() {
+            if (currentModalVideo) {
+                closeModal('modal-video-player');
+                openAnimatorProfileByName(currentModalVideo.creator);
+            }
+        }
+
+        function openAdminAuth() {
+            document.getElementById('admin-pin-input').value = '';
+            document.getElementById('pin-error').classList.add('hidden');
+            document.getElementById('modal-pin-auth').classList.remove('hidden');
+            document.getElementById('modal-pin-auth').classList.add('flex');
+        }
+
+        function handlePinSubmit(event) {
+            event.preventDefault();
+            const inputPin = document.getElementById('admin-pin-input').value.trim();
+
+            if (inputPin === ADMIN_PIN) {
+                closeModal('modal-pin-auth');
+                openAdminDashboard();
+            } else {
+                document.getElementById('pin-error').classList.remove('hidden');
+                document.getElementById('admin-pin-input').value = '';
+                document.getElementById('admin-pin-input').focus();
+            }
+        }
+
+        function openAdminDashboard() {
+            renderAdminVideos();
+            renderAdminAnimators();
+            updateRawCodeView();
+            document.getElementById('modal-admin-dashboard').classList.remove('hidden');
+        }
+
+        function switchAdminTab(tab) {
+            const btnVid = document.getElementById('admin-tab-videos');
+            const btnAni = document.getElementById('admin-tab-animators');
+            const btnCode = document.getElementById('admin-tab-code');
+            const viewVid = document.getElementById('admin-view-videos');
+            const viewAni = document.getElementById('admin-view-animators');
+            const viewCode = document.getElementById('admin-view-code');
+
+            // Reset tab styles
+            btnVid.className = 'px-5 py-2.5 rounded-xl text-xs font-bold bg-slate-900 text-slate-400 hover:text-white border border-slate-800 transition-all';
+            btnAni.className = 'px-5 py-2.5 rounded-xl text-xs font-bold bg-slate-900 text-slate-400 hover:text-white border border-slate-800 transition-all';
+            btnCode.className = 'px-5 py-2.5 rounded-xl text-xs font-bold bg-slate-900 text-emerald-400 hover:text-emerald-300 border border-slate-800 transition-all';
+
+            viewVid.classList.add('hidden');
+            viewAni.classList.add('hidden');
+            viewCode.classList.add('hidden');
+
+            if (tab === 'videos') {
+                btnVid.className = 'px-5 py-2.5 rounded-xl text-xs font-bold bg-brand-600 text-white shadow-md transition-all';
+                viewVid.classList.remove('hidden');
+            } else if (tab === 'animators') {
+                btnAni.className = 'px-5 py-2.5 rounded-xl text-xs font-bold bg-brand-600 text-white shadow-md transition-all';
+                viewAni.classList.remove('hidden');
+            } else if (tab === 'code') {
+                btnCode.className = 'px-5 py-2.5 rounded-xl text-xs font-bold bg-emerald-600 text-white shadow-md transition-all';
+                viewCode.classList.remove('hidden');
+                updateRawCodeView();
+            }
+        }
+
+        function renderAdminVideos() {
+            const searchVal = (document.getElementById('admin-video-search').value || '').toLowerCase();
+            const tbody = document.getElementById('admin-videos-tbody');
+            
+            const filtered = videos.filter(v => 
+                v.title.toLowerCase().includes(searchVal) || 
+                v.creator.toLowerCase().includes(searchVal)
+            );
+
+            document.getElementById('admin-video-count').innerText = videos.length;
+
+            if (filtered.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="5" class="p-6 text-center text-slate-500">No animations found.</td></tr>`;
+                return;
+            }
+
+            tbody.innerHTML = filtered.map(v => {
+                const thumb = getYouTubeThumbnail(v.youtubeUrl);
+                return `
+                    <tr class="hover:bg-slate-800/40 transition-colors">
+                        <td class="p-4 w-20">
+                            <img src="${thumb}" class="w-16 h-10 object-cover rounded-lg border border-slate-700">
+                        </td>
+                        <td class="p-4 font-bold text-white max-w-xs truncate">${v.title}</td>
+                        <td class="p-4 text-brand-cyan font-medium">${v.creator}</td>
+                        <td class="p-4">
+                            <span class="px-2 py-0.5 rounded bg-slate-800 text-[10px] text-slate-300 font-bold">${v.category || '2D'}</span>
+                        </td>
+                        <td class="p-4 text-right space-x-2">
+                            <a href="${v.youtubeUrl}" target="_blank" class="p-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 inline-block" title="Open YouTube Link">
+                                <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                            </a>
+                            <button onclick="editVideo('${v.id}')" class="p-2 rounded-lg bg-indigo-600/20 hover:bg-indigo-600/40 text-indigo-300 inline-block" title="Edit Video">
+                                <i class="fa-solid fa-pen"></i>
+                            </button>
+                            <button onclick="deleteVideo('${v.id}')" class="p-2 rounded-lg bg-rose-600/20 hover:bg-rose-600/40 text-rose-300 inline-block transition-colors" title="Delete Video">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        function openVideoFormModal(videoId = null) {
+            populateCreatorDropdowns();
+            const modal = document.getElementById('modal-video-form');
+            const titleEl = document.getElementById('video-form-title');
+
+            if (videoId) {
+                const v = videos.find(item => item.id === videoId);
+                if (!v) return;
+                titleEl.innerText = 'Edit Animation Work';
+                document.getElementById('video-form-id').value = v.id;
+                document.getElementById('vf-youtube-url').value = v.youtubeUrl;
+                document.getElementById('vf-title').value = v.title;
+                document.getElementById('vf-creator').value = v.creator;
+                document.getElementById('vf-category').value = v.category || '2D';
+                document.getElementById('vf-description').value = v.description || '';
+            } else {
+                titleEl.innerText = 'Add New Animation Work';
+                document.getElementById('video-form-id').value = '';
+                document.getElementById('vf-youtube-url').value = '';
+                document.getElementById('vf-title').value = '';
+                document.getElementById('vf-description').value = '';
+            }
+
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function editVideo(videoId) {
+            openVideoFormModal(videoId);
+        }
+
+        function saveVideo(event) {
+            event.preventDefault();
+            const id = document.getElementById('video-form-id').value;
+            const youtubeUrl = document.getElementById('vf-youtube-url').value.trim();
+            const title = document.getElementById('vf-title').value.trim();
+            const creator = document.getElementById('vf-creator').value;
+            const category = document.getElementById('vf-category').value;
+            const description = document.getElementById('vf-description').value.trim();
+
+            if (!extractYouTubeId(youtubeUrl)) {
+                alert('Please enter a valid YouTube video URL!');
+                return;
+            }
+
+            if (id) {
+                const index = videos.findIndex(v => v.id === id);
+                if (index !== -1) {
+                    videos[index] = { ...videos[index], youtubeUrl, title, creator, category, description };
+                }
+            } else {
+                const newVid = {
+                    id: 'vid-' + Date.now(),
+                    youtubeUrl,
+                    title,
+                    creator,
+                    category,
+                    description,
+                    timestamp: Date.now()
+                };
+                videos.unshift(newVid);
+            }
+
+            saveData();
+            renderHeroLatestVideo();
+            renderShowcaseGrid();
+            renderAdminVideos();
+            renderAnimatorsGrid();
+            closeModal('modal-video-form');
+        }
+
+        function deleteVideo(videoId) {
+            const vid = videos.find(v => v.id === videoId);
+            const vidTitle = vid ? vid.title : 'this animation';
+
+            if (confirm(`Are you sure you want to delete "${vidTitle}"?`)) {
+                videos = videos.filter(v => v.id !== videoId);
+                saveData();
+                renderHeroLatestVideo();
+                renderShowcaseGrid();
+                renderAdminVideos();
+                renderAnimatorsGrid();
+
+                if (activeProfileCreatorName) {
+                    openAnimatorProfileByName(activeProfileCreatorName);
                 }
             }
         }
 
-        function resetStickmanStudio() {
-            setStickmanPose('wave');
-            updateBoneStrength(40);
-            const slider = document.getElementById('boneStrengthSlider');
-            if (slider) slider.value = 40;
-            if (!isSkeletonVisible) toggleSkeletonVisibility();
+        function renderAdminAnimators() {
+            const container = document.getElementById('admin-animators-list');
+            document.getElementById('admin-animator-count').innerText = animators.length;
+
+            if (animators.length === 0) {
+                container.innerHTML = `<p class="text-slate-500 text-xs text-center col-span-full py-4">No animator profiles created yet.</p>`;
+                return;
+            }
+
+            container.innerHTML = animators.map(ani => {
+                const count = videos.filter(v => v.creator === ani.name).length;
+                return `
+                    <div class="p-4 rounded-2xl bg-slate-900 border border-slate-800 flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <img src="${ani.avatar || 'https://placehold.co/100x100/1e1b4b/ec4899?text=' + encodeURIComponent(ani.name)}" class="w-12 h-12 rounded-xl object-cover border border-slate-700">
+                            <div>
+                                <h4 class="text-sm font-bold text-white">${ani.name}</h4>
+                                <p class="text-xs text-brand-cyan">${ani.role || 'Animator'}</p>
+                                <span class="text-[10px] text-slate-500">${count} published animation${count === 1 ? '' : 's'}</span>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center gap-2">
+                            <button onclick="editAnimator('${ani.id}')" class="p-2 rounded-lg bg-indigo-600/20 hover:bg-indigo-600/40 text-indigo-300 text-xs" title="Edit Animator">
+                                <i class="fa-solid fa-pen"></i>
+                            </button>
+                            <button onclick="deleteAnimator('${ani.id}')" class="p-2 rounded-lg bg-rose-600/20 hover:bg-rose-600/40 text-rose-300 text-xs transition-colors" title="Delete Animator">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
         }
 
-        // Initialize topic views on DOM load
-        document.addEventListener('DOMContentLoaded', () => {
-            switchTopic('topic2');
-            setupJointDragging();
-            updateStickmanCanvas();
-        });
+        function openAnimatorFormModal(animatorId = null) {
+            const modal = document.getElementById('modal-animator-form');
+            const titleEl = document.getElementById('animator-form-title');
+
+            if (animatorId) {
+                const ani = animators.find(a => a.id === animatorId);
+                if (!ani) return;
+                titleEl.innerText = 'Edit Animator Profile';
+                document.getElementById('af-form-id').value = ani.id;
+                document.getElementById('af-name').value = ani.name;
+                document.getElementById('af-role').value = ani.role || '';
+                document.getElementById('af-avatar').value = ani.avatar || '';
+                document.getElementById('af-bio').value = ani.bio || '';
+            } else {
+                titleEl.innerText = 'Add New Animator Profile';
+                document.getElementById('af-form-id').value = '';
+                document.getElementById('af-name').value = '';
+                document.getElementById('af-role').value = '';
+                document.getElementById('af-avatar').value = '';
+                document.getElementById('af-bio').value = '';
+            }
+
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function editAnimator(animatorId) {
+            openAnimatorFormModal(animatorId);
+        }
+
+        function saveAnimator(event) {
+            event.preventDefault();
+            const id = document.getElementById('af-form-id').value;
+            const name = document.getElementById('af-name').value.trim();
+            const role = document.getElementById('af-role').value.trim();
+            const avatar = document.getElementById('af-avatar').value.trim();
+            const bio = document.getElementById('af-bio').value.trim();
+
+            if (id) {
+                const index = animators.findIndex(a => a.id === id);
+                if (index !== -1) {
+                    const oldName = animators[index].name;
+                    animators[index] = { ...animators[index], name, role, avatar, bio };
+
+                    if (oldName !== name) {
+                        videos.forEach(v => {
+                            if (v.creator === oldName) v.creator = name;
+                        });
+                    }
+                }
+            } else {
+                if (animators.some(a => a.name.toLowerCase() === name.toLowerCase())) {
+                    alert('An animator with this name already exists!');
+                    return;
+                }
+
+                const newAni = {
+                    id: 'animator-' + Date.now(),
+                    name,
+                    role: role || 'Digital Animator',
+                    avatar,
+                    bio,
+                    likes: 0,
+                    dislikes: 0
+                };
+                animators.push(newAni);
+            }
+
+            saveData();
+            populateCreatorDropdowns();
+            renderHeroLatestVideo();
+            renderShowcaseGrid();
+            renderAnimatorsGrid();
+            renderAdminAnimators();
+            closeModal('modal-animator-form');
+        }
+
+        function deleteAnimator(animatorId) {
+            const ani = animators.find(a => a.id === animatorId);
+            if (!ani) return;
+
+            if (confirm(`Are you sure you want to delete profile for "${ani.name}"?`)) {
+                animators = animators.filter(a => a.id !== animatorId);
+                delete ratings[animatorId];
+
+                saveData();
+                populateCreatorDropdowns();
+                renderShowcaseGrid();
+                renderAnimatorsGrid();
+                renderAdminAnimators();
+            }
+        }
+
+        function generateFullSourceCode() {
+            let docString = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+
+            // Formatted JSON strings for updated arrays
+            const formattedAnimators = JSON.stringify(animators, null, 12);
+            const formattedVideos = JSON.stringify(videos, null, 12);
+
+            // Replace DEFAULT_ANIMATORS & DEFAULT_VIDEOS in the source string
+            docString = docString.replace(
+                /const DEFAULT_ANIMATORS = \[\s*[\s\S]*?\];/m,
+                `const DEFAULT_ANIMATORS = ${formattedAnimators};`
+            );
+
+            docString = docString.replace(
+                /const DEFAULT_VIDEOS = \[\s*[\s\S]*?\];/m,
+                `const DEFAULT_VIDEOS = ${formattedVideos};`
+            );
+
+            return docString;
+        }
+
+        function updateRawCodeView() {
+            const textarea = document.getElementById('raw-code-textarea');
+            const countEl = document.getElementById('raw-code-char-count');
+            if (!textarea) return;
+
+            const fullCode = generateFullSourceCode();
+            textarea.value = fullCode;
+            if (countEl) countEl.innerText = `${fullCode.length.toLocaleString()} characters`;
+        }
+
+        function copyRawCodeToClipboard() {
+            const textarea = document.getElementById('raw-code-textarea');
+            if (!textarea) return;
+
+            // Ensure updated view
+            updateRawCodeView();
+
+            textarea.select();
+            textarea.setSelectionRange(0, 999999);
+
+            try {
+                document.execCommand('copy');
+                const toast = document.getElementById('copy-toast');
+                if (toast) {
+                    toast.classList.remove('hidden');
+                    toast.classList.add('flex');
+                    setTimeout(() => {
+                        toast.classList.add('hidden');
+                        toast.classList.remove('flex');
+                    }, 4000);
+                }
+            } catch (err) {
+                alert('Copying failed. Please select text manually and press Ctrl+C.');
+            }
+        }
+
+        function downloadUpdatedCodeFile() {
+            const fullCode = generateFullSourceCode();
+            const blob = new Blob([fullCode], { type: 'text/html;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = 'index.html';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+        }
+
+        function closeModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            }
+
+            if (modalId === 'modal-video-player') {
+                document.getElementById('player-iframe').src = '';
+            }
+        }
     </script>
 </body>
 </html>
