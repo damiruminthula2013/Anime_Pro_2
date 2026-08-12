@@ -4,11 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>How to Download Media on Pixabay & Pixel Art Studio</title>
-    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Font Awesome CDN -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Silkscreen&display=swap" rel="stylesheet">
@@ -77,7 +74,6 @@
             image-rendering: pixelated;
             image-rendering: crisp-edges;
         }
-        /* Hide scrollbars for toolbars */
         .no-scrollbar::-webkit-scrollbar {
             display: none;
         }
@@ -85,581 +81,574 @@
             -ms-overflow-style: none;
             scrollbar-width: none;
         }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active-tab {
+            display: block;
+        }
     </style>
 </head>
 <body class="bg-slate-950 text-slate-100 font-sans antialiased selection:bg-emerald-500 selection:text-white min-h-screen flex flex-col">
 
-    <!-- Navigation Bar -->
     <header class="sticky top-0 z-50 glass-panel border-b border-slate-800/80">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-            <a href="#" class="flex items-center gap-3 group">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
+            <button onclick="switchTab('pixabay')" class="flex items-center gap-3 group shrink-0 text-left">
                 <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-emerald-500 to-teal-400 flex items-center justify-center text-slate-950 font-black text-xl shadow-lg shadow-emerald-500/20 group-hover:scale-105 transition-transform">
                     px
                 </div>
                 <div>
                     <span class="font-bold text-lg tracking-tight text-white flex items-center gap-1.5">
-                        Pixabay Guide <span class="text-xs px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-semibold">PPTX</span>
+                        Pixabay & Moho Guide
                     </span>
-                    <p class="text-xs text-slate-400 hidden sm:block">Images, Videos, Sound Effects & Pixel Studio</p>
+                    <p class="text-xs text-slate-400 hidden sm:block">Interactive Learning Hub</p>
                 </div>
-            </a>
+            </button>
 
-            <nav class="hidden md:flex items-center gap-6 text-sm font-medium text-slate-300">
-                <a href="#presentation" class="hover:text-emerald-400 transition-colors flex items-center gap-1.5">
-                    <i class="fa-solid fa-file-powerpoint text-emerald-500"></i> Presentation
-                </a>
-                <a href="#guide-summary" class="hover:text-emerald-400 transition-colors flex items-center gap-1.5">
-                    <i class="fa-solid fa-layer-group text-teal-400"></i> Key Concepts
-                </a>
-                <a href="#steps" class="hover:text-emerald-400 transition-colors flex items-center gap-1.5">
-                    <i class="fa-solid fa-list-check text-blue-400"></i> How To Download
-                </a>
-                <a href="#video-examples" class="hover:text-emerald-400 transition-colors flex items-center gap-1.5">
-                    <i class="fa-solid fa-circle-play text-emerald-400"></i> 4K Videos
-                </a>
-                <a href="#pixel-studio" class="hover:text-indigo-400 transition-colors flex items-center gap-1.5 text-indigo-400 font-semibold">
-                    <i class="fa-solid fa-palette text-indigo-400"></i> Pixel Studio
-                </a>
+            <!-- Desktop Navigation -->
+            <nav class="hidden xl:flex items-center gap-1 text-xs font-medium text-slate-300 bg-slate-900/90 p-1.5 rounded-xl border border-slate-800">
+                <button id="nav-btn-pixabay" onclick="switchTab('pixabay')" class="tab-nav-btn px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 border font-semibold">
+                    <i class="fa-solid fa-file-powerpoint text-emerald-400"></i> 1. Pixabay Media Download
+                </button>
+                <button id="nav-btn-switch-layers" onclick="switchTab('switch-layers')" class="tab-nav-btn px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 border font-semibold">
+                    <i class="fa-solid fa-layer-group text-purple-400"></i> 2. Switch Layers in Moho
+                </button>
+                <button id="nav-btn-pixel-studio" onclick="switchTab('pixel-studio')" class="tab-nav-btn px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 border font-semibold">
+                    <i class="fa-solid fa-paintbrush text-indigo-400"></i> 3. Pixel Art Studio
+                </button>
             </nav>
 
-            <div class="flex items-center gap-3">
-                <a href="https://docs.google.com/presentation/d/1yxOc9fOc3y9HqkNEZ4SxUX2cRngPo4jN/edit?usp=sharing&ouid=109905017285947345046&rtpof=true&sd=true" target="_blank" rel="noopener noreferrer" class="px-3.5 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs sm:text-sm font-medium transition-all flex items-center gap-2 border border-slate-700">
-                    <i class="fa-solid fa-arrow-up-right-from-square"></i>
-                    <span class="hidden sm:inline">Open in</span> Google Slides
+            <div class="flex items-center gap-2">
+                <div class="relative inline-block">
+                    <select id="topic-dropdown" onchange="switchTab(this.value)" class="bg-slate-900 text-xs text-emerald-400 font-medium border border-slate-700 hover:border-emerald-500 rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500 cursor-pointer shadow-sm">
+                        <option value="pixabay">Topic 1: Pixabay Media Download</option>
+                        <option value="switch-layers">Topic 2: How to Use Switch Layers in Moho</option>
+                        <option value="pixel-studio">Topic 3: Pixel Art Studio</option>
+                    </select>
+                </div>
+
+                <a href="https://docs.google.com/presentation/d/1yxOc9fOc3y9HqkNEZ4SxUX2cRngPo4jN/edit?usp=sharing&ouid=109905017285947345046&rtpof=true&sd=true" target="_blank" rel="noopener noreferrer" class="hidden sm:flex px-3 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-medium transition-all items-center gap-2 border border-slate-700 shrink-0">
+                    <i class="fa-solid fa-arrow-up-right-from-square"></i> Google Slides
                 </a>
+
+                <button id="mobile-menu-btn" onclick="toggleMobileMenu()" class="xl:hidden p-2 rounded-lg bg-slate-800 text-slate-300 hover:text-white border border-slate-700 flex items-center justify-center">
+                    <i class="fa-solid fa-bars text-lg" id="menu-icon"></i>
+                </button>
             </div>
+        </div>
+
+        <!-- Scrollable Quick Bar -->
+        <div class="bg-slate-900/90 border-t border-slate-800/80 px-4 py-2 overflow-x-auto no-scrollbar flex items-center gap-2 text-xs font-medium">
+            <span class="text-slate-500 uppercase text-[10px] font-bold tracking-wider shrink-0 pr-1">Active View:</span>
+            <button id="pill-btn-pixabay" onclick="switchTab('pixabay')" class="pill-nav-btn px-3.5 py-1 rounded-full shrink-0 transition-colors font-semibold border">
+                Topic 1: Pixabay Media Download
+            </button>
+            <button id="pill-btn-switch-layers" onclick="switchTab('switch-layers')" class="pill-nav-btn px-3.5 py-1 rounded-full shrink-0 transition-colors font-semibold border">
+                Topic 2: Switch Layers in Moho
+            </button>
+            <button id="pill-btn-pixel-studio" onclick="switchTab('pixel-studio')" class="pill-nav-btn px-3.5 py-1 rounded-full shrink-0 transition-colors font-semibold border">
+                Topic 3: Pixel Art Studio
+            </button>
+        </div>
+
+        <!-- Mobile Drawer -->
+        <div id="mobile-menu" class="hidden xl:hidden bg-slate-950 border-b border-slate-800 px-4 py-4 space-y-2">
+            <p class="text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">Select Topic</p>
+            <button onclick="switchTab('pixabay'); toggleMobileMenu();" class="w-full text-left px-3 py-2.5 rounded-lg bg-emerald-950/60 hover:bg-emerald-900/60 text-emerald-300 text-sm font-semibold border border-emerald-800/60 flex items-center gap-2">
+                <i class="fa-solid fa-file-powerpoint text-emerald-400"></i> Topic 1: Pixabay Media Download
+            </button>
+            <button onclick="switchTab('switch-layers'); toggleMobileMenu();" class="w-full text-left px-3 py-2.5 rounded-lg bg-purple-950/60 hover:bg-purple-900/60 text-purple-300 text-sm font-semibold border border-purple-800/60 flex items-center gap-2">
+                <i class="fa-solid fa-layer-group text-purple-400"></i> Topic 2: How to Use Switch Layers in Moho
+            </button>
+            <button onclick="switchTab('pixel-studio'); toggleMobileMenu();" class="w-full text-left px-3 py-2.5 rounded-lg bg-indigo-950/60 hover:bg-indigo-900/60 text-indigo-300 text-sm font-semibold border border-indigo-800/60 flex items-center gap-2">
+                <i class="fa-solid fa-paintbrush text-indigo-400"></i> Topic 3: Pixel Art Studio
+            </button>
         </div>
     </header>
 
     <main class="flex-grow">
         <!-- Hero Section -->
-        <section class="relative pt-12 pb-8 md:pt-16 md:pb-12 overflow-hidden gradient-bg">
+        <section class="relative pt-10 pb-6 md:pt-12 md:pb-8 overflow-hidden gradient-bg">
             <div class="max-w-5xl mx-auto px-4 sm:px-6 text-center relative z-10">
-                <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs sm:text-sm font-medium mb-6">
-                    <i class="fa-solid fa-circle-info"></i> Interactive Presentation & Tutorial Hub
+                <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs sm:text-sm font-medium mb-4">
+                    <i class="fa-solid fa-circle-info"></i> Interactive Presentation & Studio Hub
                 </div>
-                <h1 class="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white mb-6 leading-tight">
-                    How to Download Images, Videos, & Sound Effects on <span class="gradient-text">Pixabay</span>
+                <h1 id="hero-title" class="text-3xl sm:text-5xl font-extrabold tracking-tight text-white mb-4 leading-tight">
+                    How to Download Media on <span class="gradient-text">Pixabay</span>
                 </h1>
-                <p class="text-base sm:text-lg text-slate-300 max-w-3xl mx-auto mb-8 font-normal leading-relaxed">
-                    Explore the complete presentation guide directly below or review key differences between Photos, Vectors, 4K Videos, and Royalty-Free Audio tracks.
+                <p id="hero-subtitle" class="text-sm sm:text-base text-slate-300 max-w-3xl mx-auto mb-6 font-normal leading-relaxed">
+                    Explore the complete presentation guide or switch topics using the navbar above to learn Moho Switch Layers or open the Pixel Art Studio.
                 </p>
 
-                <div class="flex flex-wrap justify-center items-center gap-4">
-                    <a href="#presentation" class="px-6 py-3 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold text-sm shadow-lg shadow-emerald-500/25 transition-all flex items-center gap-2">
-                        <i class="fa-solid fa-play"></i> View Presentation
-                    </a>
-                    <a href="#pixel-studio" class="px-6 py-3 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-sm border border-indigo-500/30 transition-all flex items-center gap-2 shadow-lg shadow-indigo-600/20">
+                <div class="flex flex-wrap justify-center items-center gap-3">
+                    <button onclick="switchTab('pixabay')" class="px-5 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold text-xs sm:text-sm shadow-lg shadow-emerald-500/25 transition-all flex items-center gap-2">
+                        <i class="fa-solid fa-file-powerpoint"></i> Pixabay Guide
+                    </button>
+                    <button onclick="switchTab('switch-layers')" class="px-5 py-2.5 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-semibold text-xs sm:text-sm border border-purple-500/30 transition-all flex items-center gap-2 shadow-lg shadow-purple-600/20">
+                        <i class="fa-solid fa-layer-group"></i> Switch Layers Guide
+                    </button>
+                    <button onclick="switchTab('pixel-studio')" class="px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-xs sm:text-sm border border-indigo-500/30 transition-all flex items-center gap-2 shadow-lg shadow-indigo-600/20">
                         <i class="fa-solid fa-paintbrush"></i> Pixel Art Studio
-                    </a>
+                    </button>
                 </div>
             </div>
         </section>
 
-        <!-- Presentation Embed Section -->
-        <section id="presentation" class="py-8 max-w-6xl mx-auto px-4 sm:px-6">
-            <div class="glass-panel rounded-2xl p-3 sm:p-5 shadow-2xl border border-slate-800 relative">
-                <!-- Control Toolbar Header -->
-                <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-3 mb-3 border-b border-slate-800 gap-3">
-                    <div class="flex items-center gap-3">
-                        <div class="w-8 h-8 rounded-lg bg-rose-500/10 border border-rose-500/20 flex items-center justify-center text-rose-400">
-                            <i class="fa-solid fa-file-powerpoint"></i>
+        <div id="tab-pixabay" class="tab-content active-tab">
+            <!-- Presentation Frame -->
+            <section id="presentation" class="py-6 max-w-6xl mx-auto px-4 sm:px-6">
+                <div class="glass-panel rounded-2xl p-3 sm:p-5 shadow-2xl border border-slate-800 relative">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-3 mb-3 border-b border-slate-800 gap-3">
+                        <div class="flex items-center gap-3">
+                            <div class="w-8 h-8 rounded-lg bg-rose-500/10 border border-rose-500/20 flex items-center justify-center text-rose-400">
+                                <i class="fa-solid fa-file-powerpoint"></i>
+                            </div>
+                            <div>
+                                <h2 class="text-sm sm:text-base font-bold text-white flex items-center gap-2">
+                                    pixabay.pptx
+                                    <span class="text-[10px] uppercase tracking-wider bg-slate-800 text-slate-300 px-2 py-0.5 rounded font-mono">Live Player</span>
+                                </h2>
+                                <p class="text-xs text-slate-400">Author: Damiru Samaraweera</p>
+                            </div>
                         </div>
-                        <div>
-                            <h2 class="text-sm sm:text-base font-bold text-white flex items-center gap-2">
-                                pixabay.pptx
-                                <span class="text-[10px] uppercase tracking-wider bg-slate-800 text-slate-300 px-2 py-0.5 rounded font-mono">Live Player</span>
-                            </h2>
-                            <p class="text-xs text-slate-400">Author: Damiru Samaraweera</p>
+
+                        <div class="flex items-center gap-2 text-xs">
+                            <button onclick="toggleFullScreen()" class="px-3 py-1.5 rounded-md bg-slate-800 hover:bg-slate-700 text-slate-300 font-medium transition-colors flex items-center gap-1.5 border border-slate-700">
+                                <i class="fa-solid fa-expand"></i> Fullscreen
+                            </button>
+                            <a href="https://docs.google.com/presentation/d/1yxOc9fOc3y9HqkNEZ4SxUX2cRngPo4jN/edit?usp=sharing&ouid=109905017285947345046&rtpof=true&sd=true" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 rounded-md bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 font-medium transition-colors flex items-center gap-1.5 border border-emerald-500/20">
+                                <i class="fa-solid fa-external-link"></i> Google Drive Link
+                            </a>
                         </div>
                     </div>
 
-                    <div class="flex items-center gap-2 text-xs">
-                        <button onclick="toggleFullScreen()" class="px-3 py-1.5 rounded-md bg-slate-800 hover:bg-slate-700 text-slate-300 font-medium transition-colors flex items-center gap-1.5 border border-slate-700">
-                            <i class="fa-solid fa-expand"></i> Fullscreen
+                    <div id="presentation-container" class="relative w-full rounded-xl overflow-hidden bg-slate-900 border border-slate-800 shadow-inner transition-all duration-300" style="padding-top: 56.25%;">
+                        <iframe 
+                            id="ppt-iframe"
+                            src="https://docs.google.com/presentation/d/1yxOc9fOc3y9HqkNEZ4SxUX2cRngPo4jN/embed?start=false&loop=false&delayms=3000" 
+                            frameborder="0" 
+                            class="absolute top-0 left-0 w-full h-full"
+                            allowfullscreen="true" 
+                            mozallowfullscreen="true" 
+                            webkitallowfullscreen="true"
+                            allow="fullscreen">
+                        </iframe>
+                    </div>
+
+                    <div class="mt-3 flex flex-wrap items-center justify-between text-xs text-slate-400 gap-2 px-1">
+                        <span class="flex items-center gap-1.5">
+                            <i class="fa-solid fa-keyboard text-slate-500"></i> Use arrows inside player frame to switch slides
+                        </span>
+                        <span class="text-emerald-400 font-medium">
+                            <i class="fa-solid fa-check-circle"></i> Loaded successfully from Google Slides
+                        </span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Guide Summary -->
+            <section id="guide-summary" class="py-8 max-w-6xl mx-auto px-4 sm:px-6">
+                <div class="text-center mb-8">
+                    <h2 class="text-2xl sm:text-3xl font-bold text-white mb-2">Presentation Summary & Media Types</h2>
+                    <p class="text-slate-400 text-xs sm:text-sm max-w-2xl mx-auto">
+                        Learn what each category on Pixabay provides for your creative projects as outlined in the presentation.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div class="glass-panel p-6 rounded-2xl border border-slate-800 hover:border-emerald-500/30 transition-all group">
+                        <div class="w-12 h-12 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400 text-xl mb-4 group-hover:scale-110 transition-transform">
+                            <i class="fa-solid fa-camera"></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-white mb-2">Photos</h3>
+                        <p class="text-xs sm:text-sm text-slate-400 leading-relaxed mb-3">
+                            Real-life pictures captured with cameras. High resolution, rich detail, suitable for realistic backgrounds.
+                        </p>
+                        <span class="inline-block text-[11px] font-semibold text-blue-400 bg-blue-500/10 px-2.5 py-1 rounded-md">JPG / PNG Formats</span>
+                    </div>
+
+                    <div class="glass-panel p-6 rounded-2xl border border-slate-800 hover:border-emerald-500/30 transition-all group">
+                        <div class="w-12 h-12 rounded-xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-400 text-xl mb-4 group-hover:scale-110 transition-transform">
+                            <i class="fa-solid fa-bezier-curve"></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-white mb-2">Vectors</h3>
+                        <p class="text-xs sm:text-sm text-slate-400 leading-relaxed mb-3">
+                            Digital drawings made of clean lines and geometric shapes. They never get blurry no matter how big you resize them!
+                        </p>
+                        <span class="inline-block text-[11px] font-semibold text-purple-400 bg-purple-500/10 px-2.5 py-1 rounded-md">SVG / Infinite Resolution</span>
+                    </div>
+
+                    <div class="glass-panel p-6 rounded-2xl border border-slate-800 hover:border-emerald-500/30 transition-all group">
+                        <div class="w-12 h-12 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 text-xl mb-4 group-hover:scale-110 transition-transform">
+                            <i class="fa-solid fa-video"></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-white mb-2">4K Videos</h3>
+                        <p class="text-xs sm:text-sm text-slate-400 leading-relaxed mb-3">
+                            Ultra high-definition stock video clips (4K & Full HD) for background video loops and editing.
+                        </p>
+                        <span class="inline-block text-[11px] font-semibold text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded-md">MP4 / 4K Ultra HD</span>
+                    </div>
+
+                    <div class="glass-panel p-6 rounded-2xl border border-slate-800 hover:border-emerald-500/30 transition-all group">
+                        <div class="w-12 h-12 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-400 text-xl mb-4 group-hover:scale-110 transition-transform">
+                            <i class="fa-solid fa-music"></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-white mb-2">Music & SFX</h3>
+                        <p class="text-xs sm:text-sm text-slate-400 leading-relaxed mb-3">
+                            Royalty-free background tracks and sound effect audio clips free for commercial use.
+                        </p>
+                        <span class="inline-block text-[11px] font-semibold text-amber-400 bg-amber-500/10 px-2.5 py-1 rounded-md">MP3 / Audio Tracks</span>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <div id="tab-switch-layers" class="tab-content">
+            <section id="switch-layers" class="py-8 max-w-6xl mx-auto px-4 sm:px-6">
+                <div class="text-center mb-8">
+                    <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-400 text-xs sm:text-sm font-medium mb-3">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i> Moho Animation Tutorial
+                    </div>
+                    <h2 class="text-3xl sm:text-5xl font-extrabold text-white tracking-tight mb-3">
+                        How to Use <span class="bg-gradient-to-r from-purple-400 via-pink-400 to-indigo-400 bg-clip-text text-transparent">Switch Layers</span> in Moho
+                    </h2>
+                    <p class="text-slate-300 text-sm sm:text-base max-w-2xl mx-auto">
+                        Learn how Switch Layers act like a magic flipbook folder to instantly swap poses, facial expressions, and blinks in Moho.
+                    </p>
+                </div>
+
+                <div class="glass-panel rounded-2xl p-3 sm:p-5 shadow-2xl border border-purple-900/40 relative mb-8">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-3 mb-3 border-b border-slate-800 gap-3">
+                        <div class="flex items-center gap-3">
+                            <div class="w-8 h-8 rounded-lg bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-400">
+                                <i class="fa-solid fa-file-powerpoint"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-sm sm:text-base font-bold text-white flex items-center gap-2">
+                                    switch_layers.pptx
+                                    <span class="text-[10px] uppercase tracking-wider bg-purple-950 text-purple-300 border border-purple-800/50 px-2 py-0.5 rounded font-mono">Presentation</span>
+                                </h3>
+                                <p class="text-xs text-slate-400">Topic: Moho Switch Layers Animation Guide</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center gap-2 text-xs">
+                            <button onclick="toggleSwitchLayersFullScreen()" class="px-3 py-1.5 rounded-md bg-slate-800 hover:bg-slate-700 text-slate-300 font-medium transition-colors flex items-center gap-1.5 border border-slate-700">
+                                <i class="fa-solid fa-expand"></i> Fullscreen
+                            </button>
+                            <a href="https://docs.google.com/presentation/d/18dVevUax2gewLHliObdZ-JbiZUiv6Ulq/edit?usp=sharing&ouid=109905017285947345046&rtpof=true&sd=true" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 rounded-md bg-purple-500/10 hover:bg-purple-500/20 text-purple-300 font-medium transition-colors flex items-center gap-1.5 border border-purple-500/20">
+                                <i class="fa-solid fa-external-link"></i> Open Google Slides
+                            </a>
+                        </div>
+                    </div>
+
+                    <div id="switch-presentation-container" class="relative w-full rounded-xl overflow-hidden bg-slate-900 border border-slate-800 shadow-inner transition-all duration-300" style="padding-top: 56.25%;">
+                        <iframe 
+                            id="switch-ppt-iframe"
+                            src="https://docs.google.com/presentation/d/18dVevUax2gewLHliObdZ-JbiZUiv6Ulq/embed?start=false&loop=false&delayms=3000" 
+                            frameborder="0" 
+                            class="absolute top-0 left-0 w-full h-full"
+                            allowfullscreen="true" 
+                            mozallowfullscreen="true" 
+                            webkitallowfullscreen="true"
+                            allow="fullscreen">
+                        </iframe>
+                    </div>
+                </div>
+
+                <!-- Classroom Note Box -->
+                <div class="bg-gradient-to-b from-slate-900 to-slate-950 rounded-3xl p-6 sm:p-10 border border-purple-500/30 shadow-2xl relative overflow-hidden">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-slate-800 mb-8">
+                        <div class="flex items-center gap-3">
+                            <div class="w-12 h-12 rounded-2xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400 text-xl shadow-lg">
+                                <i class="fa-solid fa-pen-to-square"></i>
+                            </div>
+                            <div>
+                                <span class="text-xs font-mono uppercase tracking-wider text-amber-400 font-semibold bg-amber-500/10 px-2.5 py-0.5 rounded border border-amber-500/20">Classroom Note</span>
+                                <h3 class="text-xl sm:text-2xl font-bold text-white mt-1">Note to Write on the Book</h3>
+                            </div>
+                        </div>
+
+                        <button onclick="copyNotebookText()" class="px-4 py-2 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-semibold text-xs transition-all flex items-center justify-center gap-2 shadow-lg shadow-purple-600/20 shrink-0">
+                            <i class="fa-solid fa-copy"></i>
+                            <span id="copy-note-btn-text">Copy Note to Clipboard</span>
                         </button>
-                        <a href="https://docs.google.com/presentation/d/1yxOc9fOc3y9HqkNEZ4SxUX2cRngPo4jN/edit?usp=sharing&ouid=109905017285947345046&rtpof=true&sd=true" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 rounded-md bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 font-medium transition-colors flex items-center gap-1.5 border border-emerald-500/20">
-                            <i class="fa-solid fa-external-link"></i> Google Drive Link
+                    </div>
+
+                    <div id="notebook-note-content" class="space-y-8 text-slate-200">
+                        <div class="bg-purple-950/40 p-5 rounded-2xl border border-purple-800/40">
+                            <h4 class="text-lg font-bold text-purple-300 mb-2 flex items-center gap-2">
+                                <i class="fa-solid fa-circle-question text-purple-400"></i> What are Switch Layers?
+                            </h4>
+                            <p class="text-sm text-slate-300 leading-relaxed">
+                                A Switch Layer is like a <strong>magic flipbook folder</strong> in Moho. It holds multiple drawings, but only displays one at a time, allowing you to swap between different shapes or poses quickly.
+                            </p>
+                        </div>
+
+                        <div>
+                            <h4 class="text-xl font-bold text-amber-300 mb-6 flex items-center gap-2 border-b border-slate-800 pb-3">
+                                <i class="fa-solid fa-book"></i> How to Add Switch Layers in Moho
+                            </h4>
+
+                            <div class="space-y-6">
+                                <div class="flex gap-4">
+                                    <div class="w-8 h-8 rounded-full bg-purple-500/20 border border-purple-500/40 text-purple-300 font-bold flex items-center justify-center shrink-0 text-sm">1</div>
+                                    <div>
+                                        <h5 class="font-bold text-white text-base">Create a New Switch Layer:</h5>
+                                        <ul class="mt-2 space-y-1.5 text-xs sm:text-sm text-slate-300 list-disc list-inside pl-1">
+                                            <li>Go to your <strong>Layers panel</strong>.</li>
+                                            <li>Click the <strong>New Layer</strong> button (<span class="font-bold text-emerald-400">+</span>).</li>
+                                            <li>Select <strong>Switch</strong> from the menu.</li>
+                                            <li>Give the layer a name (e.g., <span class="font-mono text-purple-300 bg-purple-950 px-1.5 py-0.5 rounded border border-purple-800/50">"Mouth"</span>).</li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <div class="flex gap-4">
+                                    <div class="w-8 h-8 rounded-full bg-purple-500/20 border border-purple-500/40 text-purple-300 font-bold flex items-center justify-center shrink-0 text-sm">2</div>
+                                    <div>
+                                        <h5 class="font-bold text-white text-base">Add Your Drawings:</h5>
+                                        <ul class="mt-2 space-y-1.5 text-xs sm:text-sm text-slate-300 list-disc list-inside pl-1">
+                                            <li>Create or drag your vector layers into the <strong>Switch folder</strong>.</li>
+                                            <li>Only the top drawing will be visible on your canvas.</li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <div class="flex gap-4">
+                                    <div class="w-8 h-8 rounded-full bg-purple-500/20 border border-purple-500/40 text-purple-300 font-bold flex items-center justify-center shrink-0 text-sm">3</div>
+                                    <div>
+                                        <h5 class="font-bold text-white text-base">Switch Between Drawings:</h5>
+                                        <ul class="mt-2 space-y-1.5 text-xs sm:text-sm text-slate-300 list-disc list-inside pl-1">
+                                            <li>Right-click the <strong>Switch Layer folder</strong> in your Layers panel or on the Timeline.</li>
+                                            <li>Select the drawing you want to show from the menu that pops up.</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Example Video Section -->
+                <div class="mt-8 bg-gradient-to-b from-slate-900 to-slate-950 rounded-3xl p-6 sm:p-8 border border-purple-500/30 shadow-2xl relative overflow-hidden">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-800 mb-6">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-2xl bg-purple-500/10 border border-purple-500/30 flex items-center justify-center text-purple-400 text-lg shadow-lg">
+                                <i class="fa-solid fa-circle-play"></i>
+                            </div>
+                            <div>
+                                <span class="text-xs font-mono uppercase tracking-wider text-purple-400 font-semibold bg-purple-500/10 px-2.5 py-0.5 rounded border border-purple-500/20">Demonstration</span>
+                                <h3 class="text-xl font-bold text-white mt-0.5">Example Video</h3>
+                            </div>
+                        </div>
+
+                        <a href="https://drive.google.com/file/d/14RdoxujNdkdr8P8u06sEAkEr4gXKoktM/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="px-4 py-2 rounded-xl bg-purple-600/20 hover:bg-purple-600/30 text-purple-300 font-semibold text-xs border border-purple-500/30 transition-all flex items-center justify-center gap-2 shrink-0">
+                            <i class="fa-solid fa-arrow-up-right-from-square"></i> Open Video in Drive
                         </a>
                     </div>
-                </div>
 
-                <!-- Aspect Ratio Container for Presentation -->
-                <div id="presentation-container" class="relative w-full rounded-xl overflow-hidden bg-slate-900 border border-slate-800 shadow-inner transition-all duration-300" style="padding-top: 56.25%;">
-                    <iframe 
-                        id="ppt-iframe"
-                        src="https://docs.google.com/presentation/d/1yxOc9fOc3y9HqkNEZ4SxUX2cRngPo4jN/embed?start=false&loop=false&delayms=3000" 
-                        frameborder="0" 
-                        class="absolute top-0 left-0 w-full h-full"
-                        allowfullscreen="true" 
-                        mozallowfullscreen="true" 
-                        webkitallowfullscreen="true"
-                        allow="fullscreen">
-                    </iframe>
-                </div>
-
-                <!-- Slide Navigation Hints -->
-                <div class="mt-3 flex flex-wrap items-center justify-between text-xs text-slate-400 gap-2 px-1">
-                    <span class="flex items-center gap-1.5">
-                        <i class="fa-solid fa-keyboard text-slate-500"></i> Use arrows inside the player frame to switch slides
-                    </span>
-                    <span class="text-emerald-400 font-medium">
-                        <i class="fa-solid fa-check-circle"></i> Loaded successfully from Google Slides
-                    </span>
-                </div>
-            </div>
-        </section>
-
-        <!-- Key Concepts Section -->
-        <section id="guide-summary" class="py-12 max-w-6xl mx-auto px-4 sm:px-6">
-            <div class="text-center mb-10">
-                <h2 class="text-2xl sm:text-3xl font-bold text-white mb-3">Presentation Summary & Media Types</h2>
-                <p class="text-slate-400 text-sm sm:text-base max-w-2xl mx-auto">
-                    Learn what each category on Pixabay provides for your creative projects as outlined in the presentation slides.
-                </p>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <!-- Photos -->
-                <div class="glass-panel p-6 rounded-2xl border border-slate-800 hover:border-emerald-500/30 transition-all group">
-                    <div class="w-12 h-12 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400 text-xl mb-4 group-hover:scale-110 transition-transform">
-                        <i class="fa-solid fa-camera"></i>
-                    </div>
-                    <h3 class="text-lg font-bold text-white mb-2">Photos</h3>
-                    <p class="text-xs sm:text-sm text-slate-400 leading-relaxed mb-3">
-                        Real-life pictures captured with cameras. High resolution, rich detail, suitable for natural backgrounds, landscapes, and realistic photography.
-                    </p>
-                    <span class="inline-block text-[11px] font-semibold text-blue-400 bg-blue-500/10 px-2.5 py-1 rounded-md">JPG / PNG Formats</span>
-                </div>
-
-                <!-- Vectors -->
-                <div class="glass-panel p-6 rounded-2xl border border-slate-800 hover:border-emerald-500/30 transition-all group">
-                    <div class="w-12 h-12 rounded-xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-400 text-xl mb-4 group-hover:scale-110 transition-transform">
-                        <i class="fa-solid fa-bezier-curve"></i>
-                    </div>
-                    <h3 class="text-lg font-bold text-white mb-2">Vectors</h3>
-                    <p class="text-xs sm:text-sm text-slate-400 leading-relaxed mb-3">
-                        Special digital drawings made of clean lines and geometric shapes. They never get blurry no matter how big you resize or zoom them!
-                    </p>
-                    <span class="inline-block text-[11px] font-semibold text-purple-400 bg-purple-500/10 px-2.5 py-1 rounded-md">SVG / Infinite Resolution</span>
-                </div>
-
-                <!-- Videos -->
-                <div class="glass-panel p-6 rounded-2xl border border-slate-800 hover:border-emerald-500/30 transition-all group">
-                    <div class="w-12 h-12 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 text-xl mb-4 group-hover:scale-110 transition-transform">
-                        <i class="fa-solid fa-video"></i>
-                    </div>
-                    <h3 class="text-lg font-bold text-white mb-2">4K Videos</h3>
-                    <p class="text-xs sm:text-sm text-slate-400 leading-relaxed mb-3">
-                        Ultra high-definition stock video clips (4K & Full HD). Perfect for background video loops, film projects, and content creation.
-                    </p>
-                    <span class="inline-block text-[11px] font-semibold text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded-md">MP4 / 4K Ultra HD</span>
-                </div>
-
-                <!-- Music & SFX -->
-                <div class="glass-panel p-6 rounded-2xl border border-slate-800 hover:border-emerald-500/30 transition-all group">
-                    <div class="w-12 h-12 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-400 text-xl mb-4 group-hover:scale-110 transition-transform">
-                        <i class="fa-solid fa-music"></i>
-                    </div>
-                    <h3 class="text-lg font-bold text-white mb-2">Music & SFX</h3>
-                    <p class="text-xs sm:text-sm text-slate-400 leading-relaxed mb-3">
-                        Royalty-free background tracks and sound effect audio clips (ringtones, explosions, nature sounds) free for commercial use.
-                    </p>
-                    <span class="inline-block text-[11px] font-semibold text-amber-400 bg-amber-500/10 px-2.5 py-1 rounded-md">MP3 / Audio Tracks</span>
-                </div>
-            </div>
-        </section>
-
-        <!-- Step-by-Step Walkthrough -->
-        <section id="steps" class="py-12 max-w-5xl mx-auto px-4 sm:px-6">
-            <div class="bg-slate-900/60 rounded-2xl p-6 sm:p-10 border border-slate-800">
-                <h2 class="text-2xl font-bold text-white mb-8 text-center flex items-center justify-center gap-3">
-                    <span class="w-8 h-8 rounded-full bg-emerald-500/20 text-emerald-400 text-sm flex items-center justify-center border border-emerald-500/30">
-                        <i class="fa-solid fa-list-ol"></i>
-                    </span>
-                    4 Easy Steps to Download Free Media
-                </h2>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 relative">
-                    <!-- Step 1 -->
-                    <div class="flex gap-4">
-                        <div class="flex-shrink-0 w-10 h-10 rounded-xl bg-emerald-500 text-slate-950 font-black flex items-center justify-center text-lg shadow-md shadow-emerald-500/20">
-                            1
-                        </div>
-                        <div>
-                            <h3 class="font-bold text-white text-base mb-1">Open Pixabay</h3>
-                            <p class="text-xs sm:text-sm text-slate-400">
-                                Open Google Search and type <span class="text-emerald-400 font-mono">Pixabay</span> or go directly to <span class="text-emerald-400 font-mono">pixabay.com</span>.
-                            </p>
-                        </div>
-                    </div>
-
-                    <!-- Step 2 -->
-                    <div class="flex gap-4">
-                        <div class="flex-shrink-0 w-10 h-10 rounded-xl bg-emerald-500 text-slate-950 font-black flex items-center justify-center text-lg shadow-md shadow-emerald-500/20">
-                            2
-                        </div>
-                        <div>
-                            <h3 class="font-bold text-white text-base mb-1">Choose Media Type</h3>
-                            <p class="text-xs sm:text-sm text-slate-400">
-                                Click on the category tab: <span class="text-slate-200 font-medium">Photos, Illustrations, Vectors, Videos, Music,</span> or <span class="text-slate-200 font-medium">Sound Effects</span>.
-                            </p>
-                        </div>
-                    </div>
-
-                    <!-- Step 3 -->
-                    <div class="flex gap-4">
-                        <div class="flex-shrink-0 w-10 h-10 rounded-xl bg-emerald-500 text-slate-950 font-black flex items-center justify-center text-lg shadow-md shadow-emerald-500/20">
-                            3
-                        </div>
-                        <div>
-                            <h3 class="font-bold text-white text-base mb-1">Search & Select Asset</h3>
-                            <p class="text-xs sm:text-sm text-slate-400">
-                                Type your desired search terms (e.g. "car", "nature", "flower") and click on your preferred result to open details.
-                            </p>
-                        </div>
-                    </div>
-
-                    <!-- Step 4 -->
-                    <div class="flex gap-4">
-                        <div class="flex-shrink-0 w-10 h-10 rounded-xl bg-emerald-500 text-slate-950 font-black flex items-center justify-center text-lg shadow-md shadow-emerald-500/20">
-                            4
-                        </div>
-                        <div>
-                            <h3 class="font-bold text-white text-base mb-1">Download Quality File</h3>
-                            <p class="text-xs sm:text-sm text-slate-400">
-                                Click the green <span class="text-emerald-400 font-semibold">Download</span> button, pick your preferred resolution (e.g., 4K, 1080p, SVG), and save to your computer.
-                            </p>
-                        </div>
+                    <div class="relative w-full rounded-2xl overflow-hidden bg-slate-950 border border-slate-800 shadow-inner" style="padding-top: 56.25%;">
+                        <iframe 
+                            src="https://drive.google.com/file/d/14RdoxujNdkdr8P8u06sEAkEr4gXKoktM/preview" 
+                            class="absolute top-0 left-0 w-full h-full border-0" 
+                            allow="autoplay" 
+                            allowfullscreen>
+                        </iframe>
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
+        </div>
 
-        <!-- 4K Video Examples Section -->
-        <section id="video-examples" class="py-12 max-w-6xl mx-auto px-4 sm:px-6">
-            <div class="glass-panel rounded-3xl p-6 sm:p-10 border border-slate-800 relative overflow-hidden">
-                <div class="absolute -right-20 -bottom-20 w-80 h-80 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"></div>
-
-                <div class="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
-                    <div>
-                        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-semibold mb-3">
-                            <i class="fa-solid fa-sparkles"></i> Featured Section
-                        </div>
-                        <h2 class="text-2xl sm:text-4xl font-extrabold text-white tracking-tight">
-                            Examples for 4K Videos
-                        </h2>
-                        <p class="text-slate-400 text-sm sm:text-base mt-2 max-w-xl">
-                            Here is a sample high-quality stock video clip directly from Pixabay. Watch, preview video playback, or download the original file.
-                        </p>
-                    </div>
-
-                    <a href="https://pixabay.com/videos/download/x-367684_medium.mp4" target="_blank" download class="px-5 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold text-sm shadow-lg shadow-emerald-500/20 transition-all flex items-center justify-center gap-2 self-start md:self-auto">
-                        <i class="fa-solid fa-download"></i> Direct Download MP4
-                    </a>
-                </div>
-
-                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-                    <div class="lg:col-span-8 bg-slate-950 rounded-2xl overflow-hidden border border-slate-800 shadow-2xl relative group">
-                        <div class="relative w-full aspect-video bg-black flex items-center justify-center">
-                            <video 
-                                id="sample-4k-video"
-                                class="w-full h-full object-cover" 
-                                controls 
-                                preload="metadata"
-                                poster="https://placehold.co/1280x720/0f172a/10b981?text=Pixabay+4K+Video+Sample">
-                                <source src="https://pixabay.com/videos/download/x-367684_medium.mp4" type="video/mp4">
-                                Your browser does not support the video tag.
-                            </video>
-                        </div>
-                    </div>
-
-                    <div class="lg:col-span-4 space-y-4">
-                        <div class="bg-slate-900/80 rounded-2xl p-5 border border-slate-800 space-y-4">
-                            <div class="flex items-center justify-between">
-                                <span class="text-xs font-mono font-semibold text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded-md border border-emerald-500/20">
-                                    4K ULTRA HD
-                                </span>
-                                <span class="text-xs text-slate-400 flex items-center gap-1">
-                                    <i class="fa-solid fa-shield-halved text-emerald-400"></i> Free for Use
-                                </span>
+        <div id="tab-pixel-studio" class="tab-content">
+            <section id="pixel-studio" class="py-8 max-w-7xl mx-auto px-4 sm:px-6">
+                <!-- Main Studio Container Card -->
+                <div class="glass-panel rounded-2xl border border-indigo-900/40 shadow-2xl overflow-hidden flex flex-col h-[750px]">
+                    <!-- Studio Header Bar -->
+                    <header class="bg-slate-900/90 border-b border-slate-800 px-4 py-3 flex flex-wrap items-center justify-between gap-3 shrink-0">
+                        <div class="flex items-center gap-3">
+                            <div class="w-8 h-8 rounded-lg bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-400">
+                                <i class="fa-solid fa-paintbrush"></i>
                             </div>
-
                             <div>
-                                <h3 class="text-lg font-bold text-white mb-1">Pixabay Sample Stock Video</h3>
-                                <p class="text-xs text-slate-400 leading-relaxed">
-                                    High-definition stock footage. High bitrate, clear colors, and motion fidelity suitable for 4K video editing projects.
-                                </p>
-                            </div>
-
-                            <hr class="border-slate-800">
-
-                            <div class="grid grid-cols-2 gap-3 text-xs">
-                                <div class="bg-slate-950 p-2.5 rounded-lg border border-slate-800">
-                                    <p class="text-slate-500 text-[10px]">FORMAT</p>
-                                    <p class="text-slate-200 font-semibold font-mono">MP4 (H.264)</p>
-                                </div>
-                                <div class="bg-slate-950 p-2.5 rounded-lg border border-slate-800">
-                                    <p class="text-slate-500 text-[10px]">RESOLUTION</p>
-                                    <p class="text-slate-200 font-semibold font-mono">1920x1080 / 4K</p>
-                                </div>
-                                <div class="bg-slate-950 p-2.5 rounded-lg border border-slate-800">
-                                    <p class="text-slate-500 text-[10px]">LICENSE</p>
-                                    <p class="text-emerald-400 font-semibold">Royalty Free</p>
-                                </div>
-                                <div class="bg-slate-950 p-2.5 rounded-lg border border-slate-800">
-                                    <p class="text-slate-500 text-[10px]">ATTRIBUTION</p>
-                                    <p class="text-slate-200 font-semibold">Not Required</p>
-                                </div>
-                            </div>
-
-                            <div class="pt-2">
-                                <a href="https://pixabay.com/videos/download/x-367684_medium.mp4" target="_blank" class="w-full py-2.5 px-4 bg-slate-800 hover:bg-slate-700 text-white font-medium text-xs rounded-xl border border-slate-700 transition-all flex items-center justify-center gap-2">
-                                    <i class="fa-solid fa-arrow-up-right-from-square"></i> Open Raw Video Link
-                                </a>
+                                <h3 class="text-sm font-bold text-white flex items-center gap-2 font-pixel">
+                                    PIXEL ART STUDIO
+                                </h3>
+                                <p class="text-[11px] text-slate-400">64x64 Pixel Canvas & Sprite Generator</p>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </div>
-        </section>
 
-        <!-- Interactive Search Demo Section -->
-        <section class="py-12 max-w-6xl mx-auto px-4 sm:px-6">
-            <div class="bg-gradient-to-b from-slate-900 to-slate-950 rounded-3xl p-6 sm:p-10 border border-slate-800 text-center">
-                <h2 class="text-2xl font-bold text-white mb-2">Try Searching Pixabay</h2>
-                <p class="text-slate-400 text-sm mb-6 max-w-lg mx-auto">
-                    Type any keyword below to directly launch a search query on Pixabay.com:
-                </p>
+                        <!-- Top Toolbar Controls -->
+                        <div class="flex items-center gap-2 flex-wrap">
+                            <!-- Undo / Redo -->
+                            <div class="flex items-center bg-slate-950 p-1 rounded-lg border border-slate-800">
+                                <button id="undoBtn" class="p-1.5 text-slate-400 hover:text-white disabled:opacity-30 disabled:hover:text-slate-400 transition" title="Undo (Ctrl+Z)">
+                                    <i class="fa-solid fa-rotate-left text-xs"></i>
+                                </button>
+                                <button id="redoBtn" class="p-1.5 text-slate-400 hover:text-white disabled:opacity-30 disabled:hover:text-slate-400 transition" title="Redo (Ctrl+Y)">
+                                    <i class="fa-solid fa-rotate-right text-xs"></i>
+                                </button>
+                            </div>
 
-                <form onsubmit="handlePixabaySearch(event)" class="max-w-2xl mx-auto flex flex-col sm:flex-row gap-2">
-                    <div class="relative flex-grow">
-                        <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-slate-500"></i>
-                        <input 
-                            type="text" 
-                            id="search-input" 
-                            placeholder="Search images, 4K videos, sound effects..." 
-                            class="w-full pl-11 pr-4 py-3 bg-slate-950 rounded-xl border border-slate-800 text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500 text-sm transition-colors"
-                            required
-                        >
-                    </div>
-                    <select id="search-type" class="bg-slate-950 text-slate-300 border border-slate-800 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-emerald-500">
-                        <option value="images">Photos</option>
-                        <option value="illustrations">Illustrations</option>
-                        <option value="vectors">Vectors</option>
-                        <option value="videos" selected>4K Videos</option>
-                        <option value="music">Music</option>
-                        <option value="sound-effects">Sound Effects</option>
-                    </select>
-                    <button type="submit" class="py-3 px-6 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold text-sm transition-all flex items-center justify-center gap-2">
-                        <span>Search</span>
-                        <i class="fa-solid fa-arrow-right"></i>
-                    </button>
-                </form>
-            </div>
-        </section>
+                            <div class="h-4 w-px bg-slate-800"></div>
 
-        <!-- Pixel Art Drawer Studio Section -->
-        <section id="pixel-studio" class="py-12 max-w-7xl mx-auto px-4 sm:px-6">
-            <div class="bg-slate-900 border border-slate-800 rounded-3xl overflow-hidden shadow-2xl flex flex-col h-[750px] relative select-none">
-                
-                <!-- Studio Header -->
-                <header class="h-14 border-b border-slate-800 bg-slate-950/90 px-4 flex items-center justify-between shrink-0 backdrop-blur-sm z-20">
-                    <div class="flex items-center gap-3">
-                        <div class="w-8 h-8 rounded-lg bg-indigo-600 flex items-center justify-center text-white font-bold shadow-lg shadow-indigo-500/30 font-pixel text-xs">
-                            64
-                        </div>
-                        <div>
-                            <h1 class="font-semibold text-sm tracking-wide text-white flex items-center gap-2">
-                                Pixel Art Studio <span class="font-pixel text-[10px] text-indigo-400 bg-indigo-950/60 border border-indigo-800/50 px-1.5 py-0.5 rounded">64x64</span>
-                            </h1>
-                        </div>
-                    </div>
+                            <!-- Brush Size Slider -->
+                            <div class="flex items-center gap-2 bg-slate-950 px-3 py-1 rounded-lg border border-slate-800 text-xs">
+                                <span class="text-slate-400 text-[11px]">Size:</span>
+                                <input type="range" id="brushSizeInput" min="1" max="4" value="1" class="w-16 accent-indigo-500 cursor-pointer">
+                                <span id="brushSizeVal" class="font-mono text-indigo-400 font-bold text-[11px]">1px</span>
+                            </div>
 
-                    <!-- Header Quick Actions -->
-                    <div class="flex items-center gap-2">
-                        <!-- Undo / Redo -->
-                        <div class="flex items-center bg-slate-800/80 rounded-lg p-1 border border-slate-700/50">
-                            <button id="undoBtn" class="p-1.5 hover:bg-slate-700 rounded text-slate-300 hover:text-white transition disabled:opacity-30 disabled:hover:bg-transparent" title="Undo (Ctrl+Z)">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6"/></svg>
+                            <div class="h-4 w-px bg-slate-800"></div>
+
+                            <!-- Clear Canvas -->
+                            <button id="clearBtn" class="px-3 py-1.5 bg-rose-950/40 hover:bg-rose-900/60 border border-rose-800/50 text-rose-300 text-xs font-medium rounded-lg transition flex items-center gap-1.5">
+                                <i class="fa-solid fa-trash-can"></i> Clear
                             </button>
-                            <button id="redoBtn" class="p-1.5 hover:bg-slate-700 rounded text-slate-300 hover:text-white transition disabled:opacity-30 disabled:hover:bg-transparent" title="Redo (Ctrl+Y)">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 10H11a8 8 0 00-8 8v2m18-10l-6 6m6-6l-6-6"/></svg>
+
+                            <!-- Export PNG Trigger -->
+                            <button id="openExportBtn" class="px-3.5 py-1.5 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-medium rounded-lg shadow-lg shadow-indigo-600/25 transition flex items-center gap-1.5">
+                                <i class="fa-solid fa-file-export"></i> Export PNG
                             </button>
                         </div>
+                    </header>
 
-                        <div class="h-4 w-px bg-slate-800"></div>
+                    <div class="flex-1 flex overflow-hidden">
+                        <!-- Left Sidebar: Tools -->
+                        <aside class="w-16 bg-slate-950 border-r border-slate-800 flex flex-col items-center py-3 gap-2 shrink-0 z-10">
+                            <button id="toolPencil" class="tool-btn w-10 h-10 rounded-xl flex flex-col items-center justify-center text-slate-400 hover:text-white hover:bg-slate-800 transition active bg-indigo-600/20 text-indigo-400 border border-indigo-500/40" title="Pencil (P)">
+                                <i class="fa-solid fa-pencil"></i>
+                            </button>
 
-                        <!-- Clear Canvas -->
-                        <button id="clearBtn" class="px-3 py-1.5 bg-rose-950/40 hover:bg-rose-900/60 border border-rose-800/50 text-rose-300 text-xs font-medium rounded-lg transition flex items-center gap-1.5">
-                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
-                            Clear
-                        </button>
+                            <button id="toolEraser" class="tool-btn w-10 h-10 rounded-xl flex flex-col items-center justify-center text-slate-400 hover:text-white hover:bg-slate-800 transition" title="Eraser (E)">
+                                <i class="fa-solid fa-eraser"></i>
+                            </button>
 
-                        <!-- Export Modal Trigger -->
-                        <button id="openExportBtn" class="px-3.5 py-1.5 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-medium rounded-lg shadow-lg shadow-indigo-600/25 transition flex items-center gap-1.5">
-                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
-                            Export PNG
-                        </button>
-                    </div>
-                </header>
+                            <button id="toolBucket" class="tool-btn w-10 h-10 rounded-xl flex flex-col items-center justify-center text-slate-400 hover:text-white hover:bg-slate-800 transition" title="Paint Bucket (B)">
+                                <i class="fa-solid fa-fill-drip"></i>
+                            </button>
 
-                <div class="flex-1 flex overflow-hidden">
-                    <!-- Left Sidebar: Drawing Tools -->
-                    <aside class="w-16 bg-slate-950 border-r border-slate-800 flex flex-col items-center py-3 gap-2 shrink-0 z-10">
-                        <button id="toolPencil" class="tool-btn w-10 h-10 rounded-xl flex flex-col items-center justify-center text-slate-400 hover:text-white hover:bg-slate-800 transition active bg-indigo-600/20 text-indigo-400 border border-indigo-500/40" title="Pencil (P)">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/></svg>
-                        </button>
+                            <button id="toolPicker" class="tool-btn w-10 h-10 rounded-xl flex flex-col items-center justify-center text-slate-400 hover:text-white hover:bg-slate-800 transition" title="Color Picker (I)">
+                                <i class="fa-solid fa-eye-dropper"></i>
+                            </button>
 
-                        <button id="toolEraser" class="tool-btn w-10 h-10 rounded-xl flex flex-col items-center justify-center text-slate-400 hover:text-white hover:bg-slate-800 transition" title="Eraser (E)">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11L12 4 4 12l7 7m8-8l-8 8m8-8l2 2a2 2 0 010 2.83l-7 7a2 2 0 01-2.83 0l-2-2"/></svg>
-                        </button>
+                            <button id="toolLine" class="tool-btn w-10 h-10 rounded-xl flex flex-col items-center justify-center text-slate-400 hover:text-white hover:bg-slate-800 transition" title="Line Tool (L)">
+                                <i class="fa-solid fa-slash"></i>
+                            </button>
 
-                        <button id="toolBucket" class="tool-btn w-10 h-10 rounded-xl flex flex-col items-center justify-center text-slate-400 hover:text-white hover:bg-slate-800 transition" title="Paint Bucket (B)">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v3a3 3 0 01-3 3z"/></svg>
-                        </button>
+                            <button id="toolRect" class="tool-btn w-10 h-10 rounded-xl flex flex-col items-center justify-center text-slate-400 hover:text-white hover:bg-slate-800 transition" title="Rectangle Tool (R)">
+                                <i class="fa-regular fa-square"></i>
+                            </button>
 
-                        <button id="toolPicker" class="tool-btn w-10 h-10 rounded-xl flex flex-col items-center justify-center text-slate-400 hover:text-white hover:bg-slate-800 transition" title="Color Picker (I)">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4c0-1.48.8-2.75 2-3.45V5a2 2 0 012-2h2a2 2 0 012 2v7.55a4 4 0 012 3.45 4 4 0 01-4 4H7z"/></svg>
-                        </button>
+                            <div class="w-8 h-px bg-slate-800 my-1"></div>
 
-                        <button id="toolLine" class="tool-btn w-10 h-10 rounded-xl flex flex-col items-center justify-center text-slate-400 hover:text-white hover:bg-slate-800 transition" title="Line Tool (L)">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 20L20 4"/></svg>
-                        </button>
+                            <button id="toggleGridBtn" class="w-10 h-10 rounded-xl flex flex-col items-center justify-center text-indigo-400 bg-indigo-950/40 border border-indigo-800/40 transition" title="Toggle Grid (G)">
+                                <i class="fa-solid fa-border-all"></i>
+                            </button>
+                        </aside>
 
-                        <button id="toolRect" class="tool-btn w-10 h-10 rounded-xl flex flex-col items-center justify-center text-slate-400 hover:text-white hover:bg-slate-800 transition" title="Rectangle Tool (R)">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2" stroke-width="2"/></svg>
-                        </button>
+                        <!-- Main Canvas Viewport -->
+                        <main class="flex-1 flex flex-col items-center justify-center relative p-4 bg-slate-950 overflow-hidden">
+                            <div id="canvasViewport" class="relative shadow-2xl shadow-black/80 rounded-lg overflow-hidden border border-slate-800 checkerboard cursor-crosshair">
+                                <canvas id="pixelCanvas" width="512" height="512" class="block pixelated"></canvas>
+                            </div>
 
-                        <div class="w-8 h-px bg-slate-800 my-1"></div>
+                            <!-- Canvas Info Bar -->
+                            <div class="absolute bottom-4 left-6 bg-slate-900/90 backdrop-blur border border-slate-800 px-3 py-1.5 rounded-lg text-xs font-mono text-slate-400 flex items-center gap-4 shadow-lg pointer-events-none">
+                                <div>X: <span id="coordsX" class="text-white font-medium">0</span> Y: <span id="coordsY" class="text-white font-medium">0</span></div>
+                                <div class="w-px h-3 bg-slate-800"></div>
+                                <div>Grid: <span class="text-indigo-400 font-medium">64x64</span></div>
+                                <div class="w-px h-3 bg-slate-800"></div>
+                                <div>Tool: <span id="activeToolName" class="text-white font-medium">Pencil</span></div>
+                            </div>
+                        </main>
 
-                        <button id="toggleGridBtn" class="w-10 h-10 rounded-xl flex flex-col items-center justify-center text-indigo-400 bg-indigo-950/40 border border-indigo-800/40 transition" title="Toggle Grid (G)">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16M6 4v16M12 4v16M18 4v16"/></svg>
-                        </button>
-                    </aside>
-
-                    <!-- Main Canvas Viewport -->
-                    <main class="flex-1 flex flex-col items-center justify-center relative p-4 bg-slate-950 overflow-hidden">
-                        <div id="canvasViewport" class="relative shadow-2xl shadow-black/80 rounded-lg overflow-hidden border border-slate-800 checkerboard cursor-crosshair">
-                            <canvas id="pixelCanvas" width="512" height="512" class="block pixelated"></canvas>
-                        </div>
-
-                        <!-- Canvas Info & Coordinates Bar -->
-                        <div class="absolute bottom-4 left-6 bg-slate-900/90 backdrop-blur border border-slate-800 px-3 py-1.5 rounded-lg text-xs font-mono text-slate-400 flex items-center gap-4 shadow-lg pointer-events-none">
-                            <div>X: <span id="coordsX" class="text-white font-medium">0</span> Y: <span id="coordsY" class="text-white font-medium">0</span></div>
-                            <div class="w-px h-3 bg-slate-800"></div>
-                            <div>Grid: <span class="text-indigo-400 font-medium">64x64</span></div>
-                            <div class="w-px h-3 bg-slate-800"></div>
-                            <div>Tool: <span id="activeToolName" class="text-white font-medium">Pencil</span></div>
-                        </div>
-                    </main>
-
-                    <!-- Right Sidebar: Color Controls & Presets -->
-                    <aside class="w-72 bg-slate-950 border-l border-slate-800 flex flex-col p-4 gap-5 shrink-0 overflow-y-auto no-scrollbar z-10">
-                        <!-- Active Color -->
-                        <div class="space-y-2">
-                            <label class="text-xs font-semibold uppercase tracking-wider text-slate-400 block">Active Color</label>
-                            <div class="flex items-center gap-3 bg-slate-900 p-2.5 rounded-xl border border-slate-800">
-                                <div class="relative w-12 h-12 rounded-lg border-2 border-slate-700 shadow-inner overflow-hidden shrink-0">
-                                    <input type="color" id="primaryColor" value="#6366f1" class="absolute -top-2 -left-2 w-16 h-16 cursor-pointer border-0 p-0 bg-transparent">
-                                </div>
-                                <div class="flex-1 flex flex-col gap-1">
-                                    <div class="flex items-center justify-between">
-                                        <span id="hexLabel" class="text-xs font-mono font-bold text-white uppercase">#6366F1</span>
-                                        <span class="text-[10px] text-slate-400">HEX</span>
+                        <!-- Right Sidebar: Color Controls & Presets -->
+                        <aside class="w-72 bg-slate-950 border-l border-slate-800 flex flex-col p-4 gap-5 shrink-0 overflow-y-auto no-scrollbar z-10">
+                            <!-- Active Color Picker -->
+                            <div class="space-y-2">
+                                <label class="text-xs font-semibold uppercase tracking-wider text-slate-400 block">Active Color</label>
+                                <div class="flex items-center gap-3 bg-slate-900 p-2.5 rounded-xl border border-slate-800">
+                                    <div class="relative w-12 h-12 rounded-lg border-2 border-slate-700 shadow-inner overflow-hidden shrink-0">
+                                        <input type="color" id="primaryColor" value="#6366f1" class="absolute -top-2 -left-2 w-16 h-16 cursor-pointer border-0 p-0 bg-transparent">
                                     </div>
-                                    <div class="flex items-center gap-1">
-                                        <button id="quickBlack" class="w-4 h-4 rounded bg-black border border-slate-700 hover:scale-110 transition"></button>
-                                        <button id="quickWhite" class="w-4 h-4 rounded bg-white border border-slate-700 hover:scale-110 transition"></button>
-                                        <button id="quickRed" class="w-4 h-4 rounded bg-red-500 hover:scale-110 transition"></button>
-                                        <button id="quickGreen" class="w-4 h-4 rounded bg-emerald-500 hover:scale-110 transition"></button>
-                                        <button id="quickBlue" class="w-4 h-4 rounded bg-blue-500 hover:scale-110 transition"></button>
+                                    <div class="flex-1 flex flex-col gap-1">
+                                        <div class="flex items-center justify-between">
+                                            <span id="hexLabel" class="text-xs font-mono font-bold text-white uppercase">#6366F1</span>
+                                            <span class="text-[10px] text-slate-400">HEX</span>
+                                        </div>
+                                        <div class="flex items-center gap-1">
+                                            <button id="quickBlack" class="w-4 h-4 rounded bg-black border border-slate-700 hover:scale-110 transition"></button>
+                                            <button id="quickWhite" class="w-4 h-4 rounded bg-white border border-slate-700 hover:scale-110 transition"></button>
+                                            <button id="quickRed" class="w-4 h-4 rounded bg-red-500 hover:scale-110 transition"></button>
+                                            <button id="quickGreen" class="w-4 h-4 rounded bg-emerald-500 hover:scale-110 transition"></button>
+                                            <button id="quickBlue" class="w-4 h-4 rounded bg-blue-500 hover:scale-110 transition"></button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <!-- Color Palette Presets -->
-                        <div class="space-y-2">
-                            <div class="flex items-center justify-between">
-                                <label class="text-xs font-semibold uppercase tracking-wider text-slate-400 block">Palette Presets</label>
-                                <select id="paletteSelect" class="bg-slate-900 text-xs text-slate-200 border border-slate-800 rounded-lg px-2 py-1 focus:outline-none focus:border-indigo-500">
-                                    <option value="pico8">PICO-8</option>
-                                    <option value="gameboy">GameBoy Classic</option>
-                                    <option value="cyberpunk">Cyberpunk Neon</option>
-                                    <option value="pastel">Pastel Cute</option>
-                                    <option value="retro">8-Bit NES</option>
-                                </select>
+                            <!-- Color Palette Presets -->
+                            <div class="space-y-2">
+                                <div class="flex items-center justify-between">
+                                    <label class="text-xs font-semibold uppercase tracking-wider text-slate-400 block">Palette Presets</label>
+                                    <select id="paletteSelect" class="bg-slate-900 text-xs text-slate-200 border border-slate-800 rounded-lg px-2 py-1 focus:outline-none focus:border-indigo-500">
+                                        <option value="pico8">PICO-8</option>
+                                        <option value="gameboy">GameBoy</option>
+                                        <option value="cyberpunk">Cyberpunk</option>
+                                        <option value="pastel">Pastel Soft</option>
+                                        <option value="retro">Retro Arcade</option>
+                                    </select>
+                                </div>
+                                <div id="presetGrid" class="grid grid-cols-8 gap-1.5 p-2 bg-slate-900 rounded-xl border border-slate-800"></div>
                             </div>
-                            <div id="presetGrid" class="grid grid-cols-8 gap-1.5 bg-slate-900 p-2 rounded-xl border border-slate-800">
-                                <!-- Swatches inserted via JavaScript -->
+
+                            <!-- Recent Swatches -->
+                            <div class="space-y-2">
+                                <label class="text-xs font-semibold uppercase tracking-wider text-slate-400 block">Recent Colors</label>
+                                <div id="recentGrid" class="flex flex-wrap gap-1.5 p-2 bg-slate-900 rounded-xl border border-slate-800 min-h-[42px]"></div>
                             </div>
-                        </div>
-
-                        <!-- Recent Colors -->
-                        <div class="space-y-2">
-                            <label class="text-xs font-semibold uppercase tracking-wider text-slate-400 block">Recent Colors</label>
-                            <div id="recentGrid" class="grid grid-cols-8 gap-1.5 bg-slate-900 p-2 rounded-xl border border-slate-800 min-h-[42px]">
-                                <!-- Recent Swatches -->
-                            </div>
-                        </div>
-
-                        <!-- Brush Size -->
-                        <div class="space-y-3 pt-2 border-t border-slate-800">
-                            <div class="flex items-center justify-between">
-                                <label class="text-xs font-semibold uppercase tracking-wider text-slate-400">Brush Size</label>
-                                <span id="brushSizeVal" class="text-xs font-mono font-bold text-indigo-400">1px</span>
-                            </div>
-                            <input type="range" id="brushSizeInput" min="1" max="4" value="1" class="w-full h-1.5 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-indigo-500">
-                        </div>
-
-                        <!-- Shortcuts -->
-                        <div class="mt-auto bg-slate-900 p-3 rounded-xl border border-slate-800 text-[11px] text-slate-400 space-y-1">
-                            <div class="font-medium text-slate-300 mb-1">Shortcuts</div>
-                            <div class="flex justify-between"><span>Pencil / Eraser</span><span class="font-mono text-slate-500">P / E</span></div>
-                            <div class="flex justify-between"><span>Bucket / Picker</span><span class="font-mono text-slate-500">B / I</span></div>
-                            <div class="flex justify-between"><span>Toggle Grid</span><span class="font-mono text-slate-500">G</span></div>
-                            <div class="flex justify-between"><span>Undo / Redo</span><span class="font-mono text-slate-500">Ctrl+Z / Y</span></div>
-                        </div>
-                    </aside>
-                </div>
-
-                <!-- Export Modal Window -->
-                <div id="exportModal" class="absolute inset-0 bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4 z-50 opacity-0 pointer-events-none transition-opacity duration-200">
-                    <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 w-full max-w-md shadow-2xl flex flex-col gap-5">
-                        <div class="flex items-center justify-between border-b border-slate-800 pb-3">
-                            <h3 class="text-base font-semibold text-white">Export Pixel Art PNG</h3>
-                            <button id="closeExportBtn" class="text-slate-400 hover:text-white p-1">
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
-                            </button>
-                        </div>
-
-                        <div class="flex items-center justify-center p-4 bg-slate-950 border border-slate-800 rounded-xl checkerboard">
-                            <canvas id="previewCanvas" width="192" height="192" class="rounded shadow-md block pixelated"></canvas>
-                        </div>
-
-                        <div class="space-y-3">
-                            <label class="text-xs font-semibold uppercase tracking-wider text-slate-400 block">Export Scale</label>
-                            <div class="grid grid-cols-4 gap-2">
-                                <button class="scale-btn border border-slate-700 bg-slate-800 text-slate-300 py-2 rounded-lg text-xs font-mono hover:bg-slate-700 transition" data-scale="1">1x (64px)</button>
-                                <button class="scale-btn border border-slate-700 bg-slate-800 text-slate-300 py-2 rounded-lg text-xs font-mono hover:bg-slate-700 transition" data-scale="4">4x (256px)</button>
-                                <button class="scale-btn border border-indigo-500/50 bg-indigo-600/20 text-indigo-300 py-2 rounded-lg text-xs font-mono hover:bg-indigo-600/30 transition active" data-scale="16">16x (1024px)</button>
-                                <button class="scale-btn border border-slate-700 bg-slate-800 text-slate-300 py-2 rounded-lg text-xs font-mono hover:bg-slate-700 transition" data-scale="32">32x (2048px)</button>
-                            </div>
-                        </div>
-
-                        <div class="flex items-center gap-3 pt-2">
-                            <button id="cancelExportBtn" class="flex-1 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-medium rounded-xl transition">Cancel</button>
-                            <button id="downloadPngBtn" class="flex-1 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-medium rounded-xl shadow-lg shadow-indigo-600/30 transition flex items-center justify-center gap-2">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
-                                Download PNG
-                            </button>
-                        </div>
+                        </aside>
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
+        </div>
     </main>
+
+    <!-- Export Modal -->
+    <div id="exportModal" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4 opacity-0 pointer-events-none transition-opacity duration-200">
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 max-w-md w-full shadow-2xl relative space-y-5">
+            <div class="flex items-center justify-between pb-3 border-b border-slate-800">
+                <h3 class="text-lg font-bold text-white flex items-center gap-2">
+                    <i class="fa-solid fa-file-image text-indigo-400"></i> Export Pixel Artwork
+                </h3>
+                <button id="closeExportBtn" class="text-slate-400 hover:text-white text-lg">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <div class="flex flex-col items-center justify-center p-4 bg-slate-950 rounded-xl border border-slate-800 checkerboard">
+                <canvas id="previewCanvas" width="200" height="200" class="pixelated border border-slate-700/50 shadow-md"></canvas>
+            </div>
+
+            <div class="space-y-2">
+                <label class="text-xs font-semibold uppercase tracking-wider text-slate-400 block">Export Resolution</label>
+                <div class="grid grid-cols-4 gap-2">
+                    <button data-scale="1" class="scale-btn py-2 text-xs font-medium rounded-lg border border-slate-700 bg-slate-800 text-slate-300 hover:border-indigo-500 transition">1x (64px)</button>
+                    <button data-scale="8" class="scale-btn py-2 text-xs font-medium rounded-lg border border-slate-700 bg-slate-800 text-slate-300 hover:border-indigo-500 transition">8x (512px)</button>
+                    <button data-scale="16" class="scale-btn py-2 text-xs font-medium rounded-lg border border-indigo-500/50 bg-indigo-600/20 text-indigo-300 hover:border-indigo-500 transition">16x (1024px)</button>
+                    <button data-scale="32" class="scale-btn py-2 text-xs font-medium rounded-lg border border-slate-700 bg-slate-800 text-slate-300 hover:border-indigo-500 transition">32x (2048px)</button>
+                </div>
+            </div>
+
+            <div class="flex items-center justify-end gap-3 pt-2">
+                <button id="cancelExportBtn" class="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold transition">Cancel</button>
+                <button id="downloadPngBtn" class="px-5 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold transition shadow-lg shadow-indigo-600/25 flex items-center gap-2">
+                    <i class="fa-solid fa-download"></i> Download PNG
+                </button>
+            </div>
+        </div>
+    </div>
 
     <!-- Footer -->
     <footer class="border-t border-slate-800/80 bg-slate-950 py-8 text-xs text-slate-500">
@@ -671,15 +660,83 @@
                 <span class="text-slate-300 font-semibold">Pixabay Educational Guide & Pixel Art Studio Hub</span>
             </div>
             <p class="text-center sm:text-right">
-                Based on presentation <span class="text-slate-400 font-medium">pixabay.pptx</span> by Damiru Samaraweera.
+                Based on presentations by Damiru Samaraweera.
             </p>
         </div>
     </footer>
 
     <script>
-        // Toggle Fullscreen mode with permissions error handling & theater mode fallback
-        async function toggleFullScreen() {
-            const container = document.getElementById('presentation-container');
+        // Tab switching function to show only selected content
+        function switchTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active-tab');
+            });
+
+            const targetTab = document.getElementById('tab-' + tabName);
+            if (targetTab) {
+                targetTab.classList.add('active-tab');
+            }
+
+            const dropdown = document.getElementById('topic-dropdown');
+            if (dropdown) dropdown.value = tabName;
+
+            const heroTitle = document.getElementById('hero-title');
+            const heroSubtitle = document.getElementById('hero-subtitle');
+
+            if (tabName === 'pixabay') {
+                if (heroTitle) heroTitle.innerHTML = 'How to Download Media on <span class="gradient-text">Pixabay</span>';
+                if (heroSubtitle) heroSubtitle.textContent = 'Explore the complete Pixabay media presentation guide, photos, vectors, 4K videos, and audio tutorials below.';
+            } else if (tabName === 'switch-layers') {
+                if (heroTitle) heroTitle.innerHTML = 'How to Use <span class="text-purple-400">Switch Layers</span> in Moho';
+                if (heroSubtitle) heroSubtitle.textContent = 'Learn how Switch Layers act like a magic flipbook folder in Moho to easily swap poses and facial expressions.';
+            } else if (tabName === 'pixel-studio') {
+                if (heroTitle) heroTitle.innerHTML = 'Interactive <span class="text-indigo-400">Pixel Art Studio</span>';
+                if (heroSubtitle) heroSubtitle.textContent = 'Draw 64x64 pixel art sprites directly in your browser with brush tools, palettes, and PNG export.';
+            }
+
+            updateNavStyles(tabName);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function updateNavStyles(activeTab) {
+            const styles = {
+                'pixabay': { activeClass: 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40', inactiveClass: 'bg-slate-900/60 text-slate-400 border-slate-800' },
+                'switch-layers': { activeClass: 'bg-purple-500/20 text-purple-300 border-purple-500/40', inactiveClass: 'bg-slate-900/60 text-slate-400 border-slate-800' },
+                'pixel-studio': { activeClass: 'bg-indigo-500/20 text-indigo-300 border-indigo-500/40', inactiveClass: 'bg-slate-900/60 text-slate-400 border-slate-800' }
+            };
+
+            ['pixabay', 'switch-layers', 'pixel-studio'].forEach(tab => {
+                const navBtn = document.getElementById('nav-btn-' + tab);
+                const pillBtn = document.getElementById('pill-btn-' + tab);
+                const isSelected = (tab === activeTab);
+                const currentStyle = styles[tab];
+
+                [navBtn, pillBtn].forEach(btn => {
+                    if (btn) {
+                        if (isSelected) {
+                            btn.className = btn.className.replace(/bg-slate-\S+|text-slate-\S+|border-slate-\S+/g, '');
+                            btn.classList.add(...currentStyle.activeClass.split(' '));
+                        } else {
+                            btn.className = btn.className.replace(/bg-\S+|text-\S+|border-\S+/g, '');
+                            btn.classList.add(...currentStyle.inactiveClass.split(' '));
+                        }
+                    }
+                });
+            });
+        }
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            const icon = document.getElementById('menu-icon');
+            if (menu) menu.classList.toggle('hidden');
+            if (icon && menu) {
+                icon.className = menu.classList.contains('hidden') ? 'fa-solid fa-bars text-lg' : 'fa-solid fa-xmark text-lg';
+            }
+        }
+
+        async function toggleSwitchLayersFullScreen() {
+            const container = document.getElementById('switch-presentation-container');
+            if (!container) return;
             
             if (container.classList.contains('theater-mode')) {
                 container.classList.remove('theater-mode');
@@ -688,50 +745,65 @@
 
             if (!document.fullscreenElement) {
                 try {
-                    if (container.requestFullscreen) {
-                        await container.requestFullscreen();
-                    } else if (container.webkitRequestFullscreen) {
-                        await container.webkitRequestFullscreen();
-                    } else if (container.msRequestFullscreen) {
-                        await container.msRequestFullscreen();
-                    }
+                    if (container.requestFullscreen) await container.requestFullscreen();
+                    else if (container.webkitRequestFullscreen) await container.webkitRequestFullscreen();
+                    else if (container.msRequestFullscreen) await container.msRequestFullscreen();
                 } catch (err) {
-                    console.warn('Browser fullscreen blocked by permissions policy, enabling Theater Mode fallback:', err);
                     container.classList.add('theater-mode');
                 }
             } else {
-                try {
-                    if (document.exitFullscreen) {
-                        await document.exitFullscreen();
-                    } else if (document.webkitExitFullscreen) {
-                        await document.webkitExitFullscreen();
-                    }
-                } catch (err) {
-                    console.warn('Exit fullscreen error:', err);
+                if (document.exitFullscreen) await document.exitFullscreen();
+            }
+        }
+
+        function copyNotebookText() {
+            const noteText = `How to Add Switch Layers in Moho\n1. Create a New Switch Layer:\n  • Go to your Layers panel.\n  • Click the New Layer button (+).\n  • Select Switch from the menu.\n  • Give the layer a name (e.g., "Mouth").\n\n2. Add Your Drawings:\n  • Create or drag your vector layers into the Switch folder.\n  • Only the top drawing will be visible on your canvas.\n\n3. Switch Between Drawings:\n  • Right-click the Switch Layer folder in your Layers panel or on the Timeline.\n  • Select the drawing you want to show from the menu that pops up.\n\nBest for: Facial expressions, hand poses, and eye blinks.\n---\nWhat are Switch Layers?\nA Switch Layer is like a magic flipbook folder in Moho. It holds multiple drawings, but only displays one at a time, allowing you to swap between different shapes or poses quickly.`;
+
+            const textArea = document.createElement("textarea");
+            textArea.value = noteText;
+            document.body.appendChild(textArea);
+            textArea.select();
+            try {
+                document.execCommand('copy');
+                const btnText = document.getElementById('copy-note-btn-text');
+                if (btnText) {
+                    btnText.textContent = "Copied to Clipboard!";
+                    setTimeout(() => { btnText.textContent = "Copy Note to Clipboard"; }, 2500);
                 }
+            } catch (err) {
+                console.error('Copy failed:', err);
             }
+            document.body.removeChild(textArea);
         }
 
-        // Handle Pixabay direct search redirect
-        function handlePixabaySearch(e) {
-            e.preventDefault();
-            const query = encodeURIComponent(document.getElementById('search-input').value.trim());
-            const type = document.getElementById('search-type').value;
+        async function toggleFullScreen() {
+            const container = document.getElementById('presentation-container');
+            if (!container) return;
             
-            if (query) {
-                let url = `https://pixabay.com/${type}/search/${query}/`;
-                window.open(url, '_blank');
+            if (container.classList.contains('theater-mode')) {
+                container.classList.remove('theater-mode');
+                return;
+            }
+
+            if (!document.fullscreenElement) {
+                try {
+                    if (container.requestFullscreen) await container.requestFullscreen();
+                    else if (container.webkitRequestFullscreen) await container.webkitRequestFullscreen();
+                    else if (container.msRequestFullscreen) await container.msRequestFullscreen();
+                } catch (err) {
+                    container.classList.add('theater-mode');
+                }
+            } else {
+                if (document.exitFullscreen) await document.exitFullscreen();
             }
         }
 
-        // Canvas Constants & State Variables
         const GRID_SIZE = 64;
         const CANVAS_DISPLAY_SIZE = 512;
         const PIXEL_SIZE = CANVAS_DISPLAY_SIZE / GRID_SIZE;
 
-        // Pixel Studio DOM Elements
         const canvas = document.getElementById('pixelCanvas');
-        const ctx = canvas.getContext('2d');
+        const ctx = canvas ? canvas.getContext('2d') : null;
         const primaryColorInput = document.getElementById('primaryColor');
         const hexLabel = document.getElementById('hexLabel');
         const presetGrid = document.getElementById('presetGrid');
@@ -747,16 +819,14 @@
         const brushSizeInput = document.getElementById('brushSizeInput');
         const brushSizeVal = document.getElementById('brushSizeVal');
 
-        // Export Modal Elements
         const exportModal = document.getElementById('exportModal');
         const openExportBtn = document.getElementById('openExportBtn');
         const closeExportBtn = document.getElementById('closeExportBtn');
         const cancelExportBtn = document.getElementById('cancelExportBtn');
         const downloadPngBtn = document.getElementById('downloadPngBtn');
         const previewCanvas = document.getElementById('previewCanvas');
-        const previewCtx = previewCanvas.getContext('2d');
+        const previewCtx = previewCanvas ? previewCanvas.getContext('2d') : null;
 
-        // Studio State Variables
         let grid = Array(GRID_SIZE).fill(null).map(() => Array(GRID_SIZE).fill(null));
         let history = [];
         let historyIndex = -1;
@@ -771,16 +841,16 @@
         let exportScale = 16;
         let recentColors = ['#6366f1', '#000000', '#ffffff', '#ef4444', '#10b981', '#3b82f6'];
 
-        // Preset Color Palettes
         const palettes = {
             pico8: ['#000000','#1D2B53','#7E2553','#008751','#AB5236','#5F574F','#C2C3C7','#FFF1E8','#FF004D','#FFA300','#FFEC27','#00E436','#29ADFF','#83769C','#FF77A8','#FFCCAA'],
             gameboy: ['#0f380f', '#306230', '#8bac0f', '#9bbc0f'],
             cyberpunk: ['#ff0055', '#7a00ff', '#00e5ff', '#00ff66', '#ffea00', '#12002b', '#240046', '#ffffff'],
             pastel: ['#ffb3ba', '#ffdfba', '#ffffba', '#baffc9', '#bae1ff', '#e8baff', '#f1f1f1', '#4a4a4a'],
-            retro: ['#000000', '#ffffff', '#880000', '#aefeef', '#cc44cc', '#00cc55', '#00cc55', '#eeeec8', '#dd8855', '#664400', '#ff7777', '#333333', '#777777', '#aaff66', '#0088ff', '#bbbbbb']
+            retro: ['#000000', '#ffffff', '#880000', '#aefeef', '#cc44cc', '#00cc55', '#eeeec8', '#dd8855', '#664400', '#ff7777', '#333333', '#777777', '#aaff66', '#0088ff', '#bbbbbb']
         };
 
         function initStudio() {
+            if (!canvas || !ctx) return;
             saveHistoryState();
             loadPalette('pico8');
             updateRecentGrid();
@@ -796,13 +866,14 @@
             };
 
             Object.entries(toolButtons).forEach(([btnId, tool]) => {
-                document.getElementById(btnId).addEventListener('click', () => setTool(tool));
+                const btn = document.getElementById(btnId);
+                if (btn) btn.addEventListener('click', () => setTool(tool));
             });
         }
 
         function setTool(tool) {
             currentTool = tool;
-            activeToolName.textContent = tool.charAt(0).toUpperCase() + tool.slice(1);
+            if (activeToolName) activeToolName.textContent = tool.charAt(0).toUpperCase() + tool.slice(1);
 
             document.querySelectorAll('.tool-btn').forEach(btn => {
                 btn.classList.remove('active', 'bg-indigo-600/20', 'text-indigo-400', 'border', 'border-indigo-500/40');
@@ -825,8 +896,8 @@
 
         function updateColor(hex) {
             activeColor = hex;
-            primaryColorInput.value = hex;
-            hexLabel.textContent = hex.toUpperCase();
+            if (primaryColorInput) primaryColorInput.value = hex;
+            if (hexLabel) hexLabel.textContent = hex.toUpperCase();
             addRecentColor(hex);
         }
 
@@ -839,6 +910,7 @@
         }
 
         function updateRecentGrid() {
+            if (!recentGrid) return;
             recentGrid.innerHTML = '';
             recentColors.forEach(color => {
                 const swatch = document.createElement('button');
@@ -850,6 +922,7 @@
         }
 
         function loadPalette(paletteKey) {
+            if (!presetGrid) return;
             presetGrid.innerHTML = '';
             const colors = palettes[paletteKey] || palettes.pico8;
             colors.forEach(color => {
@@ -861,7 +934,7 @@
             });
         }
 
-        paletteSelect.addEventListener('change', (e) => loadPalette(e.target.value));
+        if (paletteSelect) paletteSelect.addEventListener('change', (e) => loadPalette(e.target.value));
 
         function saveHistoryState() {
             if (historyIndex < history.length - 1) {
@@ -895,14 +968,15 @@
         }
 
         function updateUndoRedoButtons() {
-            undoBtn.disabled = historyIndex <= 0;
-            redoBtn.disabled = historyIndex >= history.length - 1;
+            if (undoBtn) undoBtn.disabled = historyIndex <= 0;
+            if (redoBtn) redoBtn.disabled = historyIndex >= history.length - 1;
         }
 
-        undoBtn.addEventListener('click', undo);
-        redoBtn.addEventListener('click', redo);
+        if (undoBtn) undoBtn.addEventListener('click', undo);
+        if (redoBtn) redoBtn.addEventListener('click', redo);
 
         function render(tempPreviewGrid = null) {
+            if (!ctx) return;
             ctx.clearRect(0, 0, CANVAS_DISPLAY_SIZE, CANVAS_DISPLAY_SIZE);
             const targetGrid = tempPreviewGrid || grid;
 
@@ -953,7 +1027,6 @@
             const queue = [[startX, startY]];
             while (queue.length > 0) {
                 const [x, y] = queue.pop();
-
                 if (x < 0 || x >= GRID_SIZE || y < 0 || y >= GRID_SIZE) continue;
                 if (grid[y][x] === targetColor) {
                     grid[y][x] = replacementColor;
@@ -1000,6 +1073,7 @@
         }
 
         function getGridCoords(e) {
+            if (!canvas) return { x: 0, y: 0 };
             const rect = canvas.getBoundingClientRect();
             const clientX = e.touches ? e.touches[0].clientX : e.clientX;
             const clientY = e.touches ? e.touches[0].clientY : e.clientY;
@@ -1038,8 +1112,8 @@
 
         function handleMove(e) {
             const { x, y } = getGridCoords(e);
-            coordsX.textContent = x;
-            coordsY.textContent = y;
+            if (coordsX) coordsX.textContent = x;
+            if (coordsY) coordsY.textContent = y;
 
             if (!isDrawing) return;
 
@@ -1087,51 +1161,67 @@
             }
         }
 
-        canvas.addEventListener('mousedown', handleStart);
-        canvas.addEventListener('mousemove', handleMove);
-        window.addEventListener('mouseup', handleEnd);
+        if (canvas) {
+            canvas.addEventListener('mousedown', handleStart);
+            canvas.addEventListener('mousemove', handleMove);
+            window.addEventListener('mouseup', handleEnd);
 
-        canvas.addEventListener('touchstart', (e) => { handleStart(e); e.preventDefault(); }, { passive: false });
-        canvas.addEventListener('touchmove', (e) => { handleMove(e); e.preventDefault(); }, { passive: false });
-        window.addEventListener('touchend', handleEnd);
+            canvas.addEventListener('touchstart', (e) => { handleStart(e); e.preventDefault(); }, { passive: false });
+            canvas.addEventListener('touchmove', (e) => { handleMove(e); e.preventDefault(); }, { passive: false });
+            window.addEventListener('touchend', handleEnd);
+        }
 
-        primaryColorInput.addEventListener('input', (e) => updateColor(e.target.value));
+        if (primaryColorInput) primaryColorInput.addEventListener('input', (e) => updateColor(e.target.value));
 
-        document.getElementById('quickBlack').addEventListener('click', () => updateColor('#000000'));
-        document.getElementById('quickWhite').addEventListener('click', () => updateColor('#ffffff'));
-        document.getElementById('quickRed').addEventListener('click', () => updateColor('#ef4444'));
-        document.getElementById('quickGreen').addEventListener('click', () => updateColor('#10b981'));
-        document.getElementById('quickBlue').addEventListener('click', () => updateColor('#3b82f6'));
+        const quickBtnMap = {
+            quickBlack: '#000000',
+            quickWhite: '#ffffff',
+            quickRed: '#ef4444',
+            quickGreen: '#10b981',
+            quickBlue: '#3b82f6'
+        };
 
-        toggleGridBtn.addEventListener('click', () => {
-            showGrid = !showGrid;
-            toggleGridBtn.classList.toggle('text-indigo-400', showGrid);
-            toggleGridBtn.classList.toggle('bg-indigo-950/40', showGrid);
-            toggleGridBtn.classList.toggle('text-slate-400', !showGrid);
-            render();
+        Object.entries(quickBtnMap).forEach(([btnId, color]) => {
+            const btn = document.getElementById(btnId);
+            if (btn) btn.addEventListener('click', () => updateColor(color));
         });
 
-        clearBtn.addEventListener('click', () => {
-            grid = Array(GRID_SIZE).fill(null).map(() => Array(GRID_SIZE).fill(null));
-            saveHistoryState();
-            render();
-        });
+        if (toggleGridBtn) {
+            toggleGridBtn.addEventListener('click', () => {
+                showGrid = !showGrid;
+                toggleGridBtn.classList.toggle('text-indigo-400', showGrid);
+                toggleGridBtn.classList.toggle('bg-indigo-950/40', showGrid);
+                toggleGridBtn.classList.toggle('text-slate-400', !showGrid);
+                render();
+            });
+        }
 
-        brushSizeInput.addEventListener('input', (e) => {
-            brushSize = parseInt(e.target.value, 10);
-            brushSizeVal.textContent = brushSize + 'px';
-        });
+        if (clearBtn) {
+            clearBtn.addEventListener('click', () => {
+                grid = Array(GRID_SIZE).fill(null).map(() => Array(GRID_SIZE).fill(null));
+                saveHistoryState();
+                render();
+            });
+        }
+
+        if (brushSizeInput && brushSizeVal) {
+            brushSizeInput.addEventListener('input', (e) => {
+                brushSize = parseInt(e.target.value, 10);
+                brushSizeVal.textContent = brushSize + 'px';
+            });
+        }
 
         function openExportModal() {
             renderExportPreview();
-            exportModal.classList.remove('opacity-0', 'pointer-events-none');
+            if (exportModal) exportModal.classList.remove('opacity-0', 'pointer-events-none');
         }
 
         function closeExportModal() {
-            exportModal.classList.add('opacity-0', 'pointer-events-none');
+            if (exportModal) exportModal.classList.add('opacity-0', 'pointer-events-none');
         }
 
         function renderExportPreview() {
+            if (!previewCtx || !previewCanvas) return;
             previewCtx.clearRect(0, 0, previewCanvas.width, previewCanvas.height);
             const previewScale = previewCanvas.width / GRID_SIZE;
 
@@ -1157,37 +1247,39 @@
             });
         });
 
-        downloadPngBtn.addEventListener('click', () => {
-            const exportCanvas = document.createElement('canvas');
-            const targetDimension = GRID_SIZE * exportScale;
-            exportCanvas.width = targetDimension;
-            exportCanvas.height = targetDimension;
-            const exportCtx = exportCanvas.getContext('2d');
+        if (downloadPngBtn) {
+            downloadPngBtn.addEventListener('click', () => {
+                const exportCanvas = document.createElement('canvas');
+                const targetDimension = GRID_SIZE * exportScale;
+                exportCanvas.width = targetDimension;
+                exportCanvas.height = targetDimension;
+                const exportCtx = exportCanvas.getContext('2d');
 
-            exportCtx.imageSmoothingEnabled = false;
+                exportCtx.imageSmoothingEnabled = false;
 
-            for (let r = 0; r < GRID_SIZE; r++) {
-                for (let c = 0; c < GRID_SIZE; c++) {
-                    if (grid[r][c]) {
-                        exportCtx.fillStyle = grid[r][c];
-                        exportCtx.fillRect(c * exportScale, r * exportScale, exportScale, exportScale);
+                for (let r = 0; r < GRID_SIZE; r++) {
+                    for (let c = 0; c < GRID_SIZE; c++) {
+                        if (grid[r][c]) {
+                            exportCtx.fillStyle = grid[r][c];
+                            exportCtx.fillRect(c * exportScale, r * exportScale, exportScale, exportScale);
+                        }
                     }
                 }
-            }
 
-            const link = document.createElement('a');
-            link.download = `pixel-art-64x64-${Date.now()}.png`;
-            link.href = exportCanvas.toDataURL('image/png');
-            link.click();
-            closeExportModal();
-        });
+                const link = document.createElement('a');
+                link.download = `pixel-art-64x64-${Date.now()}.png`;
+                link.href = exportCanvas.toDataURL('image/png');
+                link.click();
+                closeExportModal();
+            });
+        }
 
-        openExportBtn.addEventListener('click', openExportModal);
-        closeExportBtn.addEventListener('click', closeExportModal);
-        cancelExportBtn.addEventListener('click', closeExportModal);
+        if (openExportBtn) openExportBtn.addEventListener('click', openExportModal);
+        if (closeExportBtn) closeExportBtn.addEventListener('click', closeExportModal);
+        if (cancelExportBtn) cancelExportBtn.addEventListener('click', closeExportModal);
 
         window.addEventListener('keydown', (e) => {
-            if (e.target.tagName === 'INPUT') return;
+            if (e.target.tagName === 'INPUT' || e.target.tagName === 'SELECT') return;
             const key = e.key.toLowerCase();
 
             if (key === 'p') setTool('pencil');
@@ -1196,13 +1288,16 @@
             else if (key === 'i') setTool('picker');
             else if (key === 'l') setTool('line');
             else if (key === 'r') setTool('rect');
-            else if (key === 'g') toggleGridBtn.click();
+            else if (key === 'g' && toggleGridBtn) toggleGridBtn.click();
             else if (e.ctrlKey && key === 'z') { e.preventDefault(); undo(); }
             else if (e.ctrlKey && key === 'y') { e.preventDefault(); redo(); }
         });
 
-        // Initialize Pixel Studio
-        initStudio();
+        // Initialize Web Application
+        window.addEventListener('DOMContentLoaded', () => {
+            switchTab('pixabay');
+            initStudio();
+        });
     </script>
 </body>
 </html>
