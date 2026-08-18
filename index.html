@@ -3,20 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>How to Download Media on Pixabay & Pixel Art Studio</title>
+    <title>How to Download Media on Pixabay & Switch Layers Guide</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Silkscreen&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                        pixel: ['Silkscreen', 'cursive']
+                        sans: ['Inter', 'sans-serif']
                     },
                     colors: {
                         pixabay: {
@@ -33,11 +32,12 @@
             }
         }
     </script>
+    
     <style>
         .glass-panel {
-            background: rgba(15, 23, 42, 0.75);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
         .gradient-text {
@@ -46,9 +46,8 @@
             -webkit-text-fill-color: transparent;
         }
         .gradient-bg {
-            background: radial-gradient(circle at 50% 0%, rgba(16, 185, 129, 0.15) 0%, rgba(15, 23, 42, 0) 70%);
+            background: radial-gradient(circle at 50% 0%, rgba(16, 185, 129, 0.18) 0%, rgba(15, 23, 42, 0) 70%);
         }
-        /* Theater mode fallback when full-screen is restricted by browser policy */
         .theater-mode {
             position: fixed !important;
             top: 0 !important;
@@ -58,21 +57,6 @@
             z-index: 9999 !important;
             padding-top: 0 !important;
             border-radius: 0 !important;
-        }
-        /* Custom transparent checkerboard pattern for pixel art canvas */
-        .checkerboard {
-            background-color: #1e293b;
-            background-image: 
-                linear-gradient(45deg, #0f172a 25%, transparent 25%), 
-                linear-gradient(-45deg, #0f172a 25%, transparent 25%), 
-                linear-gradient(45deg, transparent 75%, #0f172a 75%), 
-                linear-gradient(-45deg, transparent 75%, #0f172a 75%);
-            background-size: 20px 20px;
-            background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
-        }
-        canvas.pixelated {
-            image-rendering: pixelated;
-            image-rendering: crisp-edges;
         }
         .no-scrollbar::-webkit-scrollbar {
             display: none;
@@ -87,10 +71,99 @@
         .tab-content.active-tab {
             display: block;
         }
+
+        @keyframes portalSpin {
+            0% { transform: rotate(0deg) scale(0.92); }
+            50% { transform: rotate(180deg) scale(1.08); }
+            100% { transform: rotate(360deg) scale(0.92); }
+        }
+        @keyframes portalSpinReverse {
+            0% { transform: rotate(360deg); }
+            100% { transform: rotate(0deg); }
+        }
+        @keyframes pulseGlow {
+            0%, 100% { opacity: 0.4; filter: blur(25px); transform: scale(1); }
+            50% { opacity: 0.95; filter: blur(45px); transform: scale(1.25); }
+        }
+        @keyframes scanline {
+            0% { transform: translateY(-100%); }
+            100% { transform: translateY(1000%); }
+        }
+        @keyframes floatText {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+        .portal-hud-ring {
+            animation: portalSpin 12s linear infinite;
+        }
+        .portal-hud-ring-rev {
+            animation: portalSpinReverse 8s linear infinite;
+        }
+        .portal-glow-bg {
+            animation: pulseGlow 2.8s ease-in-out infinite;
+        }
+        .hud-text-bounce {
+            animation: floatText 2.2s ease-in-out infinite;
+        }
     </style>
 </head>
 <body class="bg-slate-950 text-slate-100 font-sans antialiased selection:bg-emerald-500 selection:text-white min-h-screen flex flex-col">
 
+    <!-- Fullscreen Extended Sci-Fi Quantum Portal Transition Overlay -->
+    <div id="assignment-portal-overlay" class="fixed inset-0 z-[99999] bg-slate-950/95 backdrop-blur-2xl flex flex-col items-center justify-center hidden opacity-0 transition-opacity duration-500 overflow-hidden pointer-events-auto select-none">
+        <!-- Canvas for dynamic particle hyperdrive tunnel -->
+        <canvas id="portal-canvas" class="absolute inset-0 w-full h-full pointer-events-none z-0"></canvas>
+
+        <!-- Ambient Glow Backdrops -->
+        <div class="absolute w-[600px] h-[600px] rounded-full bg-gradient-to-tr from-amber-500/30 via-orange-500/20 to-emerald-500/30 portal-glow-bg pointer-events-none"></div>
+        <div class="absolute w-[350px] h-[350px] rounded-full bg-gradient-to-br from-amber-400/40 via-purple-600/30 to-emerald-400/40 blur-3xl pointer-events-none"></div>
+
+        <!-- Holographic HUD Outer Elements -->
+        <div class="relative z-10 flex flex-col items-center justify-center p-6 text-center max-w-xl w-full">
+            <div class="relative w-56 h-56 sm:w-64 sm:h-64 flex items-center justify-center mb-8">
+                <!-- Rotating Ring 1 -->
+                <div class="absolute inset-0 rounded-full border-2 border-dashed border-amber-400/70 portal-hud-ring shadow-[0_0_40px_rgba(251,191,36,0.4)]"></div>
+                <!-- Rotating Ring 2 -->
+                <div class="absolute inset-3 rounded-full border-2 border-emerald-400/60 portal-hud-ring-rev border-t-transparent border-b-transparent"></div>
+                <!-- Rotating Ring 3 -->
+                <div class="absolute inset-7 rounded-full border-2 border-orange-500/50 portal-hud-ring"></div>
+                <!-- Rotating Ring 4 (Inner Laser Dot Circle) -->
+                <div class="absolute inset-11 rounded-full border border-purple-400/40 portal-hud-ring-rev border-dashed"></div>
+                
+                <!-- Center Energy Core -->
+                <div id="portal-core" class="w-24 h-24 sm:w-28 sm:h-28 rounded-full bg-gradient-to-tr from-amber-400 via-orange-500 to-emerald-300 flex items-center justify-center text-slate-950 text-4xl sm:text-5xl shadow-[0_0_60px_rgba(245,158,11,0.95)] transform transition-transform duration-300 scale-100">
+                    <i class="fa-solid fa-rocket animate-bounce" id="portal-icon"></i>
+                </div>
+            </div>
+
+            <!-- Title & Extended Telemetry Status Text -->
+            <div class="space-y-3 z-10 w-full">
+                <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-500/20 border border-amber-400/40 text-amber-300 text-xs font-mono font-bold uppercase tracking-widest hud-text-bounce">
+                    <span class="w-2 h-2 rounded-full bg-amber-400 animate-ping"></span>
+                    <span id="portal-stage-badge">Stage 1 / 5 • Warp Engine Pre-check</span>
+                </div>
+                <h2 class="text-2xl sm:text-4xl font-black text-white tracking-tight drop-shadow-[0_0_20px_rgba(255,255,255,0.5)]">
+                    Launching <span class="bg-gradient-to-r from-amber-300 via-orange-400 to-emerald-400 bg-clip-text text-transparent">Today's Assignment</span>
+                </h2>
+                <p id="portal-status-text" class="text-xs sm:text-sm font-mono text-emerald-300 h-8 flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-spinner animate-spin"></i> Initializing quantum link protocol...
+                </p>
+            </div>
+
+            <!-- Futuristic Multi-segment Progress Bar -->
+            <div class="w-full max-w-md mt-6 bg-slate-900/90 border border-slate-700/80 rounded-full h-4 p-0.5 overflow-hidden shadow-inner relative">
+                <div id="portal-progress-bar" class="h-full bg-gradient-to-r from-amber-400 via-orange-500 to-emerald-400 rounded-full w-0 transition-all duration-150 ease-out shadow-[0_0_15px_rgba(245,158,11,0.9)]"></div>
+            </div>
+            
+            <div class="w-full max-w-md flex items-center justify-between mt-2 text-[11px] font-mono font-bold text-slate-400">
+                <span id="portal-speed-indicator"><i class="fa-solid fa-bolt text-amber-400"></i> Speed: 0 KM/S</span>
+                <span id="portal-percent" class="text-amber-400 text-sm font-extrabold">0%</span>
+                <span id="portal-time-rem">ETA: 5.0s</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Top Fixed Header -->
     <header class="sticky top-0 z-50 glass-panel border-b border-slate-800/80">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
             <button onclick="switchTab('pixabay')" class="flex items-center gap-3 group shrink-0 text-left">
@@ -101,102 +174,92 @@
                     <span class="font-bold text-lg tracking-tight text-white flex items-center gap-1.5">
                         Pixabay & Moho Guide
                     </span>
-                    <p class="text-xs text-slate-400 hidden sm:block">Interactive Learning Hub</p>
+                    <p class="text-xs text-slate-400 hidden sm:block">Interactive Learning & Assignment Hub</p>
                 </div>
             </button>
 
             <!-- Desktop Navigation -->
-            <nav class="hidden xl:flex items-center gap-1 text-xs font-medium text-slate-300 bg-slate-900/90 p-1.5 rounded-xl border border-slate-800">
+            <nav class="hidden md:flex items-center gap-1 text-xs font-medium text-slate-300 bg-slate-900/90 p-1.5 rounded-xl border border-slate-800">
                 <button id="nav-btn-pixabay" onclick="switchTab('pixabay')" class="tab-nav-btn px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 border font-semibold">
                     <i class="fa-solid fa-file-powerpoint text-emerald-400"></i> 1. Pixabay Media Download
                 </button>
                 <button id="nav-btn-switch-layers" onclick="switchTab('switch-layers')" class="tab-nav-btn px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 border font-semibold">
                     <i class="fa-solid fa-layer-group text-purple-400"></i> 2. Switch Layers in Moho
                 </button>
-                <button id="nav-btn-pixel-studio" onclick="switchTab('pixel-studio')" class="tab-nav-btn px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 border font-semibold">
-                    <i class="fa-solid fa-paintbrush text-indigo-400"></i> 3. Pixel Art Studio
-                </button>
             </nav>
 
             <div class="flex items-center gap-2">
-                <div class="relative inline-block">
-                    <select id="topic-dropdown" onchange="switchTab(this.value)" class="bg-slate-900 text-xs text-emerald-400 font-medium border border-slate-700 hover:border-emerald-500 rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500 cursor-pointer shadow-sm">
-                        <option value="pixabay">Topic 1: Pixabay Media Download</option>
-                        <option value="switch-layers">Topic 2: How to Use Switch Layers in Moho</option>
-                        <option value="pixel-studio">Topic 3: Pixel Art Studio</option>
-                    </select>
-                </div>
-
-                <a href="https://docs.google.com/presentation/d/1yxOc9fOc3y9HqkNEZ4SxUX2cRngPo4jN/edit?usp=sharing&ouid=109905017285947345046&rtpof=true&sd=true" target="_blank" rel="noopener noreferrer" class="hidden sm:flex px-3 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-medium transition-all items-center gap-2 border border-slate-700 shrink-0">
-                    <i class="fa-solid fa-arrow-up-right-from-square"></i> Google Slides
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLSepN4Wy5jjqIOGjeF0Vqk9SqvvZZMS77-wZp7qKD1MHR-AUHw/viewform?usp=dialog" target="_blank" rel="noopener noreferrer" onclick="triggerAssignmentPortal(event)" class="px-3.5 py-2 rounded-xl bg-gradient-to-r from-amber-400 to-orange-500 hover:from-amber-300 hover:to-orange-400 text-slate-950 font-black text-xs transition-all flex items-center gap-1.5 shadow-lg shadow-amber-500/25 border border-amber-300/40 shrink-0 hover:scale-105 active:scale-95">
+                    <i class="fa-solid fa-pen-to-square"></i> Today's Assignment
                 </a>
 
-                <button id="mobile-menu-btn" onclick="toggleMobileMenu()" class="xl:hidden p-2 rounded-lg bg-slate-800 text-slate-300 hover:text-white border border-slate-700 flex items-center justify-center">
+                <button id="mobile-menu-btn" onclick="toggleMobileMenu()" class="md:hidden p-2 rounded-lg bg-slate-800 text-slate-300 hover:text-white border border-slate-700 flex items-center justify-center">
                     <i class="fa-solid fa-bars text-lg" id="menu-icon"></i>
                 </button>
             </div>
         </div>
 
-        <!-- Scrollable Quick Bar -->
+        <!-- Scrollable Quick Pill Bar -->
         <div class="bg-slate-900/90 border-t border-slate-800/80 px-4 py-2 overflow-x-auto no-scrollbar flex items-center gap-2 text-xs font-medium">
             <span class="text-slate-500 uppercase text-[10px] font-bold tracking-wider shrink-0 pr-1">Active View:</span>
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSepN4Wy5jjqIOGjeF0Vqk9SqvvZZMS77-wZp7qKD1MHR-AUHw/viewform?usp=dialog" target="_blank" rel="noopener noreferrer" onclick="triggerAssignmentPortal(event)" class="px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 hover:bg-amber-500/30 border border-amber-500/40 shrink-0 font-bold flex items-center gap-1.5 transition-all">
+                <i class="fa-solid fa-clipboard-list text-amber-400"></i> Today's Assignment
+            </a>
             <button id="pill-btn-pixabay" onclick="switchTab('pixabay')" class="pill-nav-btn px-3.5 py-1 rounded-full shrink-0 transition-colors font-semibold border">
                 Topic 1: Pixabay Media Download
             </button>
             <button id="pill-btn-switch-layers" onclick="switchTab('switch-layers')" class="pill-nav-btn px-3.5 py-1 rounded-full shrink-0 transition-colors font-semibold border">
                 Topic 2: Switch Layers in Moho
             </button>
-            <button id="pill-btn-pixel-studio" onclick="switchTab('pixel-studio')" class="pill-nav-btn px-3.5 py-1 rounded-full shrink-0 transition-colors font-semibold border">
-                Topic 3: Pixel Art Studio
-            </button>
         </div>
 
         <!-- Mobile Drawer -->
-        <div id="mobile-menu" class="hidden xl:hidden bg-slate-950 border-b border-slate-800 px-4 py-4 space-y-2">
-            <p class="text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">Select Topic</p>
+        <div id="mobile-menu" class="hidden md:hidden bg-slate-950 border-b border-slate-800 px-4 py-4 space-y-2">
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSepN4Wy5jjqIOGjeF0Vqk9SqvvZZMS77-wZp7qKD1MHR-AUHw/viewform?usp=dialog" target="_blank" rel="noopener noreferrer" onclick="triggerAssignmentPortal(event); toggleMobileMenu();" class="w-full text-left px-3 py-2.5 rounded-lg bg-gradient-to-r from-amber-500 to-orange-500 text-slate-950 text-sm font-extrabold flex items-center justify-between">
+                <span class="flex items-center gap-2"><i class="fa-solid fa-pen-to-square"></i> Today's Assignment</span>
+                <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
+            </a>
+            <p class="text-xs font-bold uppercase tracking-wider text-slate-500 mb-2 pt-1">Select Topic</p>
             <button onclick="switchTab('pixabay'); toggleMobileMenu();" class="w-full text-left px-3 py-2.5 rounded-lg bg-emerald-950/60 hover:bg-emerald-900/60 text-emerald-300 text-sm font-semibold border border-emerald-800/60 flex items-center gap-2">
                 <i class="fa-solid fa-file-powerpoint text-emerald-400"></i> Topic 1: Pixabay Media Download
             </button>
             <button onclick="switchTab('switch-layers'); toggleMobileMenu();" class="w-full text-left px-3 py-2.5 rounded-lg bg-purple-950/60 hover:bg-purple-900/60 text-purple-300 text-sm font-semibold border border-purple-800/60 flex items-center gap-2">
                 <i class="fa-solid fa-layer-group text-purple-400"></i> Topic 2: How to Use Switch Layers in Moho
             </button>
-            <button onclick="switchTab('pixel-studio'); toggleMobileMenu();" class="w-full text-left px-3 py-2.5 rounded-lg bg-indigo-950/60 hover:bg-indigo-900/60 text-indigo-300 text-sm font-semibold border border-indigo-800/60 flex items-center gap-2">
-                <i class="fa-solid fa-paintbrush text-indigo-400"></i> Topic 3: Pixel Art Studio
-            </button>
         </div>
     </header>
 
     <main class="flex-grow">
-        <!-- Hero Section -->
-        <section class="relative pt-10 pb-6 md:pt-12 md:pb-8 overflow-hidden gradient-bg">
+        <section class="relative pt-10 pb-8 md:pt-14 md:pb-12 overflow-hidden gradient-bg">
+            <!-- Dynamic Ambient Hero Background Particle Canvas -->
+            <canvas id="bg-particles-canvas" class="absolute inset-0 w-full h-full pointer-events-none z-0 opacity-75"></canvas>
+
             <div class="max-w-5xl mx-auto px-4 sm:px-6 text-center relative z-10">
                 <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs sm:text-sm font-medium mb-4">
-                    <i class="fa-solid fa-circle-info"></i> Interactive Presentation & Studio Hub
+                    <i class="fa-solid fa-graduation-cap"></i> Complete Interactive Presentation & Learning Hub
                 </div>
-                <h1 id="hero-title" class="text-3xl sm:text-5xl font-extrabold tracking-tight text-white mb-4 leading-tight">
+                <h1 id="hero-title" class="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight text-white mb-4 leading-tight">
                     How to Download Media on <span class="gradient-text">Pixabay</span>
                 </h1>
                 <p id="hero-subtitle" class="text-sm sm:text-base text-slate-300 max-w-3xl mx-auto mb-6 font-normal leading-relaxed">
-                    Explore the complete presentation guide or switch topics using the navbar above to learn Moho Switch Layers or open the Pixel Art Studio.
+                    Master royalty-free asset downloads on Pixabay and learn professional Moho Switch Layer character animation step by step!
                 </p>
 
                 <div class="flex flex-wrap justify-center items-center gap-3">
                     <button onclick="switchTab('pixabay')" class="px-5 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold text-xs sm:text-sm shadow-lg shadow-emerald-500/25 transition-all flex items-center gap-2">
-                        <i class="fa-solid fa-file-powerpoint"></i> Pixabay Guide
+                        <i class="fa-solid fa-file-powerpoint"></i> Topic 1: Pixabay Guide
                     </button>
                     <button onclick="switchTab('switch-layers')" class="px-5 py-2.5 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-semibold text-xs sm:text-sm border border-purple-500/30 transition-all flex items-center gap-2 shadow-lg shadow-purple-600/20">
-                        <i class="fa-solid fa-layer-group"></i> Switch Layers Guide
-                    </button>
-                    <button onclick="switchTab('pixel-studio')" class="px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-xs sm:text-sm border border-indigo-500/30 transition-all flex items-center gap-2 shadow-lg shadow-indigo-600/20">
-                        <i class="fa-solid fa-paintbrush"></i> Pixel Art Studio
+                        <i class="fa-solid fa-layer-group"></i> Topic 2: Switch Layers Guide
                     </button>
                 </div>
             </div>
         </section>
 
-        <div id="tab-pixabay" class="tab-content active-tab">
+        <!-- TAB 1: PIXABAY MEDIA DOWNLOAD -->
+        <div id="tab-pixabay" class="tab-content active-tab space-y-12 pb-12">
             <!-- Presentation Frame -->
-            <section id="presentation" class="py-6 max-w-6xl mx-auto px-4 sm:px-6">
+            <section id="presentation" class="pt-6 max-w-6xl mx-auto px-4 sm:px-6">
                 <div class="glass-panel rounded-2xl p-3 sm:p-5 shadow-2xl border border-slate-800 relative">
                     <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-3 mb-3 border-b border-slate-800 gap-3">
                         <div class="flex items-center gap-3">
@@ -246,12 +309,12 @@
                 </div>
             </section>
 
-            <!-- Guide Summary -->
-            <section id="guide-summary" class="py-8 max-w-6xl mx-auto px-4 sm:px-6">
+            <!-- Media Types Breakdown -->
+            <section id="guide-summary" class="max-w-6xl mx-auto px-4 sm:px-6">
                 <div class="text-center mb-8">
-                    <h2 class="text-2xl sm:text-3xl font-bold text-white mb-2">Presentation Summary & Media Types</h2>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-white mb-2">Pixabay Media Types & Formats</h2>
                     <p class="text-slate-400 text-xs sm:text-sm max-w-2xl mx-auto">
-                        Learn what each category on Pixabay provides for your creative projects as outlined in the presentation.
+                        Learn what each media category on Pixabay provides for your animation and design projects.
                     </p>
                 </div>
 
@@ -262,7 +325,7 @@
                         </div>
                         <h3 class="text-lg font-bold text-white mb-2">Photos</h3>
                         <p class="text-xs sm:text-sm text-slate-400 leading-relaxed mb-3">
-                            Real-life pictures captured with cameras. High resolution, rich detail, suitable for realistic backgrounds.
+                            Real-life camera photography. High resolution, rich detail, suitable for realistic backgrounds and references.
                         </p>
                         <span class="inline-block text-[11px] font-semibold text-blue-400 bg-blue-500/10 px-2.5 py-1 rounded-md">JPG / PNG Formats</span>
                     </div>
@@ -273,7 +336,7 @@
                         </div>
                         <h3 class="text-lg font-bold text-white mb-2">Vectors</h3>
                         <p class="text-xs sm:text-sm text-slate-400 leading-relaxed mb-3">
-                            Digital drawings made of clean lines and geometric shapes. They never get blurry no matter how big you resize them!
+                            Digital drawings made of clean lines and scalable shapes. They never get pixelated when resized!
                         </p>
                         <span class="inline-block text-[11px] font-semibold text-purple-400 bg-purple-500/10 px-2.5 py-1 rounded-md">SVG / Infinite Resolution</span>
                     </div>
@@ -284,7 +347,7 @@
                         </div>
                         <h3 class="text-lg font-bold text-white mb-2">4K Videos</h3>
                         <p class="text-xs sm:text-sm text-slate-400 leading-relaxed mb-3">
-                            Ultra high-definition stock video clips (4K & Full HD) for background video loops and editing.
+                            Ultra high-definition stock video clips (4K & Full HD) ideal for animated video backgrounds and montages.
                         </p>
                         <span class="inline-block text-[11px] font-semibold text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded-md">MP4 / 4K Ultra HD</span>
                     </div>
@@ -295,16 +358,99 @@
                         </div>
                         <h3 class="text-lg font-bold text-white mb-2">Music & SFX</h3>
                         <p class="text-xs sm:text-sm text-slate-400 leading-relaxed mb-3">
-                            Royalty-free background tracks and sound effect audio clips free for commercial use.
+                            Royalty-free background tracks and sound effect audio clips free for commercial and school projects.
                         </p>
                         <span class="inline-block text-[11px] font-semibold text-amber-400 bg-amber-500/10 px-2.5 py-1 rounded-md">MP3 / Audio Tracks</span>
                     </div>
                 </div>
             </section>
+
+            <!-- Detailed Download Step-by-Step Walkthrough -->
+            <section class="max-w-6xl mx-auto px-4 sm:px-6">
+                <div class="glass-panel rounded-3xl p-6 sm:p-8 border border-emerald-500/20 shadow-2xl">
+                    <h3 class="text-2xl font-bold text-white mb-6 flex items-center gap-3">
+                        <i class="fa-solid fa-circle-check text-emerald-400"></i>
+                        Step-by-Step: How to Download Assets on Pixabay
+                    </h3>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div class="bg-slate-900/90 p-5 rounded-2xl border border-slate-800 relative">
+                            <div class="w-8 h-8 rounded-full bg-emerald-500 text-slate-950 font-black flex items-center justify-center text-sm mb-3">1</div>
+                            <h4 class="font-bold text-white text-base mb-2">Search & Filter</h4>
+                            <p class="text-xs text-slate-300 leading-relaxed">
+                                Enter your keyword in the Pixabay search bar. Use the top dropdown to filter by <strong>Photos, Illustrations, Vectors, Videos, or Sound Effects</strong>.
+                            </p>
+                        </div>
+
+                        <div class="bg-slate-900/90 p-5 rounded-2xl border border-slate-800 relative">
+                            <div class="w-8 h-8 rounded-full bg-emerald-500 text-slate-950 font-black flex items-center justify-center text-sm mb-3">2</div>
+                            <h4 class="font-bold text-white text-base mb-2">Select Resolution</h4>
+                            <p class="text-xs text-slate-300 leading-relaxed">
+                                Click on the image or vector you want. Click the green <strong>"Download"</strong> button and choose your preferred file resolution (e.g., 1920x1080 or SVG).
+                            </p>
+                        </div>
+
+                        <div class="bg-slate-900/90 p-5 rounded-2xl border border-slate-800 relative">
+                            <div class="w-8 h-8 rounded-full bg-emerald-500 text-slate-950 font-black flex items-center justify-center text-sm mb-3">3</div>
+                            <h4 class="font-bold text-white text-base mb-2">Check License & Save</h4>
+                            <p class="text-xs text-slate-300 leading-relaxed">
+                                Verify the <strong>Content License</strong> (Free to use, no attribution required). Click download to save the file straight to your downloads folder.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Interactive Pixabay Knowledge Check Quiz -->
+            <section class="max-w-6xl mx-auto px-4 sm:px-6">
+                <div class="bg-slate-900/90 rounded-3xl p-6 sm:p-8 border border-slate-800 shadow-2xl">
+                    <div class="flex items-center justify-between mb-6 pb-4 border-b border-slate-800">
+                        <div>
+                            <span class="text-xs font-mono uppercase tracking-wider text-emerald-400 font-semibold bg-emerald-500/10 px-2.5 py-1 rounded">Interactive Check</span>
+                            <h3 class="text-xl sm:text-2xl font-bold text-white mt-1">Pixabay Knowledge Quiz</h3>
+                        </div>
+                        <span id="pixabay-quiz-score" class="text-xs font-mono bg-slate-800 px-3 py-1.5 rounded-lg text-amber-300 font-bold">
+                            Score: 0 / 3
+                        </span>
+                    </div>
+
+                    <div class="space-y-6 text-sm">
+                        <!-- Q1 -->
+                        <div class="space-y-2">
+                            <p class="font-semibold text-white">1. Which file format on Pixabay can be scaled to any size without losing quality?</p>
+                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 text-xs">
+                                <button onclick="checkQuizAnswer('q1', 'jpg', false, this)" class="q1-btn p-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-left border border-slate-700 font-medium">A) JPG Photo</button>
+                                <button onclick="checkQuizAnswer('q1', 'svg', true, this)" class="q1-btn p-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-left border border-slate-700 font-medium">B) Vector / SVG</button>
+                                <button onclick="checkQuizAnswer('q1', 'mp3', false, this)" class="q1-btn p-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-left border border-slate-700 font-medium">C) MP3 Audio</button>
+                            </div>
+                        </div>
+
+                        <!-- Q2 -->
+                        <div class="space-y-2 pt-4 border-t border-slate-800/60">
+                            <p class="font-semibold text-white">2. Are assets on Pixabay free to use for commercial and school projects?</p>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+                                <button onclick="checkQuizAnswer('q2', 'yes', true, this)" class="q2-btn p-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-left border border-slate-700 font-medium">A) Yes, under the Pixabay Content License</button>
+                                <button onclick="checkQuizAnswer('q2', 'no', false, this)" class="q2-btn p-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-left border border-slate-700 font-medium">B) No, you must always pay per download</button>
+                            </div>
+                        </div>
+
+                        <!-- Q3 -->
+                        <div class="space-y-2 pt-4 border-t border-slate-800/60">
+                            <p class="font-semibold text-white">3. What audio file type is downloaded for Pixabay background music?</p>
+                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 text-xs">
+                                <button onclick="checkQuizAnswer('q3', 'mp4', false, this)" class="q3-btn p-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-left border border-slate-700 font-medium">A) MP4</button>
+                                <button onclick="checkQuizAnswer('q3', 'mp3', true, this)" class="q3-btn p-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-left border border-slate-700 font-medium">B) MP3</button>
+                                <button onclick="checkQuizAnswer('q3', 'gif', false, this)" class="q3-btn p-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-left border border-slate-700 font-medium">C) GIF</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
         </div>
 
-        <div id="tab-switch-layers" class="tab-content">
-            <section id="switch-layers" class="py-8 max-w-6xl mx-auto px-4 sm:px-6">
+        <!-- TAB 2: SWITCH LAYERS IN MOHO -->
+        <div id="tab-switch-layers" class="tab-content space-y-12 pb-12">
+            <section id="switch-layers" class="pt-6 max-w-6xl mx-auto px-4 sm:px-6">
                 <div class="text-center mb-8">
                     <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-400 text-xs sm:text-sm font-medium mb-3">
                         <i class="fa-solid fa-wand-magic-sparkles"></i> Moho Animation Tutorial
@@ -317,6 +463,7 @@
                     </p>
                 </div>
 
+                <!-- Presentation Frame -->
                 <div class="glass-panel rounded-2xl p-3 sm:p-5 shadow-2xl border border-purple-900/40 relative mb-8">
                     <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-3 mb-3 border-b border-slate-800 gap-3">
                         <div class="flex items-center gap-3">
@@ -356,7 +503,7 @@
                     </div>
                 </div>
 
-                <!-- Classroom Note Box -->
+                <!-- Notebook Notes Card -->
                 <div class="bg-gradient-to-b from-slate-900 to-slate-950 rounded-3xl p-6 sm:p-10 border border-purple-500/30 shadow-2xl relative overflow-hidden">
                     <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-slate-800 mb-8">
                         <div class="flex items-center gap-3">
@@ -430,7 +577,7 @@
                     </div>
                 </div>
 
-                <!-- Example Video Section -->
+                <!-- Video Demonstration Card -->
                 <div class="mt-8 bg-gradient-to-b from-slate-900 to-slate-950 rounded-3xl p-6 sm:p-8 border border-purple-500/30 shadow-2xl relative overflow-hidden">
                     <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-800 mb-6">
                         <div class="flex items-center gap-3">
@@ -457,207 +604,157 @@
                         </iframe>
                     </div>
                 </div>
-            </section>
-        </div>
 
-        <div id="tab-pixel-studio" class="tab-content">
-            <section id="pixel-studio" class="py-8 max-w-7xl mx-auto px-4 sm:px-6">
-                <!-- Main Studio Container Card -->
-                <div class="glass-panel rounded-2xl border border-indigo-900/40 shadow-2xl overflow-hidden flex flex-col h-[750px]">
-                    <!-- Studio Header Bar -->
-                    <header class="bg-slate-900/90 border-b border-slate-800 px-4 py-3 flex flex-wrap items-center justify-between gap-3 shrink-0">
-                        <div class="flex items-center gap-3">
-                            <div class="w-8 h-8 rounded-lg bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-400">
-                                <i class="fa-solid fa-paintbrush"></i>
+                <!-- Interactive Moho Character Switch Layer Simulator Widget -->
+                <div class="mt-8 bg-slate-900/90 rounded-3xl p-6 sm:p-8 border border-purple-500/30 shadow-2xl">
+                    <div class="flex items-center justify-between pb-4 border-b border-slate-800 mb-6">
+                        <div>
+                            <span class="text-xs font-mono uppercase tracking-wider text-purple-400 font-semibold bg-purple-500/10 px-2.5 py-1 rounded">Interactive Tool</span>
+                            <h3 class="text-xl sm:text-2xl font-bold text-white mt-1">Live Switch Layer Simulator</h3>
+                        </div>
+                        <span class="text-xs font-mono text-slate-400">Try clicking sub-layers!</span>
+                    </div>
+
+                    <p class="text-xs sm:text-sm text-slate-300 mb-6">
+                        Click the sub-layer buttons below to test how Moho dynamically swaps vector layers inside a Switch folder!
+                    </p>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                        <!-- Preview Box -->
+                        <div class="bg-slate-950 p-6 rounded-2xl border border-slate-800 flex flex-col items-center justify-center min-h-[260px] relative overflow-hidden">
+                            <div class="absolute top-3 left-3 text-[10px] font-mono text-purple-400 bg-purple-950/80 px-2 py-0.5 rounded border border-purple-800">
+                                Moho Canvas Preview
                             </div>
+
+                            <!-- Animated Character Face SVG -->
+                            <div class="w-36 h-36 relative flex items-center justify-center mt-4">
+                                <!-- Head Circle -->
+                                <div class="w-32 h-32 rounded-full bg-amber-200 border-4 border-slate-800 flex flex-col items-center justify-center shadow-lg relative">
+                                    
+                                    <!-- Hair -->
+                                    <div class="absolute -top-3 w-28 h-10 bg-slate-800 rounded-t-full"></div>
+
+                                    <!-- Eye Switch Layer Simulation -->
+                                    <div class="flex gap-6 mb-3 relative z-10">
+                                        <div id="sim-eye-left" class="w-5 h-5 bg-slate-900 rounded-full flex items-center justify-center transition-all">
+                                            <div class="w-1.5 h-1.5 bg-white rounded-full"></div>
+                                        </div>
+                                        <div id="sim-eye-right" class="w-5 h-5 bg-slate-900 rounded-full flex items-center justify-center transition-all">
+                                            <div class="w-1.5 h-1.5 bg-white rounded-full"></div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Mouth Switch Layer Simulation -->
+                                    <div id="sim-mouth" class="w-10 h-3 bg-rose-500 rounded-full transition-all border-2 border-slate-800"></div>
+                                </div>
+                            </div>
+
+                            <p id="sim-active-layer-text" class="text-xs font-mono text-amber-300 mt-4 bg-slate-900 px-3 py-1 rounded-md border border-slate-800">
+                                Active Layer: Mouth -> Smile
+                            </p>
+                        </div>
+
+                        <!-- Controls -->
+                        <div class="space-y-6">
+                            <!-- Mouth Switch Layer Group -->
                             <div>
-                                <h3 class="text-sm font-bold text-white flex items-center gap-2 font-pixel">
-                                    PIXEL ART STUDIO
-                                </h3>
-                                <p class="text-[11px] text-slate-400">64x64 Pixel Canvas & Sprite Generator</p>
-                            </div>
-                        </div>
-
-                        <!-- Top Toolbar Controls -->
-                        <div class="flex items-center gap-2 flex-wrap">
-                            <!-- Undo / Redo -->
-                            <div class="flex items-center bg-slate-950 p-1 rounded-lg border border-slate-800">
-                                <button id="undoBtn" class="p-1.5 text-slate-400 hover:text-white disabled:opacity-30 disabled:hover:text-slate-400 transition" title="Undo (Ctrl+Z)">
-                                    <i class="fa-solid fa-rotate-left text-xs"></i>
-                                </button>
-                                <button id="redoBtn" class="p-1.5 text-slate-400 hover:text-white disabled:opacity-30 disabled:hover:text-slate-400 transition" title="Redo (Ctrl+Y)">
-                                    <i class="fa-solid fa-rotate-right text-xs"></i>
-                                </button>
-                            </div>
-
-                            <div class="h-4 w-px bg-slate-800"></div>
-
-                            <!-- Brush Size Slider -->
-                            <div class="flex items-center gap-2 bg-slate-950 px-3 py-1 rounded-lg border border-slate-800 text-xs">
-                                <span class="text-slate-400 text-[11px]">Size:</span>
-                                <input type="range" id="brushSizeInput" min="1" max="4" value="1" class="w-16 accent-indigo-500 cursor-pointer">
-                                <span id="brushSizeVal" class="font-mono text-indigo-400 font-bold text-[11px]">1px</span>
-                            </div>
-
-                            <div class="h-4 w-px bg-slate-800"></div>
-
-                            <!-- Clear Canvas -->
-                            <button id="clearBtn" class="px-3 py-1.5 bg-rose-950/40 hover:bg-rose-900/60 border border-rose-800/50 text-rose-300 text-xs font-medium rounded-lg transition flex items-center gap-1.5">
-                                <i class="fa-solid fa-trash-can"></i> Clear
-                            </button>
-
-                            <!-- Export PNG Trigger -->
-                            <button id="openExportBtn" class="px-3.5 py-1.5 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-medium rounded-lg shadow-lg shadow-indigo-600/25 transition flex items-center gap-1.5">
-                                <i class="fa-solid fa-file-export"></i> Export PNG
-                            </button>
-                        </div>
-                    </header>
-
-                    <div class="flex-1 flex overflow-hidden">
-                        <!-- Left Sidebar: Tools -->
-                        <aside class="w-16 bg-slate-950 border-r border-slate-800 flex flex-col items-center py-3 gap-2 shrink-0 z-10">
-                            <button id="toolPencil" class="tool-btn w-10 h-10 rounded-xl flex flex-col items-center justify-center text-slate-400 hover:text-white hover:bg-slate-800 transition active bg-indigo-600/20 text-indigo-400 border border-indigo-500/40" title="Pencil (P)">
-                                <i class="fa-solid fa-pencil"></i>
-                            </button>
-
-                            <button id="toolEraser" class="tool-btn w-10 h-10 rounded-xl flex flex-col items-center justify-center text-slate-400 hover:text-white hover:bg-slate-800 transition" title="Eraser (E)">
-                                <i class="fa-solid fa-eraser"></i>
-                            </button>
-
-                            <button id="toolBucket" class="tool-btn w-10 h-10 rounded-xl flex flex-col items-center justify-center text-slate-400 hover:text-white hover:bg-slate-800 transition" title="Paint Bucket (B)">
-                                <i class="fa-solid fa-fill-drip"></i>
-                            </button>
-
-                            <button id="toolPicker" class="tool-btn w-10 h-10 rounded-xl flex flex-col items-center justify-center text-slate-400 hover:text-white hover:bg-slate-800 transition" title="Color Picker (I)">
-                                <i class="fa-solid fa-eye-dropper"></i>
-                            </button>
-
-                            <button id="toolLine" class="tool-btn w-10 h-10 rounded-xl flex flex-col items-center justify-center text-slate-400 hover:text-white hover:bg-slate-800 transition" title="Line Tool (L)">
-                                <i class="fa-solid fa-slash"></i>
-                            </button>
-
-                            <button id="toolRect" class="tool-btn w-10 h-10 rounded-xl flex flex-col items-center justify-center text-slate-400 hover:text-white hover:bg-slate-800 transition" title="Rectangle Tool (R)">
-                                <i class="fa-regular fa-square"></i>
-                            </button>
-
-                            <div class="w-8 h-px bg-slate-800 my-1"></div>
-
-                            <button id="toggleGridBtn" class="w-10 h-10 rounded-xl flex flex-col items-center justify-center text-indigo-400 bg-indigo-950/40 border border-indigo-800/40 transition" title="Toggle Grid (G)">
-                                <i class="fa-solid fa-border-all"></i>
-                            </button>
-                        </aside>
-
-                        <!-- Main Canvas Viewport -->
-                        <main class="flex-1 flex flex-col items-center justify-center relative p-4 bg-slate-950 overflow-hidden">
-                            <div id="canvasViewport" class="relative shadow-2xl shadow-black/80 rounded-lg overflow-hidden border border-slate-800 checkerboard cursor-crosshair">
-                                <canvas id="pixelCanvas" width="512" height="512" class="block pixelated"></canvas>
-                            </div>
-
-                            <!-- Canvas Info Bar -->
-                            <div class="absolute bottom-4 left-6 bg-slate-900/90 backdrop-blur border border-slate-800 px-3 py-1.5 rounded-lg text-xs font-mono text-slate-400 flex items-center gap-4 shadow-lg pointer-events-none">
-                                <div>X: <span id="coordsX" class="text-white font-medium">0</span> Y: <span id="coordsY" class="text-white font-medium">0</span></div>
-                                <div class="w-px h-3 bg-slate-800"></div>
-                                <div>Grid: <span class="text-indigo-400 font-medium">64x64</span></div>
-                                <div class="w-px h-3 bg-slate-800"></div>
-                                <div>Tool: <span id="activeToolName" class="text-white font-medium">Pencil</span></div>
-                            </div>
-                        </main>
-
-                        <!-- Right Sidebar: Color Controls & Presets -->
-                        <aside class="w-72 bg-slate-950 border-l border-slate-800 flex flex-col p-4 gap-5 shrink-0 overflow-y-auto no-scrollbar z-10">
-                            <!-- Active Color Picker -->
-                            <div class="space-y-2">
-                                <label class="text-xs font-semibold uppercase tracking-wider text-slate-400 block">Active Color</label>
-                                <div class="flex items-center gap-3 bg-slate-900 p-2.5 rounded-xl border border-slate-800">
-                                    <div class="relative w-12 h-12 rounded-lg border-2 border-slate-700 shadow-inner overflow-hidden shrink-0">
-                                        <input type="color" id="primaryColor" value="#6366f1" class="absolute -top-2 -left-2 w-16 h-16 cursor-pointer border-0 p-0 bg-transparent">
-                                    </div>
-                                    <div class="flex-1 flex flex-col gap-1">
-                                        <div class="flex items-center justify-between">
-                                            <span id="hexLabel" class="text-xs font-mono font-bold text-white uppercase">#6366F1</span>
-                                            <span class="text-[10px] text-slate-400">HEX</span>
-                                        </div>
-                                        <div class="flex items-center gap-1">
-                                            <button id="quickBlack" class="w-4 h-4 rounded bg-black border border-slate-700 hover:scale-110 transition"></button>
-                                            <button id="quickWhite" class="w-4 h-4 rounded bg-white border border-slate-700 hover:scale-110 transition"></button>
-                                            <button id="quickRed" class="w-4 h-4 rounded bg-red-500 hover:scale-110 transition"></button>
-                                            <button id="quickGreen" class="w-4 h-4 rounded bg-emerald-500 hover:scale-110 transition"></button>
-                                            <button id="quickBlue" class="w-4 h-4 rounded bg-blue-500 hover:scale-110 transition"></button>
-                                        </div>
-                                    </div>
+                                <h4 class="text-xs font-bold font-mono text-purple-300 uppercase tracking-wider mb-2 flex items-center gap-2">
+                                    <i class="fa-solid fa-folder-closed text-purple-400"></i> Switch Folder: "Mouth"
+                                </h4>
+                                <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 text-xs">
+                                    <button onclick="setMouthShape('smile')" class="mouth-btn p-2.5 rounded-xl bg-purple-900/60 hover:bg-purple-800 text-purple-200 border border-purple-700 font-semibold text-left">
+                                        📄 Smile (Rest)
+                                    </button>
+                                    <button onclick="setMouthShape('open_o')" class="mouth-btn p-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 font-medium text-left">
+                                        📄 O (Phoneme)
+                                    </button>
+                                    <button onclick="setMouthShape('wide_e')" class="mouth-btn p-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 font-medium text-left">
+                                        📄 E / A (Wide)
+                                    </button>
+                                    <button onclick="setMouthShape('closed_m')" class="mouth-btn p-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 font-medium text-left">
+                                        📄 M / B (Closed)
+                                    </button>
+                                    <button onclick="setMouthShape('surprised')" class="mouth-btn p-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 font-medium text-left">
+                                        📄 Shocked
+                                    </button>
                                 </div>
                             </div>
 
-                            <!-- Color Palette Presets -->
-                            <div class="space-y-2">
-                                <div class="flex items-center justify-between">
-                                    <label class="text-xs font-semibold uppercase tracking-wider text-slate-400 block">Palette Presets</label>
-                                    <select id="paletteSelect" class="bg-slate-900 text-xs text-slate-200 border border-slate-800 rounded-lg px-2 py-1 focus:outline-none focus:border-indigo-500">
-                                        <option value="pico8">PICO-8</option>
-                                        <option value="gameboy">GameBoy</option>
-                                        <option value="cyberpunk">Cyberpunk</option>
-                                        <option value="pastel">Pastel Soft</option>
-                                        <option value="retro">Retro Arcade</option>
-                                    </select>
+                            <!-- Eyes Switch Layer Group -->
+                            <div>
+                                <h4 class="text-xs font-bold font-mono text-purple-300 uppercase tracking-wider mb-2 flex items-center gap-2">
+                                    <i class="fa-solid fa-folder-closed text-purple-400"></i> Switch Folder: "Eyes"
+                                </h4>
+                                <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 text-xs">
+                                    <button onclick="setEyeShape('open')" class="eye-btn p-2.5 rounded-xl bg-purple-900/60 hover:bg-purple-800 text-purple-200 border border-purple-700 font-semibold text-left">
+                                        📄 Normal Open
+                                    </button>
+                                    <button onclick="setEyeShape('blink')" class="eye-btn p-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 font-medium text-left">
+                                        📄 Blink / Closed
+                                    </button>
+                                    <button onclick="setEyeShape('wink')" class="eye-btn p-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 font-medium text-left">
+                                        📄 Wink
+                                    </button>
                                 </div>
-                                <div id="presetGrid" class="grid grid-cols-8 gap-1.5 p-2 bg-slate-900 rounded-xl border border-slate-800"></div>
                             </div>
+                        </div>
+                    </div>
+                </div>
 
-                            <!-- Recent Swatches -->
-                            <div class="space-y-2">
-                                <label class="text-xs font-semibold uppercase tracking-wider text-slate-400 block">Recent Colors</label>
-                                <div id="recentGrid" class="flex flex-wrap gap-1.5 p-2 bg-slate-900 rounded-xl border border-slate-800 min-h-[42px]"></div>
+                <!-- Keyboard Shortcuts & Quick Tips -->
+                <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="glass-panel p-6 rounded-3xl border border-slate-800">
+                        <h4 class="text-lg font-bold text-white mb-4 flex items-center gap-2">
+                            <i class="fa-solid fa-bolt text-amber-400"></i> Moho Switch Layer Pro Tips
+                        </h4>
+                        <ul class="space-y-3 text-xs sm:text-sm text-slate-300">
+                            <li class="flex items-start gap-2">
+                                <i class="fa-solid fa-check text-emerald-400 mt-1"></i>
+                                <span><strong>Interpolate Switch Layers:</strong> Enable smooth morphing between vector drawings in layer settings!</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <i class="fa-solid fa-check text-emerald-400 mt-1"></i>
+                                <span><strong>Right-Click Timeline:</strong> You can right-click any frame on the timeline to instantly swap switch layers.</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <i class="fa-solid fa-check text-emerald-400 mt-1"></i>
+                                <span><strong>Name Matching:</strong> Keep layer names consistent (e.g., A, E, O, Rest) for accurate automatic lip syncing.</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="glass-panel p-6 rounded-3xl border border-slate-800">
+                        <h4 class="text-lg font-bold text-white mb-4 flex items-center gap-2">
+                            <i class="fa-solid fa-keyboard text-purple-400"></i> Useful Moho Shortcuts
+                        </h4>
+                        <div class="space-y-2 text-xs font-mono">
+                            <div class="flex justify-between p-2 bg-slate-900 rounded-lg border border-slate-800">
+                                <span class="text-slate-300">New Vector Layer</span>
+                                <span class="text-purple-300 font-bold">Ctrl + N</span>
                             </div>
-                        </aside>
+                            <div class="flex justify-between p-2 bg-slate-900 rounded-lg border border-slate-800">
+                                <span class="text-slate-300">Preview Render</span>
+                                <span class="text-purple-300 font-bold">Ctrl + R</span>
+                            </div>
+                            <div class="flex justify-between p-2 bg-slate-900 rounded-lg border border-slate-800">
+                                <span class="text-slate-300">Duplicate Layer</span>
+                                <span class="text-purple-300 font-bold">Ctrl + D</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </section>
         </div>
     </main>
 
-    <!-- Export Modal -->
-    <div id="exportModal" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4 opacity-0 pointer-events-none transition-opacity duration-200">
-        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 max-w-md w-full shadow-2xl relative space-y-5">
-            <div class="flex items-center justify-between pb-3 border-b border-slate-800">
-                <h3 class="text-lg font-bold text-white flex items-center gap-2">
-                    <i class="fa-solid fa-file-image text-indigo-400"></i> Export Pixel Artwork
-                </h3>
-                <button id="closeExportBtn" class="text-slate-400 hover:text-white text-lg">
-                    <i class="fa-solid fa-xmark"></i>
-                </button>
-            </div>
-
-            <div class="flex flex-col items-center justify-center p-4 bg-slate-950 rounded-xl border border-slate-800 checkerboard">
-                <canvas id="previewCanvas" width="200" height="200" class="pixelated border border-slate-700/50 shadow-md"></canvas>
-            </div>
-
-            <div class="space-y-2">
-                <label class="text-xs font-semibold uppercase tracking-wider text-slate-400 block">Export Resolution</label>
-                <div class="grid grid-cols-4 gap-2">
-                    <button data-scale="1" class="scale-btn py-2 text-xs font-medium rounded-lg border border-slate-700 bg-slate-800 text-slate-300 hover:border-indigo-500 transition">1x (64px)</button>
-                    <button data-scale="8" class="scale-btn py-2 text-xs font-medium rounded-lg border border-slate-700 bg-slate-800 text-slate-300 hover:border-indigo-500 transition">8x (512px)</button>
-                    <button data-scale="16" class="scale-btn py-2 text-xs font-medium rounded-lg border border-indigo-500/50 bg-indigo-600/20 text-indigo-300 hover:border-indigo-500 transition">16x (1024px)</button>
-                    <button data-scale="32" class="scale-btn py-2 text-xs font-medium rounded-lg border border-slate-700 bg-slate-800 text-slate-300 hover:border-indigo-500 transition">32x (2048px)</button>
-                </div>
-            </div>
-
-            <div class="flex items-center justify-end gap-3 pt-2">
-                <button id="cancelExportBtn" class="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold transition">Cancel</button>
-                <button id="downloadPngBtn" class="px-5 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold transition shadow-lg shadow-indigo-600/25 flex items-center gap-2">
-                    <i class="fa-solid fa-download"></i> Download PNG
-                </button>
-            </div>
-        </div>
-    </div>
-
     <!-- Footer -->
-    <footer class="border-t border-slate-800/80 bg-slate-950 py-8 text-xs text-slate-500">
+    <footer class="border-t border-slate-800/80 bg-slate-950 py-8 text-xs text-slate-500 mt-auto">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
             <div class="flex items-center gap-2">
                 <div class="w-6 h-6 rounded bg-emerald-500 text-slate-950 font-black flex items-center justify-center text-xs">
                     px
                 </div>
-                <span class="text-slate-300 font-semibold">Pixabay Educational Guide & Pixel Art Studio Hub</span>
+                <span class="text-slate-300 font-semibold">Pixabay & Moho Educational Learning Hub</span>
             </div>
             <p class="text-center sm:text-right">
                 Based on presentations by Damiru Samaraweera.
@@ -666,637 +763,534 @@
     </footer>
 
     <script>
-        // Tab switching function to show only selected content
+        // --- Tab Switcher Navigation ---
         function switchTab(tabName) {
-            document.querySelectorAll('.tab-content').forEach(tab => {
-                tab.classList.remove('active-tab');
-            });
+            const tabs = document.querySelectorAll('.tab-content');
+            tabs.forEach(tab => tab.classList.remove('active-tab'));
 
             const targetTab = document.getElementById('tab-' + tabName);
             if (targetTab) {
                 targetTab.classList.add('active-tab');
             }
 
+            // Sync Dropdown
             const dropdown = document.getElementById('topic-dropdown');
             if (dropdown) dropdown.value = tabName;
 
-            const heroTitle = document.getElementById('hero-title');
-            const heroSubtitle = document.getElementById('hero-subtitle');
+            // Nav Button Highlights
+            const pixabayNav = document.getElementById('nav-btn-pixabay');
+            const switchNav = document.getElementById('nav-btn-switch-layers');
+            const pixabayPill = document.getElementById('pill-btn-pixabay');
+            const switchPill = document.getElementById('pill-btn-switch-layers');
 
             if (tabName === 'pixabay') {
+                if (pixabayNav) pixabayNav.className = 'tab-nav-btn px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 border font-semibold bg-emerald-500/20 text-emerald-300 border-emerald-500/40';
+                if (switchNav) switchNav.className = 'tab-nav-btn px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 border font-semibold bg-transparent text-slate-300 border-transparent hover:bg-slate-800';
+                if (pixabayPill) pixabayPill.className = 'pill-nav-btn px-3.5 py-1 rounded-full shrink-0 transition-colors font-semibold border bg-emerald-500/20 text-emerald-300 border-emerald-500/40';
+                if (switchPill) switchPill.className = 'pill-nav-btn px-3.5 py-1 rounded-full shrink-0 transition-colors font-semibold border bg-slate-800 text-slate-400 border-slate-700 hover:text-white';
+
+                const heroTitle = document.getElementById('hero-title');
+                const heroSubtitle = document.getElementById('hero-subtitle');
                 if (heroTitle) heroTitle.innerHTML = 'How to Download Media on <span class="gradient-text">Pixabay</span>';
-                if (heroSubtitle) heroSubtitle.textContent = 'Explore the complete Pixabay media presentation guide, photos, vectors, 4K videos, and audio tutorials below.';
-            } else if (tabName === 'switch-layers') {
-                if (heroTitle) heroTitle.innerHTML = 'How to Use <span class="text-purple-400">Switch Layers</span> in Moho';
-                if (heroSubtitle) heroSubtitle.textContent = 'Learn how Switch Layers act like a magic flipbook folder in Moho to easily swap poses and facial expressions.';
-            } else if (tabName === 'pixel-studio') {
-                if (heroTitle) heroTitle.innerHTML = 'Interactive <span class="text-indigo-400">Pixel Art Studio</span>';
-                if (heroSubtitle) heroSubtitle.textContent = 'Draw 64x64 pixel art sprites directly in your browser with brush tools, palettes, and PNG export.';
+                if (heroSubtitle) heroSubtitle.textContent = 'Master royalty-free asset downloads on Pixabay and learn professional Moho Switch Layer character animation step by step!';
+            } else {
+                if (pixabayNav) pixabayNav.className = 'tab-nav-btn px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 border font-semibold bg-transparent text-slate-300 border-transparent hover:bg-slate-800';
+                if (switchNav) switchNav.className = 'tab-nav-btn px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 border font-semibold bg-purple-500/20 text-purple-300 border-purple-500/40';
+                if (pixabayPill) pixabayPill.className = 'pill-nav-btn px-3.5 py-1 rounded-full shrink-0 transition-colors font-semibold border bg-slate-800 text-slate-400 border-slate-700 hover:text-white';
+                if (switchPill) switchPill.className = 'pill-nav-btn px-3.5 py-1 rounded-full shrink-0 transition-colors font-semibold border bg-purple-500/20 text-purple-300 border-purple-500/40';
+
+                const heroTitle = document.getElementById('hero-title');
+                const heroSubtitle = document.getElementById('hero-subtitle');
+                if (heroTitle) heroTitle.innerHTML = 'Master <span class="bg-gradient-to-r from-purple-400 via-pink-400 to-indigo-400 bg-clip-text text-transparent">Switch Layers</span> in Moho';
+                if (heroSubtitle) heroSubtitle.textContent = 'Learn how Switch Layers act like a magic flipbook folder to swap poses, mouth shapes, and expressions instantly in Moho!';
             }
-
-            updateNavStyles(tabName);
-            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        function updateNavStyles(activeTab) {
-            const styles = {
-                'pixabay': { activeClass: 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40', inactiveClass: 'bg-slate-900/60 text-slate-400 border-slate-800' },
-                'switch-layers': { activeClass: 'bg-purple-500/20 text-purple-300 border-purple-500/40', inactiveClass: 'bg-slate-900/60 text-slate-400 border-slate-800' },
-                'pixel-studio': { activeClass: 'bg-indigo-500/20 text-indigo-300 border-indigo-500/40', inactiveClass: 'bg-slate-900/60 text-slate-400 border-slate-800' }
-            };
-
-            ['pixabay', 'switch-layers', 'pixel-studio'].forEach(tab => {
-                const navBtn = document.getElementById('nav-btn-' + tab);
-                const pillBtn = document.getElementById('pill-btn-' + tab);
-                const isSelected = (tab === activeTab);
-                const currentStyle = styles[tab];
-
-                [navBtn, pillBtn].forEach(btn => {
-                    if (btn) {
-                        if (isSelected) {
-                            btn.className = btn.className.replace(/bg-slate-\S+|text-slate-\S+|border-slate-\S+/g, '');
-                            btn.classList.add(...currentStyle.activeClass.split(' '));
-                        } else {
-                            btn.className = btn.className.replace(/bg-\S+|text-\S+|border-\S+/g, '');
-                            btn.classList.add(...currentStyle.inactiveClass.split(' '));
-                        }
-                    }
-                });
-            });
-        }
-
+        // --- Mobile Drawer Toggle ---
         function toggleMobileMenu() {
             const menu = document.getElementById('mobile-menu');
             const icon = document.getElementById('menu-icon');
-            if (menu) menu.classList.toggle('hidden');
-            if (icon && menu) {
-                icon.className = menu.classList.contains('hidden') ? 'fa-solid fa-bars text-lg' : 'fa-solid fa-xmark text-lg';
+            if (menu) {
+                menu.classList.toggle('hidden');
+                if (icon) {
+                    icon.className = menu.classList.contains('hidden') ? 'fa-solid fa-bars text-lg' : 'fa-solid fa-xmark text-lg';
+                }
             }
         }
 
-        async function toggleSwitchLayersFullScreen() {
+        // --- Presentation Fullscreen Toggles ---
+        function toggleFullScreen() {
+            const container = document.getElementById('presentation-container');
+            if (container) {
+                if (document.fullscreenElement) {
+                    document.exitFullscreen();
+                } else if (container.requestFullscreen) {
+                    container.requestFullscreen();
+                } else {
+                    container.classList.toggle('theater-mode');
+                }
+            }
+        }
+
+        function toggleSwitchLayersFullScreen() {
             const container = document.getElementById('switch-presentation-container');
-            if (!container) return;
-            
-            if (container.classList.contains('theater-mode')) {
-                container.classList.remove('theater-mode');
+            if (container) {
+                if (document.fullscreenElement) {
+                    document.exitFullscreen();
+                } else if (container.requestFullscreen) {
+                    container.requestFullscreen();
+                } else {
+                    container.classList.toggle('theater-mode');
+                }
+            }
+        }
+
+        // --- Assignment Portal Trigger Engine ---
+        let portalInstance = null;
+        let isPortalRunning = false;
+
+        function triggerAssignmentPortal(event) {
+            if (event) event.preventDefault();
+            if (isPortalRunning) return;
+            isPortalRunning = true;
+
+            const targetUrl = "https://docs.google.com/forms/d/e/1FAIpQLSepN4Wy5jjqIOGjeF0Vqk9SqvvZZMS77-wZp7qKD1MHR-AUHw/viewform?usp=dialog";
+            const overlay = document.getElementById('assignment-portal-overlay');
+            const badge = document.getElementById('portal-stage-badge');
+            const statusText = document.getElementById('portal-status-text');
+            const progressBar = document.getElementById('portal-progress-bar');
+            const speedText = document.getElementById('portal-speed-indicator');
+            const percentText = document.getElementById('portal-percent');
+            const timeRemText = document.getElementById('portal-time-rem');
+
+            if (!overlay) {
+                window.open(targetUrl, '_blank');
+                isPortalRunning = false;
                 return;
             }
 
-            if (!document.fullscreenElement) {
-                try {
-                    if (container.requestFullscreen) await container.requestFullscreen();
-                    else if (container.webkitRequestFullscreen) await container.webkitRequestFullscreen();
-                    else if (container.msRequestFullscreen) await container.msRequestFullscreen();
-                } catch (err) {
-                    container.classList.add('theater-mode');
+            // Display Fullscreen Sci-Fi Portal Overlay
+            overlay.classList.remove('hidden');
+            setTimeout(() => overlay.classList.add('opacity-100'), 10);
+
+            // Trigger Audio & Warp Canvas
+            playExtendedPortalSound();
+            if (portalInstance) portalInstance.start();
+
+            const stages = [
+                { badge: "Stage 1 / 5 • Warp Engine Pre-check", status: "Initializing quantum link protocol...", speed: "12,400 KM/S", percent: 20, time: "4.0s" },
+                { badge: "Stage 2 / 5 • Synchronizing Worksheet", status: "Fetching Assignment Data & Form Matrix...", speed: "38,900 KM/S", percent: 42, time: "2.9s" },
+                { badge: "Stage 3 / 5 • Calibrating Subspace Bridge", status: "Establishing secure portal pipe to Google Forms...", speed: "65,200 KM/S", percent: 68, time: "1.8s" },
+                { badge: "Stage 4 / 5 • Full Hyper-drive Engagement", status: "Warp core at maximum capacity! Preparing drop...", speed: "92,800 KM/S", percent: 88, time: "0.7s" },
+                { badge: "Stage 5 / 5 • Portal Locked & Dispatched", status: "Transfer complete! Launching worksheet in new tab...", speed: "100,000 KM/S", percent: 100, time: "0.0s" }
+            ];
+
+            let currentStage = 0;
+            const intervalTime = 950;
+
+            function updateStage() {
+                if (currentStage < stages.length) {
+                    const st = stages[currentStage];
+                    if (badge) badge.textContent = st.badge;
+                    if (statusText) statusText.innerHTML = `<i class="fa-solid fa-spinner animate-spin"></i> ${st.status}`;
+                    if (progressBar) progressBar.style.width = st.percent + '%';
+                    if (speedText) speedText.innerHTML = `<i class="fa-solid fa-bolt text-amber-400"></i> Speed: ${st.speed}`;
+                    if (percentText) percentText.textContent = st.percent + '%';
+                    if (timeRemText) timeRemText.textContent = `ETA: ${st.time}`;
+
+                    currentStage++;
+                    setTimeout(updateStage, intervalTime);
+                } else {
+                    window.open(targetUrl, '_blank');
+
+                    setTimeout(() => {
+                        overlay.classList.remove('opacity-100');
+                        setTimeout(() => {
+                            overlay.classList.add('hidden');
+                            if (portalInstance) portalInstance.stop();
+                            if (progressBar) progressBar.style.width = '0%';
+                            isPortalRunning = false;
+                        }, 500);
+                    }, 600);
                 }
-            } else {
-                if (document.exitFullscreen) await document.exitFullscreen();
             }
+
+            updateStage();
         }
 
+        // --- Copy Notebook Text ---
         function copyNotebookText() {
-            const noteText = `How to Add Switch Layers in Moho\n1. Create a New Switch Layer:\n  • Go to your Layers panel.\n  • Click the New Layer button (+).\n  • Select Switch from the menu.\n  • Give the layer a name (e.g., "Mouth").\n\n2. Add Your Drawings:\n  • Create or drag your vector layers into the Switch folder.\n  • Only the top drawing will be visible on your canvas.\n\n3. Switch Between Drawings:\n  • Right-click the Switch Layer folder in your Layers panel or on the Timeline.\n  • Select the drawing you want to show from the menu that pops up.\n\nBest for: Facial expressions, hand poses, and eye blinks.\n---\nWhat are Switch Layers?\nA Switch Layer is like a magic flipbook folder in Moho. It holds multiple drawings, but only displays one at a time, allowing you to swap between different shapes or poses quickly.`;
+            const content = document.getElementById('notebook-note-content');
+            if (!content) return;
 
-            const textArea = document.createElement("textarea");
-            textArea.value = noteText;
-            document.body.appendChild(textArea);
-            textArea.select();
+            const tempTextArea = document.createElement('textarea');
+            tempTextArea.value = content.innerText || content.textContent;
+            document.body.appendChild(tempTextArea);
+            tempTextArea.select();
             try {
                 document.execCommand('copy');
                 const btnText = document.getElementById('copy-note-btn-text');
                 if (btnText) {
+                    const orig = btnText.textContent;
                     btnText.textContent = "Copied to Clipboard!";
-                    setTimeout(() => { btnText.textContent = "Copy Note to Clipboard"; }, 2500);
+                    setTimeout(() => {
+                        btnText.textContent = orig;
+                    }, 2000);
                 }
-            } catch (err) {
-                console.error('Copy failed:', err);
+            } catch (e) {
+                console.error("Copy failed", e);
             }
-            document.body.removeChild(textArea);
+            document.body.removeChild(tempTextArea);
         }
 
-        async function toggleFullScreen() {
-            const container = document.getElementById('presentation-container');
-            if (!container) return;
-            
-            if (container.classList.contains('theater-mode')) {
-                container.classList.remove('theater-mode');
-                return;
-            }
+        // --- Pixabay Quiz Logic ---
+        let quizScore = { q1: false, q2: false, q3: false };
 
-            if (!document.fullscreenElement) {
-                try {
-                    if (container.requestFullscreen) await container.requestFullscreen();
-                    else if (container.webkitRequestFullscreen) await container.webkitRequestFullscreen();
-                    else if (container.msRequestFullscreen) await container.msRequestFullscreen();
-                } catch (err) {
-                    container.classList.add('theater-mode');
-                }
+        function checkQuizAnswer(qId, ans, isCorrect, btn) {
+            const parentButtons = document.querySelectorAll(`.${qId}-btn`);
+            parentButtons.forEach(b => {
+                b.classList.remove('bg-emerald-600', 'bg-rose-600', 'border-emerald-400', 'border-rose-400', 'text-white');
+                b.classList.add('bg-slate-800', 'border-slate-700', 'text-slate-300');
+            });
+
+            if (isCorrect) {
+                btn.classList.remove('bg-slate-800', 'border-slate-700');
+                btn.classList.add('bg-emerald-600', 'border-emerald-400', 'text-white');
+                quizScore[qId] = true;
             } else {
-                if (document.exitFullscreen) await document.exitFullscreen();
+                btn.classList.remove('bg-slate-800', 'border-slate-700');
+                btn.classList.add('bg-rose-600', 'border-rose-400', 'text-white');
+                quizScore[qId] = false;
+            }
+
+            const scoreCount = Object.values(quizScore).filter(Boolean).length;
+            const scoreElem = document.getElementById('pixabay-quiz-score');
+            if (scoreElem) {
+                scoreElem.textContent = `Score: ${scoreCount} / 3`;
+                scoreElem.className = scoreCount === 3
+                    ? "text-xs font-mono bg-emerald-500/20 px-3 py-1.5 rounded-lg text-emerald-300 font-bold border border-emerald-500/40"
+                    : "text-xs font-mono bg-slate-800 px-3 py-1.5 rounded-lg text-amber-300 font-bold";
             }
         }
 
-        const GRID_SIZE = 64;
-        const CANVAS_DISPLAY_SIZE = 512;
-        const PIXEL_SIZE = CANVAS_DISPLAY_SIZE / GRID_SIZE;
+        // --- Live Moho Interactive Simulator Controls ---
+        function setMouthShape(shape) {
+            const mouth = document.getElementById('sim-mouth');
+            const label = document.getElementById('sim-active-layer-text');
+            const buttons = document.querySelectorAll('.mouth-btn');
 
-        const canvas = document.getElementById('pixelCanvas');
-        const ctx = canvas ? canvas.getContext('2d') : null;
-        const primaryColorInput = document.getElementById('primaryColor');
-        const hexLabel = document.getElementById('hexLabel');
-        const presetGrid = document.getElementById('presetGrid');
-        const recentGrid = document.getElementById('recentGrid');
-        const paletteSelect = document.getElementById('paletteSelect');
-        const activeToolName = document.getElementById('activeToolName');
-        const coordsX = document.getElementById('coordsX');
-        const coordsY = document.getElementById('coordsY');
-        const toggleGridBtn = document.getElementById('toggleGridBtn');
-        const undoBtn = document.getElementById('undoBtn');
-        const redoBtn = document.getElementById('redoBtn');
-        const clearBtn = document.getElementById('clearBtn');
-        const brushSizeInput = document.getElementById('brushSizeInput');
-        const brushSizeVal = document.getElementById('brushSizeVal');
-
-        const exportModal = document.getElementById('exportModal');
-        const openExportBtn = document.getElementById('openExportBtn');
-        const closeExportBtn = document.getElementById('closeExportBtn');
-        const cancelExportBtn = document.getElementById('cancelExportBtn');
-        const downloadPngBtn = document.getElementById('downloadPngBtn');
-        const previewCanvas = document.getElementById('previewCanvas');
-        const previewCtx = previewCanvas ? previewCanvas.getContext('2d') : null;
-
-        let grid = Array(GRID_SIZE).fill(null).map(() => Array(GRID_SIZE).fill(null));
-        let history = [];
-        let historyIndex = -1;
-        const MAX_HISTORY = 30;
-
-        let currentTool = 'pencil';
-        let activeColor = '#6366f1';
-        let brushSize = 1;
-        let showGrid = true;
-        let isDrawing = false;
-        let startCoords = null;
-        let exportScale = 16;
-        let recentColors = ['#6366f1', '#000000', '#ffffff', '#ef4444', '#10b981', '#3b82f6'];
-
-        const palettes = {
-            pico8: ['#000000','#1D2B53','#7E2553','#008751','#AB5236','#5F574F','#C2C3C7','#FFF1E8','#FF004D','#FFA300','#FFEC27','#00E436','#29ADFF','#83769C','#FF77A8','#FFCCAA'],
-            gameboy: ['#0f380f', '#306230', '#8bac0f', '#9bbc0f'],
-            cyberpunk: ['#ff0055', '#7a00ff', '#00e5ff', '#00ff66', '#ffea00', '#12002b', '#240046', '#ffffff'],
-            pastel: ['#ffb3ba', '#ffdfba', '#ffffba', '#baffc9', '#bae1ff', '#e8baff', '#f1f1f1', '#4a4a4a'],
-            retro: ['#000000', '#ffffff', '#880000', '#aefeef', '#cc44cc', '#00cc55', '#eeeec8', '#dd8855', '#664400', '#ff7777', '#333333', '#777777', '#aaff66', '#0088ff', '#bbbbbb']
-        };
-
-        function initStudio() {
-            if (!canvas || !ctx) return;
-            saveHistoryState();
-            loadPalette('pico8');
-            updateRecentGrid();
-            render();
-
-            const toolButtons = {
-                toolPencil: 'pencil',
-                toolEraser: 'eraser',
-                toolBucket: 'bucket',
-                toolPicker: 'picker',
-                toolLine: 'line',
-                toolRect: 'rect'
-            };
-
-            Object.entries(toolButtons).forEach(([btnId, tool]) => {
-                const btn = document.getElementById(btnId);
-                if (btn) btn.addEventListener('click', () => setTool(tool));
-            });
-        }
-
-        function setTool(tool) {
-            currentTool = tool;
-            if (activeToolName) activeToolName.textContent = tool.charAt(0).toUpperCase() + tool.slice(1);
-
-            document.querySelectorAll('.tool-btn').forEach(btn => {
-                btn.classList.remove('active', 'bg-indigo-600/20', 'text-indigo-400', 'border', 'border-indigo-500/40');
+            buttons.forEach(b => {
+                b.classList.remove('bg-purple-900/60', 'bg-purple-800', 'text-purple-200', 'border-purple-700', 'font-semibold');
+                b.classList.add('bg-slate-800', 'text-slate-300', 'border-slate-700', 'font-medium');
             });
 
-            const activeBtnMap = {
-                pencil: 'toolPencil',
-                eraser: 'toolEraser',
-                bucket: 'toolBucket',
-                picker: 'toolPicker',
-                line: 'toolLine',
-                rect: 'toolRect'
-            };
+            if (window.event && window.event.currentTarget) {
+                window.event.currentTarget.classList.remove('bg-slate-800', 'text-slate-300', 'border-slate-700', 'font-medium');
+                window.event.currentTarget.classList.add('bg-purple-900/60', 'text-purple-200', 'border-purple-700', 'font-semibold');
+            }
 
-            const btn = document.getElementById(activeBtnMap[tool]);
-            if (btn) {
-                btn.classList.add('active', 'bg-indigo-600/20', 'text-indigo-400', 'border', 'border-indigo-500/40');
+            if (!mouth) return;
+
+            mouth.style.width = '2.5rem';
+            mouth.style.height = '0.75rem';
+            mouth.style.borderRadius = '9999px';
+
+            if (shape === 'smile') {
+                mouth.style.height = '0.85rem';
+                mouth.style.borderRadius = '0 0 9999px 9999px';
+                if (label) label.textContent = 'Active Layer: Mouth -> Smile (Rest)';
+            } else if (shape === 'open_o') {
+                mouth.style.width = '1.5rem';
+                mouth.style.height = '1.5rem';
+                mouth.style.borderRadius = '9999px';
+                if (label) label.textContent = 'Active Layer: Mouth -> O (Phoneme)';
+            } else if (shape === 'wide_e') {
+                mouth.style.width = '3.2rem';
+                mouth.style.height = '1.1rem';
+                mouth.style.borderRadius = '0.3rem';
+                if (label) label.textContent = 'Active Layer: Mouth -> E / A (Wide)';
+            } else if (shape === 'closed_m') {
+                mouth.style.width = '2.2rem';
+                mouth.style.height = '0.25rem';
+                mouth.style.borderRadius = '9999px';
+                if (label) label.textContent = 'Active Layer: Mouth -> M / B (Closed)';
+            } else if (shape === 'surprised') {
+                mouth.style.width = '1.8rem';
+                mouth.style.height = '2.2rem';
+                mouth.style.borderRadius = '9999px';
+                if (label) label.textContent = 'Active Layer: Mouth -> Shocked';
             }
         }
 
-        function updateColor(hex) {
-            activeColor = hex;
-            if (primaryColorInput) primaryColorInput.value = hex;
-            if (hexLabel) hexLabel.textContent = hex.toUpperCase();
-            addRecentColor(hex);
-        }
+        function setEyeShape(shape) {
+            const eyeL = document.getElementById('sim-eye-left');
+            const eyeR = document.getElementById('sim-eye-right');
+            const label = document.getElementById('sim-active-layer-text');
+            const buttons = document.querySelectorAll('.eye-btn');
 
-        function addRecentColor(hex) {
-            if (!recentColors.includes(hex)) {
-                recentColors.unshift(hex);
-                if (recentColors.length > 8) recentColors.pop();
-                updateRecentGrid();
-            }
-        }
-
-        function updateRecentGrid() {
-            if (!recentGrid) return;
-            recentGrid.innerHTML = '';
-            recentColors.forEach(color => {
-                const swatch = document.createElement('button');
-                swatch.className = 'w-6 h-6 rounded border border-slate-700 transition transform hover:scale-110';
-                swatch.style.backgroundColor = color;
-                swatch.addEventListener('click', () => updateColor(color));
-                recentGrid.appendChild(swatch);
+            buttons.forEach(b => {
+                b.classList.remove('bg-purple-900/60', 'bg-purple-800', 'text-purple-200', 'border-purple-700', 'font-semibold');
+                b.classList.add('bg-slate-800', 'text-slate-300', 'border-slate-700', 'font-medium');
             });
-        }
 
-        function loadPalette(paletteKey) {
-            if (!presetGrid) return;
-            presetGrid.innerHTML = '';
-            const colors = palettes[paletteKey] || palettes.pico8;
-            colors.forEach(color => {
-                const swatch = document.createElement('button');
-                swatch.className = 'w-5 h-5 rounded border border-slate-700/60 transition transform hover:scale-110';
-                swatch.style.backgroundColor = color;
-                swatch.addEventListener('click', () => updateColor(color));
-                presetGrid.appendChild(swatch);
-            });
-        }
-
-        if (paletteSelect) paletteSelect.addEventListener('change', (e) => loadPalette(e.target.value));
-
-        function saveHistoryState() {
-            if (historyIndex < history.length - 1) {
-                history = history.slice(0, historyIndex + 1);
+            if (window.event && window.event.currentTarget) {
+                window.event.currentTarget.classList.remove('bg-slate-800', 'text-slate-300', 'border-slate-700', 'font-medium');
+                window.event.currentTarget.classList.add('bg-purple-900/60', 'text-purple-200', 'border-purple-700', 'font-semibold');
             }
-            
-            const snapshot = grid.map(row => [...row]);
-            history.push(snapshot);
-            if (history.length > MAX_HISTORY) history.shift();
-            else historyIndex++;
 
-            updateUndoRedoButtons();
-        }
+            if (!eyeL || !eyeR) return;
 
-        function undo() {
-            if (historyIndex > 0) {
-                historyIndex--;
-                grid = history[historyIndex].map(row => [...row]);
-                render();
-                updateUndoRedoButtons();
+            if (shape === 'open') {
+                eyeL.style.height = '1.25rem';
+                eyeR.style.height = '1.25rem';
+                if (label) label.textContent = 'Active Layer: Eyes -> Normal Open';
+            } else if (shape === 'blink') {
+                eyeL.style.height = '0.2rem';
+                eyeR.style.height = '0.2rem';
+                if (label) label.textContent = 'Active Layer: Eyes -> Blink / Closed';
+            } else if (shape === 'wink') {
+                eyeL.style.height = '0.2rem';
+                eyeR.style.height = '1.25rem';
+                if (label) label.textContent = 'Active Layer: Eyes -> Wink';
             }
         }
 
-        function redo() {
-            if (historyIndex < history.length - 1) {
-                historyIndex++;
-                grid = history[historyIndex].map(row => [...row]);
-                render();
-                updateUndoRedoButtons();
+        // Extended Multi-Stage Sci-Fi Audio Synthesis Engine
+        function playExtendedPortalSound() {
+            try {
+                const AudioContext = window.AudioContext || window.webkitAudioContext;
+                if (!AudioContext) return;
+                const ctx = new AudioContext();
+
+                // Base Synth Oscillator Pitch Sweep (Accelerating Hyperdrive)
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+
+                osc.type = 'sawtooth';
+                osc.frequency.setValueAtTime(100, ctx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(1200, ctx.currentTime + 4.2);
+
+                gain.gain.setValueAtTime(0.01, ctx.currentTime);
+                gain.gain.linearRampToValueAtTime(0.28, ctx.currentTime + 1.5);
+                gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 5.0);
+
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+
+                osc.start();
+                osc.stop(ctx.currentTime + 5.1);
+
+                // Stage Chimes
+                const chimeTimes = [1.2, 2.4, 3.6, 4.5];
+                const freqs = [523.25, 659.25, 783.99, 1046.50];
+
+                chimeTimes.forEach((t, idx) => {
+                    setTimeout(() => {
+                        if (ctx.state === 'closed') return;
+                        const chime = ctx.createOscillator();
+                        const chimeGain = ctx.createGain();
+                        chime.type = 'sine';
+                        chime.frequency.setValueAtTime(freqs[idx], ctx.currentTime);
+                        chimeGain.gain.setValueAtTime(0.2, ctx.currentTime);
+                        chimeGain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.8);
+                        chime.connect(chimeGain);
+                        chimeGain.connect(ctx.destination);
+                        chime.start();
+                        chime.stop(ctx.currentTime + 0.8);
+                    }, t * 1000);
+                });
+            } catch (err) {
+                // Audio synthesis optional fallback
             }
         }
 
-        function updateUndoRedoButtons() {
-            if (undoBtn) undoBtn.disabled = historyIndex <= 0;
-            if (redoBtn) redoBtn.disabled = historyIndex >= history.length - 1;
-        }
+        // Dynamic Quantum Tunnel Canvas Engine
+        let portalActive = false;
+        let portalAnimationId = null;
 
-        if (undoBtn) undoBtn.addEventListener('click', undo);
-        if (redoBtn) redoBtn.addEventListener('click', redo);
+        function initPortalCanvas() {
+            const canvas = document.getElementById('portal-canvas');
+            if (!canvas) return null;
+            const ctx = canvas.getContext('2d');
+            let width = canvas.width = window.innerWidth;
+            let height = canvas.height = window.innerHeight;
 
-        function render(tempPreviewGrid = null) {
-            if (!ctx) return;
-            ctx.clearRect(0, 0, CANVAS_DISPLAY_SIZE, CANVAS_DISPLAY_SIZE);
-            const targetGrid = tempPreviewGrid || grid;
+            const particles = [];
+            const particleCount = 550;
+            const colors = ['#f59e0b', '#10b981', '#a855f7', '#38bdf8', '#fbbf24', '#ec4899'];
 
-            for (let r = 0; r < GRID_SIZE; r++) {
-                for (let c = 0; c < GRID_SIZE; c++) {
-                    if (targetGrid[r][c]) {
-                        ctx.fillStyle = targetGrid[r][c];
-                        ctx.fillRect(c * PIXEL_SIZE, r * PIXEL_SIZE, PIXEL_SIZE, PIXEL_SIZE);
+            for (let i = 0; i < particleCount; i++) {
+                particles.push({
+                    x: Math.random() * width,
+                    y: Math.random() * height,
+                    radius: Math.random() * 3.5 + 0.8,
+                    angle: Math.random() * Math.PI * 2,
+                    speed: Math.random() * 3.5 + 1.2,
+                    distance: Math.random() * Math.max(width, height) * 0.7,
+                    color: colors[Math.floor(Math.random() * colors.length)],
+                    alpha: Math.random() * 0.85 + 0.15,
+                    length: Math.random() * 25 + 5,
+                    type: Math.random() > 0.3 ? 'streak' : 'sparkle',
+                    pulseSpeed: Math.random() * 0.05 + 0.02
+                });
+            }
+
+            let shockwaveRadius = 0;
+
+            function draw() {
+                ctx.fillStyle = 'rgba(15, 23, 42, 0.22)';
+                ctx.fillRect(0, 0, width, height);
+
+                const centerX = width / 2;
+                const centerY = height / 2;
+
+                shockwaveRadius = (shockwaveRadius + 2.5) % (Math.max(width, height) * 0.6);
+                ctx.beginPath();
+                ctx.arc(centerX, centerY, shockwaveRadius, 0, Math.PI * 2);
+                ctx.strokeStyle = 'rgba(245, 158, 11, ' + (1 - shockwaveRadius / (Math.max(width, height) * 0.6)) * 0.3 + ')';
+                ctx.lineWidth = 2;
+                ctx.stroke();
+
+                particles.forEach(p => {
+                    p.angle += p.speed * 0.012;
+                    p.distance -= p.speed * 2.2;
+                    p.alpha += Math.sin(Date.now() * p.pulseSpeed) * 0.05;
+
+                    if (p.distance <= 12) {
+                        p.distance = Math.max(width, height) * 0.65;
+                        p.angle = Math.random() * Math.PI * 2;
                     }
-                }
-            }
 
-            if (showGrid) {
-                ctx.strokeStyle = 'rgba(255, 255, 255, 0.07)';
-                ctx.lineWidth = 1;
+                    const prevX = centerX + Math.cos(p.angle) * (p.distance + p.length);
+                    const prevY = centerY + Math.sin(p.angle) * (p.distance + p.length);
+                    p.x = centerX + Math.cos(p.angle) * p.distance;
+                    p.y = centerY + Math.sin(p.angle) * p.distance;
 
-                for (let i = 0; i <= CANVAS_DISPLAY_SIZE; i += PIXEL_SIZE) {
-                    ctx.beginPath();
-                    ctx.moveTo(i, 0);
-                    ctx.lineTo(i, CANVAS_DISPLAY_SIZE);
-                    ctx.stroke();
-
-                    ctx.beginPath();
-                    ctx.moveTo(0, i);
-                    ctx.lineTo(CANVAS_DISPLAY_SIZE, i);
-                    ctx.stroke();
-                }
-            }
-        }
-
-        function drawPixel(x, y, color) {
-            const halfBrush = Math.floor(brushSize / 2);
-            for (let bx = -halfBrush; bx < brushSize - halfBrush; bx++) {
-                for (let by = -halfBrush; by < brushSize - halfBrush; by++) {
-                    const targetX = x + bx;
-                    const targetY = y + by;
-                    if (targetX >= 0 && targetX < GRID_SIZE && targetY >= 0 && targetY < GRID_SIZE) {
-                        grid[targetY][targetX] = color;
+                    if (p.type === 'streak') {
+                        ctx.beginPath();
+                        ctx.moveTo(prevX, prevY);
+                        ctx.lineTo(p.x, p.y);
+                        ctx.strokeStyle = p.color;
+                        ctx.lineWidth = p.radius;
+                        ctx.globalAlpha = Math.max(0.1, Math.min(1, p.alpha));
+                        ctx.shadowBlur = 12;
+                        ctx.shadowColor = p.color;
+                        ctx.stroke();
+                    } else {
+                        ctx.beginPath();
+                        ctx.arc(p.x, p.y, p.radius * 1.5, 0, Math.PI * 2);
+                        ctx.fillStyle = p.color;
+                        ctx.globalAlpha = Math.max(0.1, Math.min(1, p.alpha));
+                        ctx.shadowBlur = 15;
+                        ctx.shadowColor = p.color;
+                        ctx.fill();
                     }
+                    ctx.globalAlpha = 1;
+                    ctx.shadowBlur = 0;
+                });
+
+                if (portalActive) {
+                    portalAnimationId = requestAnimationFrame(draw);
                 }
             }
-        }
-
-        function floodFill(startX, startY, targetColor, replacementColor) {
-            if (targetColor === replacementColor) return;
-            if (grid[startY][startX] !== targetColor) return;
-
-            const queue = [[startX, startY]];
-            while (queue.length > 0) {
-                const [x, y] = queue.pop();
-                if (x < 0 || x >= GRID_SIZE || y < 0 || y >= GRID_SIZE) continue;
-                if (grid[y][x] === targetColor) {
-                    grid[y][x] = replacementColor;
-                    queue.push([x + 1, y], [x - 1, y], [x, y + 1], [x, y - 1]);
-                }
-            }
-        }
-
-        function bresenhamLine(x0, y0, x1, y1) {
-            const pixels = [];
-            const dx = Math.abs(x1 - x0);
-            const dy = Math.abs(y1 - y0);
-            const sx = (x0 < x1) ? 1 : -1;
-            const sy = (y0 < y1) ? 1 : -1;
-            let err = dx - dy;
-
-            let currX = x0;
-            let currY = y0;
-
-            while (true) {
-                pixels.push([currX, currY]);
-                if (currX === x1 && currY === y1) break;
-                const e2 = 2 * err;
-                if (e2 > -dy) { err -= dy; currX += sx; }
-                if (e2 < dx) { err += dx; currY += sy; }
-            }
-            return pixels;
-        }
-
-        function getRectanglePixels(x0, y0, x1, y1) {
-            const pixels = [];
-            const minX = Math.min(x0, x1);
-            const maxX = Math.max(x0, x1);
-            const minY = Math.min(y0, y1);
-            const maxY = Math.max(y0, y1);
-
-            for (let x = minX; x <= maxX; x++) {
-                pixels.push([x, minY], [x, maxY]);
-            }
-            for (let y = minY; y <= maxY; y++) {
-                pixels.push([minX, y], [maxX, y]);
-            }
-            return pixels;
-        }
-
-        function getGridCoords(e) {
-            if (!canvas) return { x: 0, y: 0 };
-            const rect = canvas.getBoundingClientRect();
-            const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-            const clientY = e.touches ? e.touches[0].clientY : e.clientY;
-
-            const x = Math.floor((clientX - rect.left) / (rect.width / GRID_SIZE));
-            const y = Math.floor((clientY - rect.top) / (rect.height / GRID_SIZE));
 
             return {
-                x: Math.max(0, Math.min(GRID_SIZE - 1, x)),
-                y: Math.max(0, Math.min(GRID_SIZE - 1, y))
+                start: () => {
+                    portalActive = true;
+                    draw();
+                },
+                stop: () => {
+                    portalActive = false;
+                    if (portalAnimationId) cancelAnimationFrame(portalAnimationId);
+                },
+                resize: () => {
+                    width = canvas.width = window.innerWidth;
+                    height = canvas.height = window.innerHeight;
+                }
             };
         }
 
-        function handleStart(e) {
-            isDrawing = true;
-            const { x, y } = getGridCoords(e);
-            startCoords = { x, y };
+        function initBackgroundParticles() {
+            const canvas = document.getElementById('bg-particles-canvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            let width = canvas.width = canvas.parentElement.offsetWidth;
+            let height = canvas.height = canvas.parentElement.offsetHeight;
 
-            if (currentTool === 'pencil') {
-                drawPixel(x, y, activeColor);
-                render();
-            } else if (currentTool === 'eraser') {
-                drawPixel(x, y, null);
-                render();
-            } else if (currentTool === 'bucket') {
-                const targetColor = grid[y][x];
-                floodFill(x, y, targetColor, activeColor);
-                saveHistoryState();
-                render();
-            } else if (currentTool === 'picker') {
-                const picked = grid[y][x];
-                if (picked) updateColor(picked);
-                setTool('pencil');
-            }
-        }
+            const bgParticles = [];
+            const bgCount = 85;
+            const bgColors = ['#10b981', '#34d399', '#f59e0b', '#a855f7', '#60a5fa'];
 
-        function handleMove(e) {
-            const { x, y } = getGridCoords(e);
-            if (coordsX) coordsX.textContent = x;
-            if (coordsY) coordsY.textContent = y;
-
-            if (!isDrawing) return;
-
-            if (currentTool === 'pencil') {
-                drawPixel(x, y, activeColor);
-                render();
-            } else if (currentTool === 'eraser') {
-                drawPixel(x, y, null);
-                render();
-            } else if (currentTool === 'line' || currentTool === 'rect') {
-                const tempGrid = grid.map(row => [...row]);
-                const pixels = currentTool === 'line' 
-                    ? bresenhamLine(startCoords.x, startCoords.y, x, y)
-                    : getRectanglePixels(startCoords.x, startCoords.y, x, y);
-
-                pixels.forEach(([px, py]) => {
-                    if (px >= 0 && px < GRID_SIZE && py >= 0 && py < GRID_SIZE) {
-                        tempGrid[py][px] = activeColor;
-                    }
+            for (let i = 0; i < bgCount; i++) {
+                bgParticles.push({
+                    x: Math.random() * width,
+                    y: Math.random() * height,
+                    vx: (Math.random() - 0.5) * 0.6,
+                    vy: (Math.random() - 0.5) * 0.6,
+                    radius: Math.random() * 2.5 + 1,
+                    color: bgColors[Math.floor(Math.random() * bgColors.length)],
+                    alpha: Math.random() * 0.6 + 0.2
                 });
-                render(tempGrid);
-            }
-        }
-
-        function handleEnd(e) {
-            if (!isDrawing) return;
-            isDrawing = false;
-
-            if (currentTool === 'line' || currentTool === 'rect') {
-                const { x, y } = getGridCoords(e.changedTouches ? e.changedTouches[0] : e);
-                const pixels = currentTool === 'line'
-                    ? bresenhamLine(startCoords.x, startCoords.y, x, y)
-                    : getRectanglePixels(startCoords.x, startCoords.y, x, y);
-
-                pixels.forEach(([px, py]) => {
-                    if (px >= 0 && px < GRID_SIZE && py >= 0 && py < GRID_SIZE) {
-                        grid[py][px] = activeColor;
-                    }
-                });
-                render();
             }
 
-            if (currentTool !== 'picker') {
-                saveHistoryState();
-            }
-        }
+            function animateBg() {
+                ctx.clearRect(0, 0, width, height);
 
-        if (canvas) {
-            canvas.addEventListener('mousedown', handleStart);
-            canvas.addEventListener('mousemove', handleMove);
-            window.addEventListener('mouseup', handleEnd);
+                for (let i = 0; i < bgCount; i++) {
+                    for (let j = i + 1; j < bgCount; j++) {
+                        const dx = bgParticles[i].x - bgParticles[j].x;
+                        const dy = bgParticles[i].y - bgParticles[j].y;
+                        const dist = Math.sqrt(dx * dx + dy * dy);
 
-            canvas.addEventListener('touchstart', (e) => { handleStart(e); e.preventDefault(); }, { passive: false });
-            canvas.addEventListener('touchmove', (e) => { handleMove(e); e.preventDefault(); }, { passive: false });
-            window.addEventListener('touchend', handleEnd);
-        }
-
-        if (primaryColorInput) primaryColorInput.addEventListener('input', (e) => updateColor(e.target.value));
-
-        const quickBtnMap = {
-            quickBlack: '#000000',
-            quickWhite: '#ffffff',
-            quickRed: '#ef4444',
-            quickGreen: '#10b981',
-            quickBlue: '#3b82f6'
-        };
-
-        Object.entries(quickBtnMap).forEach(([btnId, color]) => {
-            const btn = document.getElementById(btnId);
-            if (btn) btn.addEventListener('click', () => updateColor(color));
-        });
-
-        if (toggleGridBtn) {
-            toggleGridBtn.addEventListener('click', () => {
-                showGrid = !showGrid;
-                toggleGridBtn.classList.toggle('text-indigo-400', showGrid);
-                toggleGridBtn.classList.toggle('bg-indigo-950/40', showGrid);
-                toggleGridBtn.classList.toggle('text-slate-400', !showGrid);
-                render();
-            });
-        }
-
-        if (clearBtn) {
-            clearBtn.addEventListener('click', () => {
-                grid = Array(GRID_SIZE).fill(null).map(() => Array(GRID_SIZE).fill(null));
-                saveHistoryState();
-                render();
-            });
-        }
-
-        if (brushSizeInput && brushSizeVal) {
-            brushSizeInput.addEventListener('input', (e) => {
-                brushSize = parseInt(e.target.value, 10);
-                brushSizeVal.textContent = brushSize + 'px';
-            });
-        }
-
-        function openExportModal() {
-            renderExportPreview();
-            if (exportModal) exportModal.classList.remove('opacity-0', 'pointer-events-none');
-        }
-
-        function closeExportModal() {
-            if (exportModal) exportModal.classList.add('opacity-0', 'pointer-events-none');
-        }
-
-        function renderExportPreview() {
-            if (!previewCtx || !previewCanvas) return;
-            previewCtx.clearRect(0, 0, previewCanvas.width, previewCanvas.height);
-            const previewScale = previewCanvas.width / GRID_SIZE;
-
-            for (let r = 0; r < GRID_SIZE; r++) {
-                for (let c = 0; c < GRID_SIZE; c++) {
-                    if (grid[r][c]) {
-                        previewCtx.fillStyle = grid[r][c];
-                        previewCtx.fillRect(c * previewScale, r * previewScale, previewScale, previewScale);
-                    }
-                }
-            }
-        }
-
-        document.querySelectorAll('.scale-btn').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                document.querySelectorAll('.scale-btn').forEach(b => {
-                    b.classList.remove('border-indigo-500/50', 'bg-indigo-600/20', 'text-indigo-300');
-                    b.classList.add('border-slate-700', 'bg-slate-800', 'text-slate-300');
-                });
-                e.target.classList.remove('border-slate-700', 'bg-slate-800', 'text-slate-300');
-                e.target.classList.add('border-indigo-500/50', 'bg-indigo-600/20', 'text-indigo-300');
-                exportScale = parseInt(e.target.dataset.scale, 10);
-            });
-        });
-
-        if (downloadPngBtn) {
-            downloadPngBtn.addEventListener('click', () => {
-                const exportCanvas = document.createElement('canvas');
-                const targetDimension = GRID_SIZE * exportScale;
-                exportCanvas.width = targetDimension;
-                exportCanvas.height = targetDimension;
-                const exportCtx = exportCanvas.getContext('2d');
-
-                exportCtx.imageSmoothingEnabled = false;
-
-                for (let r = 0; r < GRID_SIZE; r++) {
-                    for (let c = 0; c < GRID_SIZE; c++) {
-                        if (grid[r][c]) {
-                            exportCtx.fillStyle = grid[r][c];
-                            exportCtx.fillRect(c * exportScale, r * exportScale, exportScale, exportScale);
+                        if (dist < 110) {
+                            ctx.beginPath();
+                            ctx.moveTo(bgParticles[i].x, bgParticles[i].y);
+                            ctx.lineTo(bgParticles[j].x, bgParticles[j].y);
+                            ctx.strokeStyle = bgParticles[i].color;
+                            ctx.globalAlpha = (1 - dist / 110) * 0.18;
+                            ctx.lineWidth = 0.8;
+                            ctx.stroke();
                         }
                     }
                 }
 
-                const link = document.createElement('a');
-                link.download = `pixel-art-64x64-${Date.now()}.png`;
-                link.href = exportCanvas.toDataURL('image/png');
-                link.click();
-                closeExportModal();
+                bgParticles.forEach(p => {
+                    p.x += p.vx;
+                    p.y += p.vy;
+
+                    if (p.x < 0) p.x = width;
+                    if (p.x > width) p.x = 0;
+                    if (p.y < 0) p.y = height;
+                    if (p.y > height) p.y = 0;
+
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                    ctx.fillStyle = p.color;
+                    ctx.globalAlpha = p.alpha;
+                    ctx.shadowBlur = 8;
+                    ctx.shadowColor = p.color;
+                    ctx.fill();
+                });
+
+                ctx.globalAlpha = 1;
+                ctx.shadowBlur = 0;
+                requestAnimationFrame(animateBg);
+            }
+
+            animateBg();
+
+            window.addEventListener('resize', () => {
+                if (!canvas.parentElement) return;
+                width = canvas.width = canvas.parentElement.offsetWidth;
+                height = canvas.height = canvas.parentElement.offsetHeight;
             });
         }
 
-        if (openExportBtn) openExportBtn.addEventListener('click', openExportModal);
-        if (closeExportBtn) closeExportBtn.addEventListener('click', closeExportModal);
-        if (cancelExportBtn) cancelExportBtn.addEventListener('click', closeExportModal);
-
-        window.addEventListener('keydown', (e) => {
-            if (e.target.tagName === 'INPUT' || e.target.tagName === 'SELECT') return;
-            const key = e.key.toLowerCase();
-
-            if (key === 'p') setTool('pencil');
-            else if (key === 'e') setTool('eraser');
-            else if (key === 'b') setTool('bucket');
-            else if (key === 'i') setTool('picker');
-            else if (key === 'l') setTool('line');
-            else if (key === 'r') setTool('rect');
-            else if (key === 'g' && toggleGridBtn) toggleGridBtn.click();
-            else if (e.ctrlKey && key === 'z') { e.preventDefault(); undo(); }
-            else if (e.ctrlKey && key === 'y') { e.preventDefault(); redo(); }
-        });
-
         // Initialize Web Application
         window.addEventListener('DOMContentLoaded', () => {
+            portalInstance = initPortalCanvas();
             switchTab('pixabay');
-            initStudio();
+            initBackgroundParticles();
         });
     </script>
 </body>
