@@ -71,9 +71,97 @@
         .tab-content.active-tab {
             display: block;
         }
+
+        @keyframes portalSpin {
+            0% { transform: rotate(0deg) scale(0.92); }
+            50% { transform: rotate(180deg) scale(1.08); }
+            100% { transform: rotate(360deg) scale(0.92); }
+        }
+        @keyframes portalSpinReverse {
+            0% { transform: rotate(360deg); }
+            100% { transform: rotate(0deg); }
+        }
+        @keyframes pulseGlow {
+            0%, 100% { opacity: 0.4; filter: blur(25px); transform: scale(1); }
+            50% { opacity: 0.95; filter: blur(45px); transform: scale(1.25); }
+        }
+        @keyframes scanline {
+            0% { transform: translateY(-100%); }
+            100% { transform: translateY(1000%); }
+        }
+        @keyframes floatText {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+        .portal-hud-ring {
+            animation: portalSpin 12s linear infinite;
+        }
+        .portal-hud-ring-rev {
+            animation: portalSpinReverse 8s linear infinite;
+        }
+        .portal-glow-bg {
+            animation: pulseGlow 2.8s ease-in-out infinite;
+        }
+        .hud-text-bounce {
+            animation: floatText 2.2s ease-in-out infinite;
+        }
     </style>
 </head>
 <body class="bg-slate-950 text-slate-100 font-sans antialiased selection:bg-emerald-500 selection:text-white min-h-screen flex flex-col">
+
+    <!-- Fullscreen Extended Sci-Fi Quantum Portal Transition Overlay -->
+    <div id="assignment-portal-overlay" class="fixed inset-0 z-[99999] bg-slate-950/95 backdrop-blur-2xl flex flex-col items-center justify-center hidden opacity-0 transition-opacity duration-500 overflow-hidden pointer-events-auto select-none">
+        <!-- Canvas for dynamic particle hyperdrive tunnel -->
+        <canvas id="portal-canvas" class="absolute inset-0 w-full h-full pointer-events-none z-0"></canvas>
+
+        <!-- Ambient Glow Backdrops -->
+        <div class="absolute w-[600px] h-[600px] rounded-full bg-gradient-to-tr from-amber-500/30 via-orange-500/20 to-emerald-500/30 portal-glow-bg pointer-events-none"></div>
+        <div class="absolute w-[350px] h-[350px] rounded-full bg-gradient-to-br from-amber-400/40 via-purple-600/30 to-emerald-400/40 blur-3xl pointer-events-none"></div>
+
+        <!-- Holographic HUD Outer Elements -->
+        <div class="relative z-10 flex flex-col items-center justify-center p-6 text-center max-w-xl w-full">
+            <div class="relative w-56 h-56 sm:w-64 sm:h-64 flex items-center justify-center mb-8">
+                <!-- Rotating Ring 1 -->
+                <div class="absolute inset-0 rounded-full border-2 border-dashed border-amber-400/70 portal-hud-ring shadow-[0_0_40px_rgba(251,191,36,0.4)]"></div>
+                <!-- Rotating Ring 2 -->
+                <div class="absolute inset-3 rounded-full border-2 border-emerald-400/60 portal-hud-ring-rev border-t-transparent border-b-transparent"></div>
+                <!-- Rotating Ring 3 -->
+                <div class="absolute inset-7 rounded-full border-2 border-orange-500/50 portal-hud-ring"></div>
+                <!-- Rotating Ring 4 (Inner Laser Dot Circle) -->
+                <div class="absolute inset-11 rounded-full border border-purple-400/40 portal-hud-ring-rev border-dashed"></div>
+                
+                <!-- Center Energy Core -->
+                <div id="portal-core" class="w-24 h-24 sm:w-28 sm:h-28 rounded-full bg-gradient-to-tr from-amber-400 via-orange-500 to-emerald-300 flex items-center justify-center text-slate-950 text-4xl sm:text-5xl shadow-[0_0_60px_rgba(245,158,11,0.95)] transform transition-transform duration-300 scale-100">
+                    <i class="fa-solid fa-rocket animate-bounce" id="portal-icon"></i>
+                </div>
+            </div>
+
+            <!-- Title & Extended Telemetry Status Text -->
+            <div class="space-y-3 z-10 w-full">
+                <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-500/20 border border-amber-400/40 text-amber-300 text-xs font-mono font-bold uppercase tracking-widest hud-text-bounce">
+                    <span class="w-2 h-2 rounded-full bg-amber-400 animate-ping"></span>
+                    <span id="portal-stage-badge">Stage 1 / 5 • Warp Engine Pre-check</span>
+                </div>
+                <h2 class="text-2xl sm:text-4xl font-black text-white tracking-tight drop-shadow-[0_0_20px_rgba(255,255,255,0.5)]">
+                    Launching <span class="bg-gradient-to-r from-amber-300 via-orange-400 to-emerald-400 bg-clip-text text-transparent">Today's Assignment</span>
+                </h2>
+                <p id="portal-status-text" class="text-xs sm:text-sm font-mono text-emerald-300 h-8 flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-spinner animate-spin"></i> Initializing quantum link protocol...
+                </p>
+            </div>
+
+            <!-- Futuristic Multi-segment Progress Bar -->
+            <div class="w-full max-w-md mt-6 bg-slate-900/90 border border-slate-700/80 rounded-full h-4 p-0.5 overflow-hidden shadow-inner relative">
+                <div id="portal-progress-bar" class="h-full bg-gradient-to-r from-amber-400 via-orange-500 to-emerald-400 rounded-full w-0 transition-all duration-150 ease-out shadow-[0_0_15px_rgba(245,158,11,0.9)]"></div>
+            </div>
+            
+            <div class="w-full max-w-md flex items-center justify-between mt-2 text-[11px] font-mono font-bold text-slate-400">
+                <span id="portal-speed-indicator"><i class="fa-solid fa-bolt text-amber-400"></i> Speed: 0 KM/S</span>
+                <span id="portal-percent" class="text-amber-400 text-sm font-extrabold">0%</span>
+                <span id="portal-time-rem">ETA: 5.0s</span>
+            </div>
+        </div>
+    </div>
 
     <!-- Top Fixed Header -->
     <header class="sticky top-0 z-50 glass-panel border-b border-slate-800/80">
@@ -86,10 +174,11 @@
                     <span class="font-bold text-lg tracking-tight text-white flex items-center gap-1.5">
                         Pixabay & Moho Guide
                     </span>
-                    <p class="text-xs text-slate-400 hidden sm:block">Interactive Learning Hub</p>
+                    <p class="text-xs text-slate-400 hidden sm:block">Interactive Learning & Assignment Hub</p>
                 </div>
             </button>
 
+            <!-- Desktop Navigation -->
             <nav class="hidden md:flex items-center gap-1 text-xs font-medium text-slate-300 bg-slate-900/90 p-1.5 rounded-xl border border-slate-800">
                 <button id="nav-btn-pixabay" onclick="switchTab('pixabay')" class="tab-nav-btn px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 border font-semibold">
                     <i class="fa-solid fa-file-powerpoint text-emerald-400"></i> 1. Pixabay Media Download
@@ -106,6 +195,7 @@
             </div>
         </div>
 
+        <!-- Scrollable Quick Pill Bar -->
         <div class="bg-slate-900/90 border-t border-slate-800/80 px-4 py-2 overflow-x-auto no-scrollbar flex items-center gap-2 text-xs font-medium">
             <span class="text-slate-500 uppercase text-[10px] font-bold tracking-wider shrink-0 pr-1">Active View:</span>
             <button id="pill-btn-pixabay" onclick="switchTab('pixabay')" class="pill-nav-btn px-3.5 py-1 rounded-full shrink-0 transition-colors font-semibold border">
@@ -116,6 +206,7 @@
             </button>
         </div>
 
+        <!-- Mobile Drawer -->
         <div id="mobile-menu" class="hidden md:hidden bg-slate-950 border-b border-slate-800 px-4 py-4 space-y-2">
             <p class="text-xs font-bold uppercase tracking-wider text-slate-500 mb-2 pt-1">Select Topic</p>
             <button onclick="switchTab('pixabay'); toggleMobileMenu();" class="w-full text-left px-3 py-2.5 rounded-lg bg-emerald-950/60 hover:bg-emerald-900/60 text-emerald-300 text-sm font-semibold border border-emerald-800/60 flex items-center gap-2">
@@ -154,6 +245,7 @@
             </div>
         </section>
 
+        <!-- TAB 1: PIXABAY MEDIA DOWNLOAD -->
         <div id="tab-pixabay" class="tab-content active-tab space-y-12 pb-12">
             <!-- Presentation Frame -->
             <section id="presentation" class="pt-6 max-w-6xl mx-auto px-4 sm:px-6">
@@ -206,6 +298,7 @@
                 </div>
             </section>
 
+            <!-- Media Types Breakdown -->
             <section id="guide-summary" class="max-w-6xl mx-auto px-4 sm:px-6">
                 <div class="text-center mb-8">
                     <h2 class="text-2xl sm:text-3xl font-bold text-white mb-2">Pixabay Media Types & Formats</h2>
@@ -261,6 +354,7 @@
                 </div>
             </section>
 
+            <!-- Detailed Download Step-by-Step Walkthrough -->
             <section class="max-w-6xl mx-auto px-4 sm:px-6">
                 <div class="glass-panel rounded-3xl p-6 sm:p-8 border border-emerald-500/20 shadow-2xl">
                     <h3 class="text-2xl font-bold text-white mb-6 flex items-center gap-3">
@@ -296,6 +390,7 @@
                 </div>
             </section>
 
+            <!-- Interactive Pixabay Knowledge Check Quiz -->
             <section class="max-w-6xl mx-auto px-4 sm:px-6">
                 <div class="bg-slate-900/90 rounded-3xl p-6 sm:p-8 border border-slate-800 shadow-2xl">
                     <div class="flex items-center justify-between mb-6 pb-4 border-b border-slate-800">
@@ -342,6 +437,7 @@
             </section>
         </div>
 
+        <!-- TAB 2: SWITCH LAYERS IN MOHO -->
         <div id="tab-switch-layers" class="tab-content space-y-12 pb-12">
             <section id="switch-layers" class="pt-6 max-w-6xl mx-auto px-4 sm:px-6">
                 <div class="text-center mb-8">
@@ -396,6 +492,7 @@
                     </div>
                 </div>
 
+                <!-- Notebook Notes Card -->
                 <div class="bg-gradient-to-b from-slate-900 to-slate-950 rounded-3xl p-6 sm:p-10 border border-purple-500/30 shadow-2xl relative overflow-hidden">
                     <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-slate-800 mb-8">
                         <div class="flex items-center gap-3">
@@ -469,6 +566,7 @@
                     </div>
                 </div>
 
+                <!-- Video Demonstration Card -->
                 <div class="mt-8 bg-gradient-to-b from-slate-900 to-slate-950 rounded-3xl p-6 sm:p-8 border border-purple-500/30 shadow-2xl relative overflow-hidden">
                     <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-800 mb-6">
                         <div class="flex items-center gap-3">
@@ -496,100 +594,38 @@
                     </div>
                 </div>
 
+                <!-- Switch Layer Mouth Styles Presentation -->
                 <div class="mt-8 bg-slate-900/90 rounded-3xl p-6 sm:p-8 border border-purple-500/30 shadow-2xl">
-                    <div class="flex items-center justify-between pb-4 border-b border-slate-800 mb-6">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-slate-800 mb-6 gap-4">
                         <div>
-                            <span class="text-xs font-mono uppercase tracking-wider text-purple-400 font-semibold bg-purple-500/10 px-2.5 py-1 rounded">Interactive Tool</span>
-                            <h3 class="text-xl sm:text-2xl font-bold text-white mt-1">Live Switch Layer Simulator</h3>
+                            <span class="text-xs font-mono uppercase tracking-wider text-purple-400 font-semibold bg-purple-500/10 px-2.5 py-1 rounded">Presentation</span>
+                            <h3 class="text-xl sm:text-2xl font-bold text-white mt-1">Switch Layer Mouth Styles</h3>
                         </div>
-                        <span class="text-xs font-mono text-slate-400">Try clicking sub-layers!</span>
+                        <div class="flex items-center gap-2 text-xs">
+                            <button onclick="toggleMouthStylesFullScreen()" class="px-3 py-1.5 rounded-md bg-slate-800 hover:bg-slate-700 text-slate-300 font-medium transition-colors flex items-center gap-1.5 border border-slate-700">
+                                <i class="fa-solid fa-expand"></i> Fullscreen
+                            </button>
+                            <a href="https://docs.google.com/presentation/d/1_36Mt-QKDKPvxvNpikcWQ7hMGp-u42bB/edit?usp=sharing&ouid=109905017285947345046&rtpof=true&sd=true" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 rounded-md bg-purple-500/10 hover:bg-purple-500/20 text-purple-300 font-medium transition-colors flex items-center gap-1.5 border border-purple-500/20">
+                                <i class="fa-solid fa-external-link"></i> Open Google Slides
+                            </a>
+                        </div>
                     </div>
 
-                    <p class="text-xs sm:text-sm text-slate-300 mb-6">
-                        Click the sub-layer buttons below to test how Moho dynamically swaps vector layers inside a Switch folder!
-                    </p>
-
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-                        <!-- Preview Box -->
-                        <div class="bg-slate-950 p-6 rounded-2xl border border-slate-800 flex flex-col items-center justify-center min-h-[260px] relative overflow-hidden">
-                            <div class="absolute top-3 left-3 text-[10px] font-mono text-purple-400 bg-purple-950/80 px-2 py-0.5 rounded border border-purple-800">
-                                Moho Canvas Preview
-                            </div>
-
-                            <!-- Animated Character Face SVG -->
-                            <div class="w-36 h-36 relative flex items-center justify-center mt-4">
-                                <!-- Head Circle -->
-                                <div class="w-32 h-32 rounded-full bg-amber-200 border-4 border-slate-800 flex flex-col items-center justify-center shadow-lg relative">
-                                    
-                                    <!-- Hair -->
-                                    <div class="absolute -top-3 w-28 h-10 bg-slate-800 rounded-t-full"></div>
-
-                                    <!-- Eye Switch Layer Simulation -->
-                                    <div class="flex gap-6 mb-3 relative z-10">
-                                        <div id="sim-eye-left" class="w-5 h-5 bg-slate-900 rounded-full flex items-center justify-center transition-all">
-                                            <div class="w-1.5 h-1.5 bg-white rounded-full"></div>
-                                        </div>
-                                        <div id="sim-eye-right" class="w-5 h-5 bg-slate-900 rounded-full flex items-center justify-center transition-all">
-                                            <div class="w-1.5 h-1.5 bg-white rounded-full"></div>
-                                        </div>
-                                    </div>
-
-                                    <!-- Mouth Switch Layer Simulation -->
-                                    <div id="sim-mouth" class="w-10 h-3 bg-rose-500 rounded-full transition-all border-2 border-slate-800"></div>
-                                </div>
-                            </div>
-
-                            <p id="sim-active-layer-text" class="text-xs font-mono text-amber-300 mt-4 bg-slate-900 px-3 py-1 rounded-md border border-slate-800">
-                                Active Layer: Mouth -> Smile
-                            </p>
-                        </div>
-
-                        <div class="space-y-6">
-                            <!-- Mouth Switch Layer Group -->
-                            <div>
-                                <h4 class="text-xs font-bold font-mono text-purple-300 uppercase tracking-wider mb-2 flex items-center gap-2">
-                                    <i class="fa-solid fa-folder-closed text-purple-400"></i> Switch Folder: "Mouth"
-                                </h4>
-                                <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 text-xs">
-                                    <button onclick="setMouthShape('smile')" class="mouth-btn p-2.5 rounded-xl bg-purple-900/60 hover:bg-purple-800 text-purple-200 border border-purple-700 font-semibold text-left">
-                                        📄 Smile (Rest)
-                                    </button>
-                                    <button onclick="setMouthShape('open_o')" class="mouth-btn p-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 font-medium text-left">
-                                        📄 O (Phoneme)
-                                    </button>
-                                    <button onclick="setMouthShape('wide_e')" class="mouth-btn p-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 font-medium text-left">
-                                        📄 E / A (Wide)
-                                    </button>
-                                    <button onclick="setMouthShape('closed_m')" class="mouth-btn p-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 font-medium text-left">
-                                        📄 M / B (Closed)
-                                    </button>
-                                    <button onclick="setMouthShape('surprised')" class="mouth-btn p-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 font-medium text-left">
-                                        📄 Shocked
-                                    </button>
-                                </div>
-                            </div>
-
-                            <!-- Eyes Switch Layer Group -->
-                            <div>
-                                <h4 class="text-xs font-bold font-mono text-purple-300 uppercase tracking-wider mb-2 flex items-center gap-2">
-                                    <i class="fa-solid fa-folder-closed text-purple-400"></i> Switch Folder: "Eyes"
-                                </h4>
-                                <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 text-xs">
-                                    <button onclick="setEyeShape('open')" class="eye-btn p-2.5 rounded-xl bg-purple-900/60 hover:bg-purple-800 text-purple-200 border border-purple-700 font-semibold text-left">
-                                        📄 Normal Open
-                                    </button>
-                                    <button onclick="setEyeShape('blink')" class="eye-btn p-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 font-medium text-left">
-                                        📄 Blink / Closed
-                                    </button>
-                                    <button onclick="setEyeShape('wink')" class="eye-btn p-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 font-medium text-left">
-                                        📄 Wink
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
+                    <div id="mouth-styles-presentation-container" class="relative w-full rounded-xl overflow-hidden bg-slate-950 border border-slate-800 shadow-inner transition-all duration-300" style="padding-top: 56.25%;">
+                        <iframe 
+                            id="mouth-styles-ppt-iframe"
+                            src="https://docs.google.com/presentation/d/1_36Mt-QKDKPvxvNpikcWQ7hMGp-u42bB/embed?start=false&loop=false&delayms=3000" 
+                            frameborder="0" 
+                            class="absolute top-0 left-0 w-full h-full"
+                            allowfullscreen="true" 
+                            mozallowfullscreen="true" 
+                            webkitallowfullscreen="true"
+                            allow="fullscreen">
+                        </iframe>
                     </div>
                 </div>
 
+                <!-- Keyboard Shortcuts & Quick Tips -->
                 <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div class="glass-panel p-6 rounded-3xl border border-slate-800">
                         <h4 class="text-lg font-bold text-white mb-4 flex items-center gap-2">
@@ -635,6 +671,7 @@
         </div>
     </main>
 
+    <!-- Footer -->
     <footer class="border-t border-slate-800/80 bg-slate-950 py-8 text-xs text-slate-500 mt-auto">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
             <div class="flex items-center gap-2">
@@ -705,7 +742,7 @@
             }
         }
 
-        // --- STREAMING_CHUNK:Implementing presentation fullscreen toggle handlers... ---
+        // --- Presentation Fullscreen Toggles ---
         function toggleFullScreen() {
             const container = document.getElementById('presentation-container');
             if (container) {
@@ -721,6 +758,19 @@
 
         function toggleSwitchLayersFullScreen() {
             const container = document.getElementById('switch-presentation-container');
+            if (container) {
+                if (document.fullscreenElement) {
+                    document.exitFullscreen();
+                } else if (container.requestFullscreen) {
+                    container.requestFullscreen();
+                } else {
+                    container.classList.toggle('theater-mode');
+                }
+            }
+        }
+
+        function toggleMouthStylesFullScreen() {
+            const container = document.getElementById('mouth-styles-presentation-container');
             if (container) {
                 if (document.fullscreenElement) {
                     document.exitFullscreen();
@@ -757,6 +807,7 @@
             document.body.removeChild(tempTextArea);
         }
 
+        // --- Pixabay Quiz Logic ---
         let quizScore = { q1: false, q2: false, q3: false };
 
         function checkQuizAnswer(qId, ans, isCorrect, btn) {
@@ -786,6 +837,7 @@
             }
         }
 
+        // --- Live Moho Interactive Simulator Controls ---
         function setMouthShape(shape) {
             const mouth = document.getElementById('sim-mouth');
             const label = document.getElementById('sim-active-layer-text');
@@ -867,6 +919,161 @@
             }
         }
 
+        // Extended Multi-Stage Sci-Fi Audio Synthesis Engine
+        function playExtendedPortalSound() {
+            try {
+                const AudioContext = window.AudioContext || window.webkitAudioContext;
+                if (!AudioContext) return;
+                const ctx = new AudioContext();
+
+                // Base Synth Oscillator Pitch Sweep (Accelerating Hyperdrive)
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+
+                osc.type = 'sawtooth';
+                osc.frequency.setValueAtTime(100, ctx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(1200, ctx.currentTime + 4.2);
+
+                gain.gain.setValueAtTime(0.01, ctx.currentTime);
+                gain.gain.linearRampToValueAtTime(0.28, ctx.currentTime + 1.5);
+                gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 5.0);
+
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+
+                osc.start();
+                osc.stop(ctx.currentTime + 5.1);
+
+                // Stage Chimes
+                const chimeTimes = [1.2, 2.4, 3.6, 4.5];
+                const freqs = [523.25, 659.25, 783.99, 1046.50];
+
+                chimeTimes.forEach((t, idx) => {
+                    setTimeout(() => {
+                        if (ctx.state === 'closed') return;
+                        const chime = ctx.createOscillator();
+                        const chimeGain = ctx.createGain();
+                        chime.type = 'sine';
+                        chime.frequency.setValueAtTime(freqs[idx], ctx.currentTime);
+                        chimeGain.gain.setValueAtTime(0.2, ctx.currentTime);
+                        chimeGain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.8);
+                        chime.connect(chimeGain);
+                        chimeGain.connect(ctx.destination);
+                        chime.start();
+                        chime.stop(ctx.currentTime + 0.8);
+                    }, t * 1000);
+                });
+            } catch (err) {
+                // Audio synthesis optional fallback
+            }
+        }
+
+        // Dynamic Quantum Tunnel Canvas Engine
+        let portalActive = false;
+        let portalAnimationId = null;
+
+        function initPortalCanvas() {
+            const canvas = document.getElementById('portal-canvas');
+            if (!canvas) return null;
+            const ctx = canvas.getContext('2d');
+            let width = canvas.width = window.innerWidth;
+            let height = canvas.height = window.innerHeight;
+
+            const particles = [];
+            const particleCount = 550;
+            const colors = ['#f59e0b', '#10b981', '#a855f7', '#38bdf8', '#fbbf24', '#ec4899'];
+
+            for (let i = 0; i < particleCount; i++) {
+                particles.push({
+                    x: Math.random() * width,
+                    y: Math.random() * height,
+                    radius: Math.random() * 3.5 + 0.8,
+                    angle: Math.random() * Math.PI * 2,
+                    speed: Math.random() * 3.5 + 1.2,
+                    distance: Math.random() * Math.max(width, height) * 0.7,
+                    color: colors[Math.floor(Math.random() * colors.length)],
+                    alpha: Math.random() * 0.85 + 0.15,
+                    length: Math.random() * 25 + 5,
+                    type: Math.random() > 0.3 ? 'streak' : 'sparkle',
+                    pulseSpeed: Math.random() * 0.05 + 0.02
+                });
+            }
+
+            let shockwaveRadius = 0;
+
+            function draw() {
+                ctx.fillStyle = 'rgba(15, 23, 42, 0.22)';
+                ctx.fillRect(0, 0, width, height);
+
+                const centerX = width / 2;
+                const centerY = height / 2;
+
+                shockwaveRadius = (shockwaveRadius + 2.5) % (Math.max(width, height) * 0.6);
+                ctx.beginPath();
+                ctx.arc(centerX, centerY, shockwaveRadius, 0, Math.PI * 2);
+                ctx.strokeStyle = 'rgba(245, 158, 11, ' + (1 - shockwaveRadius / (Math.max(width, height) * 0.6)) * 0.3 + ')';
+                ctx.lineWidth = 2;
+                ctx.stroke();
+
+                particles.forEach(p => {
+                    p.angle += p.speed * 0.012;
+                    p.distance -= p.speed * 2.2;
+                    p.alpha += Math.sin(Date.now() * p.pulseSpeed) * 0.05;
+
+                    if (p.distance <= 12) {
+                        p.distance = Math.max(width, height) * 0.65;
+                        p.angle = Math.random() * Math.PI * 2;
+                    }
+
+                    const prevX = centerX + Math.cos(p.angle) * (p.distance + p.length);
+                    const prevY = centerY + Math.sin(p.angle) * (p.distance + p.length);
+                    p.x = centerX + Math.cos(p.angle) * p.distance;
+                    p.y = centerY + Math.sin(p.angle) * p.distance;
+
+                    if (p.type === 'streak') {
+                        ctx.beginPath();
+                        ctx.moveTo(prevX, prevY);
+                        ctx.lineTo(p.x, p.y);
+                        ctx.strokeStyle = p.color;
+                        ctx.lineWidth = p.radius;
+                        ctx.globalAlpha = Math.max(0.1, Math.min(1, p.alpha));
+                        ctx.shadowBlur = 12;
+                        ctx.shadowColor = p.color;
+                        ctx.stroke();
+                    } else {
+                        ctx.beginPath();
+                        ctx.arc(p.x, p.y, p.radius * 1.5, 0, Math.PI * 2);
+                        ctx.fillStyle = p.color;
+                        ctx.globalAlpha = Math.max(0.1, Math.min(1, p.alpha));
+                        ctx.shadowBlur = 15;
+                        ctx.shadowColor = p.color;
+                        ctx.fill();
+                    }
+                    ctx.globalAlpha = 1;
+                    ctx.shadowBlur = 0;
+                });
+
+                if (portalActive) {
+                    portalAnimationId = requestAnimationFrame(draw);
+                }
+            }
+
+            return {
+                start: () => {
+                    portalActive = true;
+                    draw();
+                },
+                stop: () => {
+                    portalActive = false;
+                    if (portalAnimationId) cancelAnimationFrame(portalAnimationId);
+                },
+                resize: () => {
+                    width = canvas.width = window.innerWidth;
+                    height = canvas.height = window.innerHeight;
+                }
+            };
+        }
+
         function initBackgroundParticles() {
             const canvas = document.getElementById('bg-particles-canvas');
             if (!canvas) return;
@@ -945,6 +1152,7 @@
 
         // Initialize Web Application
         window.addEventListener('DOMContentLoaded', () => {
+            portalInstance = initPortalCanvas();
             switchTab('pixabay');
             initBackgroundParticles();
         });
