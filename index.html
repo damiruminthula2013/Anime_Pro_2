@@ -71,97 +71,9 @@
         .tab-content.active-tab {
             display: block;
         }
-
-        @keyframes portalSpin {
-            0% { transform: rotate(0deg) scale(0.92); }
-            50% { transform: rotate(180deg) scale(1.08); }
-            100% { transform: rotate(360deg) scale(0.92); }
-        }
-        @keyframes portalSpinReverse {
-            0% { transform: rotate(360deg); }
-            100% { transform: rotate(0deg); }
-        }
-        @keyframes pulseGlow {
-            0%, 100% { opacity: 0.4; filter: blur(25px); transform: scale(1); }
-            50% { opacity: 0.95; filter: blur(45px); transform: scale(1.25); }
-        }
-        @keyframes scanline {
-            0% { transform: translateY(-100%); }
-            100% { transform: translateY(1000%); }
-        }
-        @keyframes floatText {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-8px); }
-        }
-        .portal-hud-ring {
-            animation: portalSpin 12s linear infinite;
-        }
-        .portal-hud-ring-rev {
-            animation: portalSpinReverse 8s linear infinite;
-        }
-        .portal-glow-bg {
-            animation: pulseGlow 2.8s ease-in-out infinite;
-        }
-        .hud-text-bounce {
-            animation: floatText 2.2s ease-in-out infinite;
-        }
     </style>
 </head>
 <body class="bg-slate-950 text-slate-100 font-sans antialiased selection:bg-emerald-500 selection:text-white min-h-screen flex flex-col">
-
-    <!-- Fullscreen Extended Sci-Fi Quantum Portal Transition Overlay -->
-    <div id="assignment-portal-overlay" class="fixed inset-0 z-[99999] bg-slate-950/95 backdrop-blur-2xl flex flex-col items-center justify-center hidden opacity-0 transition-opacity duration-500 overflow-hidden pointer-events-auto select-none">
-        <!-- Canvas for dynamic particle hyperdrive tunnel -->
-        <canvas id="portal-canvas" class="absolute inset-0 w-full h-full pointer-events-none z-0"></canvas>
-
-        <!-- Ambient Glow Backdrops -->
-        <div class="absolute w-[600px] h-[600px] rounded-full bg-gradient-to-tr from-amber-500/30 via-orange-500/20 to-emerald-500/30 portal-glow-bg pointer-events-none"></div>
-        <div class="absolute w-[350px] h-[350px] rounded-full bg-gradient-to-br from-amber-400/40 via-purple-600/30 to-emerald-400/40 blur-3xl pointer-events-none"></div>
-
-        <!-- Holographic HUD Outer Elements -->
-        <div class="relative z-10 flex flex-col items-center justify-center p-6 text-center max-w-xl w-full">
-            <div class="relative w-56 h-56 sm:w-64 sm:h-64 flex items-center justify-center mb-8">
-                <!-- Rotating Ring 1 -->
-                <div class="absolute inset-0 rounded-full border-2 border-dashed border-amber-400/70 portal-hud-ring shadow-[0_0_40px_rgba(251,191,36,0.4)]"></div>
-                <!-- Rotating Ring 2 -->
-                <div class="absolute inset-3 rounded-full border-2 border-emerald-400/60 portal-hud-ring-rev border-t-transparent border-b-transparent"></div>
-                <!-- Rotating Ring 3 -->
-                <div class="absolute inset-7 rounded-full border-2 border-orange-500/50 portal-hud-ring"></div>
-                <!-- Rotating Ring 4 (Inner Laser Dot Circle) -->
-                <div class="absolute inset-11 rounded-full border border-purple-400/40 portal-hud-ring-rev border-dashed"></div>
-                
-                <!-- Center Energy Core -->
-                <div id="portal-core" class="w-24 h-24 sm:w-28 sm:h-28 rounded-full bg-gradient-to-tr from-amber-400 via-orange-500 to-emerald-300 flex items-center justify-center text-slate-950 text-4xl sm:text-5xl shadow-[0_0_60px_rgba(245,158,11,0.95)] transform transition-transform duration-300 scale-100">
-                    <i class="fa-solid fa-rocket animate-bounce" id="portal-icon"></i>
-                </div>
-            </div>
-
-            <!-- Title & Extended Telemetry Status Text -->
-            <div class="space-y-3 z-10 w-full">
-                <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-500/20 border border-amber-400/40 text-amber-300 text-xs font-mono font-bold uppercase tracking-widest hud-text-bounce">
-                    <span class="w-2 h-2 rounded-full bg-amber-400 animate-ping"></span>
-                    <span id="portal-stage-badge">Stage 1 / 5 • Warp Engine Pre-check</span>
-                </div>
-                <h2 class="text-2xl sm:text-4xl font-black text-white tracking-tight drop-shadow-[0_0_20px_rgba(255,255,255,0.5)]">
-                    Launching <span class="bg-gradient-to-r from-amber-300 via-orange-400 to-emerald-400 bg-clip-text text-transparent">Today's Assignment</span>
-                </h2>
-                <p id="portal-status-text" class="text-xs sm:text-sm font-mono text-emerald-300 h-8 flex items-center justify-center gap-2">
-                    <i class="fa-solid fa-spinner animate-spin"></i> Initializing quantum link protocol...
-                </p>
-            </div>
-
-            <!-- Futuristic Multi-segment Progress Bar -->
-            <div class="w-full max-w-md mt-6 bg-slate-900/90 border border-slate-700/80 rounded-full h-4 p-0.5 overflow-hidden shadow-inner relative">
-                <div id="portal-progress-bar" class="h-full bg-gradient-to-r from-amber-400 via-orange-500 to-emerald-400 rounded-full w-0 transition-all duration-150 ease-out shadow-[0_0_15px_rgba(245,158,11,0.9)]"></div>
-            </div>
-            
-            <div class="w-full max-w-md flex items-center justify-between mt-2 text-[11px] font-mono font-bold text-slate-400">
-                <span id="portal-speed-indicator"><i class="fa-solid fa-bolt text-amber-400"></i> Speed: 0 KM/S</span>
-                <span id="portal-percent" class="text-amber-400 text-sm font-extrabold">0%</span>
-                <span id="portal-time-rem">ETA: 5.0s</span>
-            </div>
-        </div>
-    </div>
 
     <!-- Top Fixed Header -->
     <header class="sticky top-0 z-50 glass-panel border-b border-slate-800/80">
@@ -174,11 +86,10 @@
                     <span class="font-bold text-lg tracking-tight text-white flex items-center gap-1.5">
                         Pixabay & Moho Guide
                     </span>
-                    <p class="text-xs text-slate-400 hidden sm:block">Interactive Learning & Assignment Hub</p>
+                    <p class="text-xs text-slate-400 hidden sm:block">Interactive Learning Hub</p>
                 </div>
             </button>
 
-            <!-- Desktop Navigation -->
             <nav class="hidden md:flex items-center gap-1 text-xs font-medium text-slate-300 bg-slate-900/90 p-1.5 rounded-xl border border-slate-800">
                 <button id="nav-btn-pixabay" onclick="switchTab('pixabay')" class="tab-nav-btn px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 border font-semibold">
                     <i class="fa-solid fa-file-powerpoint text-emerald-400"></i> 1. Pixabay Media Download
@@ -189,22 +100,14 @@
             </nav>
 
             <div class="flex items-center gap-2">
-                <a href="https://docs.google.com/forms/d/e/1FAIpQLSepN4Wy5jjqIOGjeF0Vqk9SqvvZZMS77-wZp7qKD1MHR-AUHw/viewform?usp=dialog" target="_blank" rel="noopener noreferrer" onclick="triggerAssignmentPortal(event)" class="px-3.5 py-2 rounded-xl bg-gradient-to-r from-amber-400 to-orange-500 hover:from-amber-300 hover:to-orange-400 text-slate-950 font-black text-xs transition-all flex items-center gap-1.5 shadow-lg shadow-amber-500/25 border border-amber-300/40 shrink-0 hover:scale-105 active:scale-95">
-                    <i class="fa-solid fa-pen-to-square"></i> Today's Assignment
-                </a>
-
                 <button id="mobile-menu-btn" onclick="toggleMobileMenu()" class="md:hidden p-2 rounded-lg bg-slate-800 text-slate-300 hover:text-white border border-slate-700 flex items-center justify-center">
                     <i class="fa-solid fa-bars text-lg" id="menu-icon"></i>
                 </button>
             </div>
         </div>
 
-        <!-- Scrollable Quick Pill Bar -->
         <div class="bg-slate-900/90 border-t border-slate-800/80 px-4 py-2 overflow-x-auto no-scrollbar flex items-center gap-2 text-xs font-medium">
             <span class="text-slate-500 uppercase text-[10px] font-bold tracking-wider shrink-0 pr-1">Active View:</span>
-            <a href="https://docs.google.com/forms/d/e/1FAIpQLSepN4Wy5jjqIOGjeF0Vqk9SqvvZZMS77-wZp7qKD1MHR-AUHw/viewform?usp=dialog" target="_blank" rel="noopener noreferrer" onclick="triggerAssignmentPortal(event)" class="px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 hover:bg-amber-500/30 border border-amber-500/40 shrink-0 font-bold flex items-center gap-1.5 transition-all">
-                <i class="fa-solid fa-clipboard-list text-amber-400"></i> Today's Assignment
-            </a>
             <button id="pill-btn-pixabay" onclick="switchTab('pixabay')" class="pill-nav-btn px-3.5 py-1 rounded-full shrink-0 transition-colors font-semibold border">
                 Topic 1: Pixabay Media Download
             </button>
@@ -213,12 +116,7 @@
             </button>
         </div>
 
-        <!-- Mobile Drawer -->
         <div id="mobile-menu" class="hidden md:hidden bg-slate-950 border-b border-slate-800 px-4 py-4 space-y-2">
-            <a href="https://docs.google.com/forms/d/e/1FAIpQLSepN4Wy5jjqIOGjeF0Vqk9SqvvZZMS77-wZp7qKD1MHR-AUHw/viewform?usp=dialog" target="_blank" rel="noopener noreferrer" onclick="triggerAssignmentPortal(event); toggleMobileMenu();" class="w-full text-left px-3 py-2.5 rounded-lg bg-gradient-to-r from-amber-500 to-orange-500 text-slate-950 text-sm font-extrabold flex items-center justify-between">
-                <span class="flex items-center gap-2"><i class="fa-solid fa-pen-to-square"></i> Today's Assignment</span>
-                <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
-            </a>
             <p class="text-xs font-bold uppercase tracking-wider text-slate-500 mb-2 pt-1">Select Topic</p>
             <button onclick="switchTab('pixabay'); toggleMobileMenu();" class="w-full text-left px-3 py-2.5 rounded-lg bg-emerald-950/60 hover:bg-emerald-900/60 text-emerald-300 text-sm font-semibold border border-emerald-800/60 flex items-center gap-2">
                 <i class="fa-solid fa-file-powerpoint text-emerald-400"></i> Topic 1: Pixabay Media Download
@@ -256,7 +154,6 @@
             </div>
         </section>
 
-        <!-- TAB 1: PIXABAY MEDIA DOWNLOAD -->
         <div id="tab-pixabay" class="tab-content active-tab space-y-12 pb-12">
             <!-- Presentation Frame -->
             <section id="presentation" class="pt-6 max-w-6xl mx-auto px-4 sm:px-6">
@@ -309,7 +206,6 @@
                 </div>
             </section>
 
-            <!-- Media Types Breakdown -->
             <section id="guide-summary" class="max-w-6xl mx-auto px-4 sm:px-6">
                 <div class="text-center mb-8">
                     <h2 class="text-2xl sm:text-3xl font-bold text-white mb-2">Pixabay Media Types & Formats</h2>
@@ -365,7 +261,6 @@
                 </div>
             </section>
 
-            <!-- Detailed Download Step-by-Step Walkthrough -->
             <section class="max-w-6xl mx-auto px-4 sm:px-6">
                 <div class="glass-panel rounded-3xl p-6 sm:p-8 border border-emerald-500/20 shadow-2xl">
                     <h3 class="text-2xl font-bold text-white mb-6 flex items-center gap-3">
@@ -401,7 +296,6 @@
                 </div>
             </section>
 
-            <!-- Interactive Pixabay Knowledge Check Quiz -->
             <section class="max-w-6xl mx-auto px-4 sm:px-6">
                 <div class="bg-slate-900/90 rounded-3xl p-6 sm:p-8 border border-slate-800 shadow-2xl">
                     <div class="flex items-center justify-between mb-6 pb-4 border-b border-slate-800">
@@ -448,7 +342,6 @@
             </section>
         </div>
 
-        <!-- TAB 2: SWITCH LAYERS IN MOHO -->
         <div id="tab-switch-layers" class="tab-content space-y-12 pb-12">
             <section id="switch-layers" class="pt-6 max-w-6xl mx-auto px-4 sm:px-6">
                 <div class="text-center mb-8">
@@ -503,7 +396,6 @@
                     </div>
                 </div>
 
-                <!-- Notebook Notes Card -->
                 <div class="bg-gradient-to-b from-slate-900 to-slate-950 rounded-3xl p-6 sm:p-10 border border-purple-500/30 shadow-2xl relative overflow-hidden">
                     <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-slate-800 mb-8">
                         <div class="flex items-center gap-3">
@@ -577,7 +469,6 @@
                     </div>
                 </div>
 
-                <!-- Video Demonstration Card -->
                 <div class="mt-8 bg-gradient-to-b from-slate-900 to-slate-950 rounded-3xl p-6 sm:p-8 border border-purple-500/30 shadow-2xl relative overflow-hidden">
                     <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-800 mb-6">
                         <div class="flex items-center gap-3">
@@ -605,7 +496,6 @@
                     </div>
                 </div>
 
-                <!-- Interactive Moho Character Switch Layer Simulator Widget -->
                 <div class="mt-8 bg-slate-900/90 rounded-3xl p-6 sm:p-8 border border-purple-500/30 shadow-2xl">
                     <div class="flex items-center justify-between pb-4 border-b border-slate-800 mb-6">
                         <div>
@@ -654,7 +544,6 @@
                             </p>
                         </div>
 
-                        <!-- Controls -->
                         <div class="space-y-6">
                             <!-- Mouth Switch Layer Group -->
                             <div>
@@ -701,7 +590,6 @@
                     </div>
                 </div>
 
-                <!-- Keyboard Shortcuts & Quick Tips -->
                 <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div class="glass-panel p-6 rounded-3xl border border-slate-800">
                         <h4 class="text-lg font-bold text-white mb-4 flex items-center gap-2">
@@ -747,7 +635,6 @@
         </div>
     </main>
 
-    <!-- Footer -->
     <footer class="border-t border-slate-800/80 bg-slate-950 py-8 text-xs text-slate-500 mt-auto">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
             <div class="flex items-center gap-2">
@@ -818,7 +705,7 @@
             }
         }
 
-        // --- Presentation Fullscreen Toggles ---
+        // --- STREAMING_CHUNK:Implementing presentation fullscreen toggle handlers... ---
         function toggleFullScreen() {
             const container = document.getElementById('presentation-container');
             if (container) {
@@ -843,79 +730,6 @@
                     container.classList.toggle('theater-mode');
                 }
             }
-        }
-
-        // --- Assignment Portal Trigger Engine ---
-        let portalInstance = null;
-        let isPortalRunning = false;
-
-        function triggerAssignmentPortal(event) {
-            if (event) event.preventDefault();
-            if (isPortalRunning) return;
-            isPortalRunning = true;
-
-            const targetUrl = "https://docs.google.com/forms/d/e/1FAIpQLSepN4Wy5jjqIOGjeF0Vqk9SqvvZZMS77-wZp7qKD1MHR-AUHw/viewform?usp=dialog";
-            const overlay = document.getElementById('assignment-portal-overlay');
-            const badge = document.getElementById('portal-stage-badge');
-            const statusText = document.getElementById('portal-status-text');
-            const progressBar = document.getElementById('portal-progress-bar');
-            const speedText = document.getElementById('portal-speed-indicator');
-            const percentText = document.getElementById('portal-percent');
-            const timeRemText = document.getElementById('portal-time-rem');
-
-            if (!overlay) {
-                window.open(targetUrl, '_blank');
-                isPortalRunning = false;
-                return;
-            }
-
-            // Display Fullscreen Sci-Fi Portal Overlay
-            overlay.classList.remove('hidden');
-            setTimeout(() => overlay.classList.add('opacity-100'), 10);
-
-            // Trigger Audio & Warp Canvas
-            playExtendedPortalSound();
-            if (portalInstance) portalInstance.start();
-
-            const stages = [
-                { badge: "Stage 1 / 5 • Warp Engine Pre-check", status: "Initializing quantum link protocol...", speed: "12,400 KM/S", percent: 20, time: "4.0s" },
-                { badge: "Stage 2 / 5 • Synchronizing Worksheet", status: "Fetching Assignment Data & Form Matrix...", speed: "38,900 KM/S", percent: 42, time: "2.9s" },
-                { badge: "Stage 3 / 5 • Calibrating Subspace Bridge", status: "Establishing secure portal pipe to Google Forms...", speed: "65,200 KM/S", percent: 68, time: "1.8s" },
-                { badge: "Stage 4 / 5 • Full Hyper-drive Engagement", status: "Warp core at maximum capacity! Preparing drop...", speed: "92,800 KM/S", percent: 88, time: "0.7s" },
-                { badge: "Stage 5 / 5 • Portal Locked & Dispatched", status: "Transfer complete! Launching worksheet in new tab...", speed: "100,000 KM/S", percent: 100, time: "0.0s" }
-            ];
-
-            let currentStage = 0;
-            const intervalTime = 950;
-
-            function updateStage() {
-                if (currentStage < stages.length) {
-                    const st = stages[currentStage];
-                    if (badge) badge.textContent = st.badge;
-                    if (statusText) statusText.innerHTML = `<i class="fa-solid fa-spinner animate-spin"></i> ${st.status}`;
-                    if (progressBar) progressBar.style.width = st.percent + '%';
-                    if (speedText) speedText.innerHTML = `<i class="fa-solid fa-bolt text-amber-400"></i> Speed: ${st.speed}`;
-                    if (percentText) percentText.textContent = st.percent + '%';
-                    if (timeRemText) timeRemText.textContent = `ETA: ${st.time}`;
-
-                    currentStage++;
-                    setTimeout(updateStage, intervalTime);
-                } else {
-                    window.open(targetUrl, '_blank');
-
-                    setTimeout(() => {
-                        overlay.classList.remove('opacity-100');
-                        setTimeout(() => {
-                            overlay.classList.add('hidden');
-                            if (portalInstance) portalInstance.stop();
-                            if (progressBar) progressBar.style.width = '0%';
-                            isPortalRunning = false;
-                        }, 500);
-                    }, 600);
-                }
-            }
-
-            updateStage();
         }
 
         // --- Copy Notebook Text ---
@@ -943,7 +757,6 @@
             document.body.removeChild(tempTextArea);
         }
 
-        // --- Pixabay Quiz Logic ---
         let quizScore = { q1: false, q2: false, q3: false };
 
         function checkQuizAnswer(qId, ans, isCorrect, btn) {
@@ -973,7 +786,6 @@
             }
         }
 
-        // --- Live Moho Interactive Simulator Controls ---
         function setMouthShape(shape) {
             const mouth = document.getElementById('sim-mouth');
             const label = document.getElementById('sim-active-layer-text');
@@ -1055,161 +867,6 @@
             }
         }
 
-        // Extended Multi-Stage Sci-Fi Audio Synthesis Engine
-        function playExtendedPortalSound() {
-            try {
-                const AudioContext = window.AudioContext || window.webkitAudioContext;
-                if (!AudioContext) return;
-                const ctx = new AudioContext();
-
-                // Base Synth Oscillator Pitch Sweep (Accelerating Hyperdrive)
-                const osc = ctx.createOscillator();
-                const gain = ctx.createGain();
-
-                osc.type = 'sawtooth';
-                osc.frequency.setValueAtTime(100, ctx.currentTime);
-                osc.frequency.exponentialRampToValueAtTime(1200, ctx.currentTime + 4.2);
-
-                gain.gain.setValueAtTime(0.01, ctx.currentTime);
-                gain.gain.linearRampToValueAtTime(0.28, ctx.currentTime + 1.5);
-                gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 5.0);
-
-                osc.connect(gain);
-                gain.connect(ctx.destination);
-
-                osc.start();
-                osc.stop(ctx.currentTime + 5.1);
-
-                // Stage Chimes
-                const chimeTimes = [1.2, 2.4, 3.6, 4.5];
-                const freqs = [523.25, 659.25, 783.99, 1046.50];
-
-                chimeTimes.forEach((t, idx) => {
-                    setTimeout(() => {
-                        if (ctx.state === 'closed') return;
-                        const chime = ctx.createOscillator();
-                        const chimeGain = ctx.createGain();
-                        chime.type = 'sine';
-                        chime.frequency.setValueAtTime(freqs[idx], ctx.currentTime);
-                        chimeGain.gain.setValueAtTime(0.2, ctx.currentTime);
-                        chimeGain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.8);
-                        chime.connect(chimeGain);
-                        chimeGain.connect(ctx.destination);
-                        chime.start();
-                        chime.stop(ctx.currentTime + 0.8);
-                    }, t * 1000);
-                });
-            } catch (err) {
-                // Audio synthesis optional fallback
-            }
-        }
-
-        // Dynamic Quantum Tunnel Canvas Engine
-        let portalActive = false;
-        let portalAnimationId = null;
-
-        function initPortalCanvas() {
-            const canvas = document.getElementById('portal-canvas');
-            if (!canvas) return null;
-            const ctx = canvas.getContext('2d');
-            let width = canvas.width = window.innerWidth;
-            let height = canvas.height = window.innerHeight;
-
-            const particles = [];
-            const particleCount = 550;
-            const colors = ['#f59e0b', '#10b981', '#a855f7', '#38bdf8', '#fbbf24', '#ec4899'];
-
-            for (let i = 0; i < particleCount; i++) {
-                particles.push({
-                    x: Math.random() * width,
-                    y: Math.random() * height,
-                    radius: Math.random() * 3.5 + 0.8,
-                    angle: Math.random() * Math.PI * 2,
-                    speed: Math.random() * 3.5 + 1.2,
-                    distance: Math.random() * Math.max(width, height) * 0.7,
-                    color: colors[Math.floor(Math.random() * colors.length)],
-                    alpha: Math.random() * 0.85 + 0.15,
-                    length: Math.random() * 25 + 5,
-                    type: Math.random() > 0.3 ? 'streak' : 'sparkle',
-                    pulseSpeed: Math.random() * 0.05 + 0.02
-                });
-            }
-
-            let shockwaveRadius = 0;
-
-            function draw() {
-                ctx.fillStyle = 'rgba(15, 23, 42, 0.22)';
-                ctx.fillRect(0, 0, width, height);
-
-                const centerX = width / 2;
-                const centerY = height / 2;
-
-                shockwaveRadius = (shockwaveRadius + 2.5) % (Math.max(width, height) * 0.6);
-                ctx.beginPath();
-                ctx.arc(centerX, centerY, shockwaveRadius, 0, Math.PI * 2);
-                ctx.strokeStyle = 'rgba(245, 158, 11, ' + (1 - shockwaveRadius / (Math.max(width, height) * 0.6)) * 0.3 + ')';
-                ctx.lineWidth = 2;
-                ctx.stroke();
-
-                particles.forEach(p => {
-                    p.angle += p.speed * 0.012;
-                    p.distance -= p.speed * 2.2;
-                    p.alpha += Math.sin(Date.now() * p.pulseSpeed) * 0.05;
-
-                    if (p.distance <= 12) {
-                        p.distance = Math.max(width, height) * 0.65;
-                        p.angle = Math.random() * Math.PI * 2;
-                    }
-
-                    const prevX = centerX + Math.cos(p.angle) * (p.distance + p.length);
-                    const prevY = centerY + Math.sin(p.angle) * (p.distance + p.length);
-                    p.x = centerX + Math.cos(p.angle) * p.distance;
-                    p.y = centerY + Math.sin(p.angle) * p.distance;
-
-                    if (p.type === 'streak') {
-                        ctx.beginPath();
-                        ctx.moveTo(prevX, prevY);
-                        ctx.lineTo(p.x, p.y);
-                        ctx.strokeStyle = p.color;
-                        ctx.lineWidth = p.radius;
-                        ctx.globalAlpha = Math.max(0.1, Math.min(1, p.alpha));
-                        ctx.shadowBlur = 12;
-                        ctx.shadowColor = p.color;
-                        ctx.stroke();
-                    } else {
-                        ctx.beginPath();
-                        ctx.arc(p.x, p.y, p.radius * 1.5, 0, Math.PI * 2);
-                        ctx.fillStyle = p.color;
-                        ctx.globalAlpha = Math.max(0.1, Math.min(1, p.alpha));
-                        ctx.shadowBlur = 15;
-                        ctx.shadowColor = p.color;
-                        ctx.fill();
-                    }
-                    ctx.globalAlpha = 1;
-                    ctx.shadowBlur = 0;
-                });
-
-                if (portalActive) {
-                    portalAnimationId = requestAnimationFrame(draw);
-                }
-            }
-
-            return {
-                start: () => {
-                    portalActive = true;
-                    draw();
-                },
-                stop: () => {
-                    portalActive = false;
-                    if (portalAnimationId) cancelAnimationFrame(portalAnimationId);
-                },
-                resize: () => {
-                    width = canvas.width = window.innerWidth;
-                    height = canvas.height = window.innerHeight;
-                }
-            };
-        }
-
         function initBackgroundParticles() {
             const canvas = document.getElementById('bg-particles-canvas');
             if (!canvas) return;
@@ -1288,7 +945,6 @@
 
         // Initialize Web Application
         window.addEventListener('DOMContentLoaded', () => {
-            portalInstance = initPortalCanvas();
             switchTab('pixabay');
             initBackgroundParticles();
         });
