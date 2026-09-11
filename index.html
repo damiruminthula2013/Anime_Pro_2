@@ -98,6 +98,9 @@
                 <button id="nav-btn-switch-layers" onclick="switchTab('switch-layers')" class="tab-nav-btn px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 border font-semibold bg-transparent text-slate-300 border-transparent hover:bg-slate-800">
                     <i class="fa-solid fa-layer-group text-purple-400"></i> 2. Switch Layers in Moho
                 </button>
+                <button id="nav-btn-3d-room" onclick="switchTab('3d-room')" class="tab-nav-btn px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 border font-semibold bg-transparent text-slate-300 border-transparent hover:bg-slate-800">
+                    <i class="fa-solid fa-cube text-cyan-400"></i> 3. Drawing a 3D Room in 2D
+                </button>
             </nav>
 
             <div class="flex items-center gap-2">
@@ -116,6 +119,9 @@
             <button id="pill-btn-switch-layers" onclick="switchTab('switch-layers')" class="pill-nav-btn px-3.5 py-1 rounded-full shrink-0 transition-colors font-semibold border bg-slate-800 text-slate-400 border-slate-700 hover:text-white">
                 Topic 2: Switch Layers in Moho
             </button>
+            <button id="pill-btn-3d-room" onclick="switchTab('3d-room')" class="pill-nav-btn px-3.5 py-1 rounded-full shrink-0 transition-colors font-semibold border bg-slate-800 text-slate-400 border-slate-700 hover:text-white">
+                Topic 3: Drawing a 3D Room in 2D
+            </button>
         </div>
 
         <!-- Mobile Drawer -->
@@ -126,6 +132,9 @@
             </button>
             <button onclick="switchTab('switch-layers'); toggleMobileMenu();" class="w-full text-left px-3 py-2.5 rounded-lg bg-purple-950/60 hover:bg-purple-900/60 text-purple-300 text-sm font-semibold border border-purple-800/60 flex items-center gap-2">
                 <i class="fa-solid fa-layer-group text-purple-400"></i> Topic 2: How to Use Switch Layers in Moho
+            </button>
+            <button onclick="switchTab('3d-room'); toggleMobileMenu();" class="w-full text-left px-3 py-2.5 rounded-lg bg-cyan-950/60 hover:bg-cyan-900/60 text-cyan-300 text-sm font-semibold border border-cyan-800/60 flex items-center gap-2">
+                <i class="fa-solid fa-cube text-cyan-400"></i> Topic 3: Drawing a 3D Room in 2D
             </button>
         </div>
     </header>
@@ -143,7 +152,7 @@
                     How to Download Media on <span class="gradient-text">Pixabay</span>
                 </h1>
                 <p id="hero-subtitle" class="text-sm sm:text-base text-slate-300 max-w-3xl mx-auto mb-6 font-normal leading-relaxed">
-                    Master royalty-free asset downloads on Pixabay and learn professional Moho Switch Layer character animation step by step!
+                    Master royalty-free asset downloads on Pixabay, learn professional Moho Switch Layer character animation, and watch 3D room drawing guides!
                 </p>
 
                 <div class="flex flex-wrap justify-center items-center gap-3">
@@ -152,6 +161,9 @@
                     </button>
                     <button onclick="switchTab('switch-layers')" class="px-5 py-2.5 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-semibold text-xs sm:text-sm border border-purple-500/30 transition-all flex items-center gap-2 shadow-lg shadow-purple-600/20">
                         <i class="fa-solid fa-layer-group"></i> Topic 2: Switch Layers Guide
+                    </button>
+                    <button onclick="switchTab('3d-room')" class="px-5 py-2.5 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-white font-semibold text-xs sm:text-sm border border-cyan-500/30 transition-all flex items-center gap-2 shadow-lg shadow-cyan-600/20">
+                        <i class="fa-solid fa-cube"></i> Topic 3: 3D Room in 2D
                     </button>
                 </div>
             </div>
@@ -581,6 +593,51 @@
                 </div>
             </section>
         </div>
+
+        <!-- TAB 3: Drawing a 3D Room in 2D -->
+        <div id="tab-3d-room" class="tab-content space-y-12 pb-12">
+            <section id="room-3d-section" class="pt-6 max-w-6xl mx-auto px-4 sm:px-6">
+                <div class="text-center mb-8">
+                    <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-xs sm:text-sm font-medium mb-3">
+                        <i class="fa-solid fa-cube"></i> Video Tutorial
+                    </div>
+                    <h2 class="text-3xl sm:text-5xl font-extrabold text-white tracking-tight mb-3">
+                        Drawing a <span class="bg-gradient-to-r from-cyan-400 via-teal-300 to-blue-500 bg-clip-text text-transparent">3D Room in 2D</span>
+                    </h2>
+                    <p class="text-slate-300 text-sm sm:text-base max-w-2xl mx-auto">
+                        Watch the full step-by-step video playback tutorial below.
+                    </p>
+                </div>
+
+                <!-- Video Playback Container -->
+                <div class="glass-panel rounded-3xl p-4 sm:p-6 border border-cyan-500/30 shadow-2xl relative overflow-hidden">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-800 mb-4">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-2xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400 text-lg shadow-lg">
+                                <i class="fa-solid fa-circle-play"></i>
+                            </div>
+                            <div>
+                                <span class="text-xs font-mono uppercase tracking-wider text-cyan-400 font-semibold bg-cyan-500/10 px-2.5 py-0.5 rounded border border-cyan-500/20">Video Playback</span>
+                                <h3 class="text-xl font-bold text-white mt-0.5">Drawing a 3D Room in 2D</h3>
+                            </div>
+                        </div>
+
+                        <a href="https://drive.google.com/file/d/190qGo8MHIS2uCoWCoFi0eoNzC8v3N8bo/view?usp=drive_link" target="_blank" rel="noopener noreferrer" class="px-4 py-2 rounded-xl bg-cyan-600/20 hover:bg-cyan-600/30 text-cyan-300 font-semibold text-xs border border-cyan-500/30 transition-all flex items-center justify-center gap-2 shrink-0">
+                            <i class="fa-solid fa-arrow-up-right-from-square"></i> Open Video in Drive
+                        </a>
+                    </div>
+
+                    <div class="relative w-full rounded-2xl overflow-hidden bg-slate-950 border border-slate-800 shadow-inner" style="padding-top: 56.25%;">
+                        <iframe 
+                            src="https://drive.google.com/file/d/190qGo8MHIS2uCoWCoFi0eoNzC8v3N8bo/preview" 
+                            class="absolute top-0 left-0 w-full h-full border-0" 
+                            allow="autoplay" 
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+                </div>
+            </section>
+        </div>
     </main>
 
     <!-- Toast Notification -->
@@ -619,29 +676,48 @@
 
             const pixabayNav = document.getElementById('nav-btn-pixabay');
             const switchNav = document.getElementById('nav-btn-switch-layers');
+            const room3dNav = document.getElementById('nav-btn-3d-room');
+
             const pixabayPill = document.getElementById('pill-btn-pixabay');
             const switchPill = document.getElementById('pill-btn-switch-layers');
+            const room3dPill = document.getElementById('pill-btn-3d-room');
+
+            const heroTitle = document.getElementById('hero-title');
+            const heroSubtitle = document.getElementById('hero-subtitle');
 
             if (tabName === 'pixabay') {
                 if (pixabayNav) pixabayNav.className = 'tab-nav-btn px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 border font-semibold bg-emerald-500/20 text-emerald-300 border-emerald-500/40';
                 if (switchNav) switchNav.className = 'tab-nav-btn px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 border font-semibold bg-transparent text-slate-300 border-transparent hover:bg-slate-800';
+                if (room3dNav) room3dNav.className = 'tab-nav-btn px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 border font-semibold bg-transparent text-slate-300 border-transparent hover:bg-slate-800';
+
                 if (pixabayPill) pixabayPill.className = 'pill-nav-btn px-3.5 py-1 rounded-full shrink-0 transition-colors font-semibold border bg-emerald-500/20 text-emerald-300 border-emerald-500/40';
                 if (switchPill) switchPill.className = 'pill-nav-btn px-3.5 py-1 rounded-full shrink-0 transition-colors font-semibold border bg-slate-800 text-slate-400 border-slate-700 hover:text-white';
+                if (room3dPill) room3dPill.className = 'pill-nav-btn px-3.5 py-1 rounded-full shrink-0 transition-colors font-semibold border bg-slate-800 text-slate-400 border-slate-700 hover:text-white';
 
-                const heroTitle = document.getElementById('hero-title');
-                const heroSubtitle = document.getElementById('hero-subtitle');
                 if (heroTitle) heroTitle.innerHTML = 'How to Download Media on <span class="gradient-text">Pixabay</span>';
-                if (heroSubtitle) heroSubtitle.textContent = 'Master royalty-free asset downloads on Pixabay and learn professional Moho Switch Layer character animation step by step!';
-            } else {
+                if (heroSubtitle) heroSubtitle.textContent = 'Master royalty-free asset downloads on Pixabay, learn professional Moho Switch Layer character animation, and watch 3D room drawing guides!';
+            } else if (tabName === 'switch-layers') {
                 if (pixabayNav) pixabayNav.className = 'tab-nav-btn px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 border font-semibold bg-transparent text-slate-300 border-transparent hover:bg-slate-800';
                 if (switchNav) switchNav.className = 'tab-nav-btn px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 border font-semibold bg-purple-500/20 text-purple-300 border-purple-500/40';
+                if (room3dNav) room3dNav.className = 'tab-nav-btn px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 border font-semibold bg-transparent text-slate-300 border-transparent hover:bg-slate-800';
+
                 if (pixabayPill) pixabayPill.className = 'pill-nav-btn px-3.5 py-1 rounded-full shrink-0 transition-colors font-semibold border bg-slate-800 text-slate-400 border-slate-700 hover:text-white';
                 if (switchPill) switchPill.className = 'pill-nav-btn px-3.5 py-1 rounded-full shrink-0 transition-colors font-semibold border bg-purple-500/20 text-purple-300 border-purple-500/40';
+                if (room3dPill) room3dPill.className = 'pill-nav-btn px-3.5 py-1 rounded-full shrink-0 transition-colors font-semibold border bg-slate-800 text-slate-400 border-slate-700 hover:text-white';
 
-                const heroTitle = document.getElementById('hero-title');
-                const heroSubtitle = document.getElementById('hero-subtitle');
                 if (heroTitle) heroTitle.innerHTML = 'Master <span class="bg-gradient-to-r from-purple-400 via-pink-400 to-indigo-400 bg-clip-text text-transparent">Switch Layers</span> in Moho';
                 if (heroSubtitle) heroSubtitle.textContent = 'Learn how Switch Layers act like a magic flipbook folder to swap poses, mouth shapes, and expressions instantly in Moho!';
+            } else if (tabName === '3d-room') {
+                if (pixabayNav) pixabayNav.className = 'tab-nav-btn px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 border font-semibold bg-transparent text-slate-300 border-transparent hover:bg-slate-800';
+                if (switchNav) switchNav.className = 'tab-nav-btn px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 border font-semibold bg-transparent text-slate-300 border-transparent hover:bg-slate-800';
+                if (room3dNav) room3dNav.className = 'tab-nav-btn px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 border font-semibold bg-cyan-500/20 text-cyan-300 border-cyan-500/40';
+
+                if (pixabayPill) pixabayPill.className = 'pill-nav-btn px-3.5 py-1 rounded-full shrink-0 transition-colors font-semibold border bg-slate-800 text-slate-400 border-slate-700 hover:text-white';
+                if (switchPill) switchPill.className = 'pill-nav-btn px-3.5 py-1 rounded-full shrink-0 transition-colors font-semibold border bg-slate-800 text-slate-400 border-slate-700 hover:text-white';
+                if (room3dPill) room3dPill.className = 'pill-nav-btn px-3.5 py-1 rounded-full shrink-0 transition-colors font-semibold border bg-cyan-500/20 text-cyan-300 border-cyan-500/40';
+
+                if (heroTitle) heroTitle.innerHTML = 'Drawing a <span class="bg-gradient-to-r from-cyan-400 via-teal-300 to-blue-500 bg-clip-text text-transparent">3D Room in 2D</span>';
+                if (heroSubtitle) heroSubtitle.textContent = 'Watch the video playback tutorial on how to construct perspective and depth when drawing a 3D room in 2D space.';
             }
         }
 
